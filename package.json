@@ -36,6 +36,11 @@
     "unbuild": "^1.2.1",
     "vitest": "^0.31.4"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "nitropack@2.4.1": "patches/nitropack@2.4.1.patch"
+    }
+  },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
@@ -43,10 +48,5 @@
     "*.{js,ts,tsx,vue,md}": [
       "eslint --cache --fix"
     ]
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "nitropack@2.4.1": "patches/nitropack@2.4.1.patch"
-    }
   }
 }

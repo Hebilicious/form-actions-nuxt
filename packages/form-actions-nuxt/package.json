@@ -42,8 +42,8 @@
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "nuxt": "latest",
     "h3": "^1.6.6",
+    "nuxt": "latest",
     "vite": "*"
   },
   "dependencies": {
