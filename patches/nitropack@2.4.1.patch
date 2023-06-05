@@ -1,0 +1,40 @@
+diff --git a/dist/runtime/app.mjs b/dist/runtime/app.mjs
+index 2a858b1b851cb61a658122f60d79c9ca0483921d..2dd548c876562bdd50116f5717b8367945bfbe44 100644
+--- a/dist/runtime/app.mjs
++++ b/dist/runtime/app.mjs
+@@ -47,7 +47,19 @@ function createNitroApp() {
+       event.$fetch = (req, init) => fetchWithEvent(event, req, init, { fetch: $fetch });
+     })
+   );
+-  for (const h of handlers) {
++  const getHandlersWithFallbacks = (handlers, config) => {
++    if (!config.routesWithFallback || config.routesWithFallback.length === 0) return handlers;
++    const routes = config.routesWithFallback.map(({ route }) => route)
++    const routesWithFallbacks = handlers
++      .filter((h) => routes.includes(h.route))
++      .map((h) => {
++        const { fallbackTo, method = "get" } = config.routesWithFallback.find(({ route }) => route === h.route);
++        return { ...h, fallback: true, fallbackTo, fallbackMethod: method }
++      });
++    return handlers.concat(routesWithFallbacks)
++  }
++
++  for (const h of getHandlersWithFallbacks(handlers, config)) {
+     let handler = h.lazy ? lazyEventHandler(h.handler) : h.handler;
+     if (h.middleware || !h.route) {
+       const middlewareBase = (config.app.baseURL + (h.route || "/")).replace(
+@@ -65,7 +77,13 @@ function createNitroApp() {
+           ...routeRules.cache
+         });
+       }
+-      router.use(h.route, handler, h.method);
++           if (h.fallback === true) {
++        const fallback = handlers.find(({ route }) => route === h.fallbackTo);
++        const fallbackHandler = h.lazy ? lazyEventHandler(fallback.handler) : fallback.handler;
++        router.use(h.route, fallbackHandler, h.fallbackMethod);
++      } else {
++        router.use(h.route, handler, h.method);
++      }
+     }
+   }
+   h3App.use(config.app.baseURL, router);

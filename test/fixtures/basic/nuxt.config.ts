@@ -1,3 +1,3 @@
 export default defineNuxtConfig({
-  modules: ["../../../packages/my-module/src/module.ts"]
+  modules: ["../../../packages/form-actions-nuxt/src/module.ts"]
 })

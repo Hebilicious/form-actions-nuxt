@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "strict": true,
     "module": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "DOM.Iterable"],
     "target": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
@@ -12,8 +12,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "paths": {
-      "#imports": ["packages/my-module/node_modules/nuxt/app.d.ts"],
-      "#app": ["packages/my-module/node_modules/nuxt/dist/app"]
+      "#imports": ["packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
+      "#app": ["packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
+      "#build/types/form-action-loaders.d.ts": ["packages/form-actions-nuxt/src/runtime/loader-types.d.ts"]
     }
   },
   "exclude": [

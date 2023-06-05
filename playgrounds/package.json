@@ -1,14 +1,15 @@
 {
-  "name": "nuxt-app",
+  "name": "nuxt-playground",
   "private": true,
   "scripts": {
-    "build": "NITRO_PRESET=cloudflare_pages nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "start": "nuxi preview"
+  },
+  "dependencies": {
+    "nuxt": "latest"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^0.5.5",
-    "nuxt": "latest"
+    "@nuxt/devtools": "^0.4.6"
   }
 }

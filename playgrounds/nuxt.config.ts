@@ -1,13 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    "../packages/my-module/src/module"
-    // "@example/my-module"
-  ],
+  modules: ["../packages/form-actions-nuxt/src/module.ts"],
   devtools: {
     enabled: true
-  },
-  experimental: {
-    renderJsonPayloads: true
   }
 })

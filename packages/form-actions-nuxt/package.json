@@ -1,5 +1,5 @@
 {
-  "name": "my-module",
+  "name": "@hebilicious/form-actions-nuxt",
   "type": "module",
   "version": "0.0.1",
   "author": {
@@ -12,12 +12,20 @@
   "exports": {
     ".": {
       "types": "./dist/module.d.ts",
-      "require": "./dist/module.cjs",
-      "import": "./dist/module.mjs"
+      "require": {
+        "default": "./dist/module.cjs",
+        "types": "./dist/module.d.cts"
+      },
+      "import": {
+        "default": "./dist/module.mjs",
+        "types": "./dist/module.d.mts"
+      },
+      "default": "./dist/module.mjs"
     },
     "./*": "./*"
   },
   "main": "./dist/module.cjs",
+  "module": "./dist/module.mjs",
   "types": "./dist/types.d.ts",
   "files": [
     "dist",
@@ -35,6 +43,7 @@
   },
   "peerDependencies": {
     "nuxt": "latest",
+    "h3": "^1.6.6",
     "vite": "*"
   },
   "dependencies": {
@@ -42,7 +51,6 @@
     "defu": "^6.1.2"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.4.0",
-    "h3": "^1.6.6"
+    "@nuxt/module-builder": "^0.4.0"
   }
 }
