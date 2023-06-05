@@ -1,0 +1,48 @@
+{
+  "name": "my-module",
+  "type": "module",
+  "version": "0.0.1",
+  "author": {
+    "name": "Hebilicious",
+    "email": "xsh4k3@gmail.com",
+    "url": "https://twitter.com/its_hebilicious"
+  },
+  "license": "MIT",
+  "repository": "Hebilicious/nuxt-module-template",
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "require": "./dist/module.cjs",
+      "import": "./dist/module.mjs"
+    },
+    "./*": "./*"
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist",
+    "*.d.ts",
+    "*.cjs",
+    "*.mjs"
+  ],
+  "scripts": {
+    "dts": "esno scripts/dts.ts",
+    "readme": "esno scripts/readme.ts",
+    "postbuild": "pnpm dts && pnpm readme",
+    "build:module": "nuxt-build-module",
+    "build": "rimraf dist && pnpm build:module && pnpm postbuild",
+    "dev": "nuxi dev"
+  },
+  "peerDependencies": {
+    "nuxt": "latest",
+    "vite": "*"
+  },
+  "dependencies": {
+    "@nuxt/kit": "3.5.2",
+    "defu": "^6.1.2"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^0.4.0",
+    "h3": "^1.6.6"
+  }
+}

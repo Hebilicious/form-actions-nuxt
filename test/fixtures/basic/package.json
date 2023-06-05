@@ -1,0 +1,7 @@
+{
+  "name": "basic-fixture",
+  "private": true,
+  "dependencies": {
+    "nuxt": "3.5.2"
+  }
+}
