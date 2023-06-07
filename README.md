@@ -24,7 +24,24 @@ _🧪 This module is really unstable and is not recommended for production use. 
 - Vue macro to automatically bind v-enhance to single forms
 - useFormActions to accept multiple syntax to shorten the api
 
+
+## 📦 Usage
+
+Install
+
+```bash
+npm i @hebilicious/form-actions-nuxt
+```
+
+Add to your modules
+```ts
+export default defineNuxtConfig({
+  modules: ["@hebilicious/form-actions-nuxt"]
+})
+```
+```
 ## Docs 
+
 
 Define a simple form action in /server/actions/login.ts
 
@@ -335,13 +352,6 @@ export const useNitroApp = () => nitroApp
   ```
 
 
-## 📦 Installation
-
-Use pnpm for development of your module :
-
-```bash
-pnpm i 
-```
 
 
 ## 📦 Contributing
