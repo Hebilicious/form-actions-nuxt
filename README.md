@@ -39,9 +39,8 @@ export default defineNuxtConfig({
   modules: ["@hebilicious/form-actions-nuxt"]
 })
 ```
-```
-## Docs 
 
+## Docs 
 
 Define a simple form action in /server/actions/login.ts
 
