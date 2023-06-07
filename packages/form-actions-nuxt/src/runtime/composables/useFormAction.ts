@@ -1,15 +1,17 @@
-import { useThrottleFn } from "@vueuse/core"
 import { type Ref, computed, reactive, ref } from "vue"
-import { NITRO_LOADER_PREFIX, NUXT_PE_HEADER } from "../utils"
-import { createError, navigateTo, useFetch, useRoute, useRuntimeConfig } from "#imports"
-import type { FetchNuxtLoaderFunction, LoaderName } from "#build/types/form-action-loaders.d.ts"
+import { NUXT_PE_HEADER } from "../utils"
+import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
+import { createError, navigateTo, useRoute } from "#imports"
+import type { LoaderName, Loaders } from "#build/types/form-action-loaders.d.ts"
 
 /**
  * The result ref can be manipulated directly.
  */
-interface UpdateArguments { result: Ref }
-type UpdateFunction = (args: UpdateArguments) => void
-interface ActionFunctionArgs {
+type UpdateFunction<R extends LoaderName> = (args: UpdateArguments<R>) => void
+interface UpdateArguments<R extends LoaderName> { result: Ref<Loaders[R]> }
+
+type ActionFunction<R extends LoaderName> = (args: ActionFunctionArgs<R>) => void
+interface ActionFunctionArgs<R extends LoaderName> {
   /**
    * Cancel the default submission.
    */
@@ -19,7 +21,7 @@ interface ActionFunctionArgs {
    *
    * @param update Update callback to update the result.
    */
-  optimistic: (update: UpdateFunction) => void
+  optimistic: (update: UpdateFunction<R>) => void
   /**
    * An object version of the `FormData` from this form
    */
@@ -46,19 +48,14 @@ interface ActionFunctionArgs {
   loader: string
 }
 
-type ActionFunction = (args: ActionFunctionArgs) => void
 type ActionResponsePayload = Response & { _data: { data: Record<string, any>; action: Record<string, any> } }
-type Loader = | string | undefined | false
 
 interface ErrorRef {
   statusCode: number
   statusMessage: string
   data: any
-
 }
-const getActionName = (loader?: Loader) => typeof loader === "string" ? loader : useRoute().path.substring(1)
 
-const getLoaderUrl = (loader?: Loader) => loader === false ? "" : `/${NITRO_LOADER_PREFIX}/${getActionName(loader)}`
 /**
  * Use form action does the following :
  * - Get the data from the loader
@@ -68,33 +65,14 @@ const getLoaderUrl = (loader?: Loader) => loader === false ? "" : `/${NITRO_LOAD
  * - Refresh the loader
  * - Handle CSR navigation / error
  */
-export async function useFormAction<T extends LoaderName>({ run, loader }: {
-  run?: ActionFunction
-  loader?: T
-} = {}) {
+export async function useFormAction<R extends LoaderName>({ run, loader }: { run?: ActionFunction<R>; loader?: R } = {}) {
   const form = ref<HTMLFormElement>()
   const formResponse = ref<Record<string, any>>({})
   const actionResponse = ref<Record<string, any>>({})
   const cancelDefaultSubmit = ref(false)
   const error = ref<ErrorRef>()
 
-  const fetchNuxtLoader: FetchNuxtLoaderFunction<T> = async (url: T, watch?: any[]) => {
-    const { data: result, refresh, pending } = await useFetch(url, { watch, immediate: true })
-    return { result, refresh, pending }
-  }
-  /**
-   * We can avoid un-necessary fetch by throttling the loader
-   */
-  const useLoader = useThrottleFn(async (loader?: Loader, watch?: any[]) => {
-    const hasLoader = useRuntimeConfig().public.__serverLoaders__.find((l: string) => l === getActionName(loader)) as boolean
-    if (hasLoader) {
-      const url = getLoaderUrl(loader) as T // Technically we're passing the name, not the URL
-      return fetchNuxtLoader(url, watch)
-    }
-    return { result: ref(null), refresh: () => {}, pending: ref(false) }
-  }, 75)
-
-  const { result, refresh, pending } = await useLoader(loader, [form])
+  const { result, refresh, pending } = await useLoader(loader)
   const loading = computed(() => pending.value)
 
   const handleResponse = (response: ActionResponsePayload) => {
@@ -135,8 +113,7 @@ export async function useFormAction<T extends LoaderName>({ run, loader }: {
         headers: new Headers([[NUXT_PE_HEADER, "1"]]),
         body: new FormData(formToSubmit)
       })
-      // console.log('Refreshing data from form ...', formToSubmit?.action, form.value)
-      refresh()
+      refresh({ dedupe: true })
       handleResponse(response as ActionResponsePayload)
     }
 
@@ -145,7 +122,7 @@ export async function useFormAction<T extends LoaderName>({ run, loader }: {
         // console.log('Cancelling default submit ...')
         cancelDefaultSubmit.value = true
       }
-      const optimistic = (update: UpdateFunction) => {
+      const optimistic = (update: UpdateFunction<R>) => {
         update({ result })
       }
       run({

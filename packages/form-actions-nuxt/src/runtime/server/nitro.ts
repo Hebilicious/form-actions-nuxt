@@ -21,7 +21,6 @@ export function defineFormActions(actions: Actions) {
   return (event: H3Event) => {
     const action = Object.keys(getQuery(event))[0]
     const handler = action ? actions[action] : Object.values(actions)[0]
-    // console.log({ action, handler }, getQuery(event))
     return defineEventHandler(handler(event))
   }
 }

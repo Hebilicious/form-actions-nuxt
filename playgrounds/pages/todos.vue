@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const { data, enhance: createTodo } = await useFormAction({ loader: "todos" })
 const { enhance: deleteTodo } = await useFormAction({
+  loader: "todos", // This is needed for typesafety
   run: ({ optimistic, formData }) => {
     // You can call cancel() here if you want to manually submit the form.
     optimistic(({ result }) => {
-      result.value.todos = result.value.todos.filter((todo: any) => todo.id !== formData.id)
+      result.value.todos = result.value.todos.filter(todo => todo.id !== formData.id)
     })
   }
 })

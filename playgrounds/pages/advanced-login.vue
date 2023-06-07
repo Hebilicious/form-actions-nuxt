@@ -3,7 +3,7 @@ const { enhance, data } = await useFormAction()
 </script>
 
 <template>
-  <form v-enhance="enhance" method="POST" action="advanced-login">
+  <form v-enhance="enhance" method="POST" action="login">
     <p v-if="data.formResponse?.missing" class="error">
       The email field is required
     </p>

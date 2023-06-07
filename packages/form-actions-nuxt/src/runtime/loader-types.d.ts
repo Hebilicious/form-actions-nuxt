@@ -29,4 +29,4 @@ type FetchResult<T> = {
     pending: Ref<boolean>
 }
   
-export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, watch?: any[]) => Promise<FetchResult<Loaders[T]>>
+export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: string, watch?: any[]) => Promise<FetchResult<Loaders[T]>>
