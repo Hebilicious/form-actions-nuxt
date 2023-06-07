@@ -24,6 +24,193 @@ _🧪 This module is really unstable and is not recommended for production use. 
 - Vue macro to automatically bind v-enhance to single forms
 - useFormActions to accept multiple syntax to shorten the api
 
+## Docs 
+
+Define a simple form action in /server/actions/login.ts
+
+```ts
+import { actionResponse, defineFormActions, getFormData } from "#form-actions"
+
+const createSession = async (_: any) => "session"
+const getUser = (email: string, ..._: any) => ({ email, username: "" })
+
+export default defineFormActions({
+  signIn: async (event) => {
+    const formData = await getFormData(event)
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
+    if (!email) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
+    const user = getUser(email, password) // Load the user somehow
+    if (!user) {
+      return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
+    }
+    setCookie(event, "session", await createSession(user)) // Attach a session
+    return actionResponse(event, { user }, { redirect: "/todos" })
+  },
+  register: (event) => {
+    return actionResponse(event, { register: true })
+  }
+})
+```
+
+Create a login page in pages/login.vue
+
+```html
+<template>
+  <form method="POST">
+    <label>
+      Email
+      <input name="email" type="email" autocomplete="username">
+    </label>
+    <label>
+      Password
+      <input name="password" type="password" autocomplete="current-password">
+    </label>
+    <button>Log in</button>
+  </form>
+</template>
+```
+
+Use progressive enhancement to add CSR to the form.
+
+```html
+<script setup>
+const { enhance, data } = await useFormAction()
+</script>
+
+<template>
+  <form v-enhance="enhance" method="POST" action="login">
+    <p v-if="data.formResponse?.missing" class="error">
+      The email field is required
+    </p>
+    <p v-if="data.formResponse?.incorrect" class="error">
+      Invalid credentials!
+    </p>
+    <p v-if="data.formResponse?.register" class="success">
+      Succesfully Registered !
+    </p>
+    <label>
+      Email
+      <input name="email" type="email" :value="data.formResponse?.email ?? ''">
+    </label>
+    <label>
+      Password
+      <input name="password" type="password">
+    </label>
+    <button>Log in</button>
+    <button formaction="advanced-login?register">
+      Register
+    </button>
+  </form>
+</template>
+
+```
+
+Create server loaders :
+
+```ts
+import { defineServerLoader } from "#form-actions"
+
+export const loader = defineServerLoader(async () => {
+  return { books: ["title"], manybooks: [] }
+})
+```
+
+Use them with type-safety everywhere.
+
+```html
+<script setup lang="ts">
+const { result } = await useLoader("books")
+</script>
+
+<template>
+  <div>
+    <h1>Books</h1>
+    {{ result }}
+  </div>
+</template>
+```
+
+Define them alongside form actions :
+
+```ts
+import { createTodo, deleteTodo, getTodos } from "../db"
+import { actionResponse, defineFormActions, defineServerLoader, getFormData } from "#form-actions"
+
+export default defineFormActions({
+  add: async (event) => {
+    const description = (await getFormData(event)).get("description") as string
+    try {
+      const todo = await createTodo(description)
+      return actionResponse(event, { todo })
+    }
+    catch (e) {
+      const error = e as Error
+      return actionResponse(event, { description }, { error: { code: 422, message: error?.message } })
+    }
+  },
+  delete: async (event) => {
+    const todoId = (await getFormData(event)).get("id") as string
+    try {
+      const todo = await deleteTodo(todoId)
+      return actionResponse(event, { todo })
+    }
+    catch (e) {
+      const error = e as Error
+      return actionResponse(event, { todoId }, { error: { code: 422, message: error?.message } })
+    }
+  }
+})
+
+export const loader = defineServerLoader(async () => {
+  const todos = await getTodos()
+  return { todos, manytodos: [] }
+})
+```
+
+Use everything together
+
+```html
+<script setup lang="ts">
+const { data, enhance: createTodo } = await useFormAction({ loader: "todos" })
+const { enhance: deleteTodo } = await useFormAction({
+  loader: "todos", // This is needed for typesafety
+  run: ({ optimistic, formData }) => {
+    // You can call cancel() here if you want to manually submit the form.
+    optimistic(({ result }) => {
+      result.value.todos = result.value.todos.filter(todo => todo.id !== formData.id)
+    })
+  }
+})
+</script>
+
+<template>
+  <div>
+    <h1>Todos</h1>
+
+    <form v-enhance="createTodo" method="POST" action="todos">
+      <label>
+        add a todo:
+        <input
+          name="description"
+          autocomplete="off"
+        >
+      </label>
+    </form>
+
+    <ul v-if="data.loader?.todos" class="todos">
+      <li v-for="todo in data.loader.todos" :key="todo.id">
+        <form v-enhance="deleteTodo" method="POST" action="todos?delete">
+          <input type="hidden" name="id" :value="todo.id">
+          <span>{{ todo.description }} - {{ todo.id }}</span>
+          <button aria-label="Mark as complete" />
+        </form>
+      </li>
+    </ul>
+  </div>
+</template>
+```
+
 ## Nitro Modifications
 
 Add the possibility to register fallback handlers. This is useful to register a post handler alongside the nuxt renderer.
