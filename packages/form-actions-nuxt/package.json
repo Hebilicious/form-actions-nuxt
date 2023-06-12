@@ -8,7 +8,7 @@
     "url": "https://twitter.com/its_hebilicious"
   },
   "license": "MIT",
-  "repository": "Hebilicious/nuxt-module-template",
+  "repository": "Hebilicious/form-actions-nuxt",
   "exports": {
     ".": {
       "types": "./dist/module.d.ts",
