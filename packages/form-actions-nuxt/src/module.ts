@@ -125,16 +125,18 @@ export default defineNuxtModule({
         const actionRoute = getActionRoute(actionPath)
         const route = `/${actionRoute}`
         // Add the action handler ...
-        nitro.handlers.push({
-          route,
-          handler: actionPath,
-          formAction: true
-        })
-        logger.success(`[form-actions] added form action '${route}' : ${actionPath}`)
+        const file = await loadFile(actionPath)
+        if (file.exports.default) {
+          nitro.handlers.push({
+            route,
+            handler: actionPath,
+            formAction: true
+          })
+          logger.success(`[form-actions] {form action} added : '${route}'`)
+        }
 
         // 3. defineServerLoader
         // Find loaders with magicast and add a  GET handler for each one of them.
-        const file = await loadFile(actionPath)
         if (file.exports.loader) {
           const handler = await writeLoader(file, loaderDirectory, actionRoute)
           const route = getLoaderRoute(actionRoute)
@@ -144,16 +146,16 @@ export default defineNuxtModule({
             lazy: true,
             handler
           })
-          logger.success(`[form-actions] added loader '${actionRoute}' at '${route}' : ${handler}`)
+          logger.success(`[form-actions] {loader} added '${actionRoute}' at '${route}'`)
           serverLoaders().push(actionRoute)
 
           // Add loader to the types array
           loaderMap.set(actionRoute, { name: actionRoute, filePath: handler, url: route })
-          logger.success(`[form-actions] added loader type for '${actionRoute}'`)
+          logger.success(`[form-actions] {loader} added type for '${actionRoute}'`)
         }
       }
       addLoaderTypes()
-      logger.success(`[form-actions] loaders added to the config : ${serverLoaders().join(", ")}`)
+      logger.success(`[form-actions] {loader} added to the config : ${serverLoaders().join(", ")}`)
     })
 
     // Regenerate loaders when the action changes.
@@ -168,7 +170,7 @@ export default defineNuxtModule({
           const removeLoaderFromServerLoader = () => {
             if (serverLoaders().includes(actionRoute)) {
               nuxt.options.runtimeConfig.public.__serverLoaders__ = serverLoaders().filter((route: string) => route !== actionRoute)
-              logger.success(`[form-actions] removed loader : '${actionRoute}', [${serverLoaders().join(", ")}]`)
+              logger.success(`[form-actions] {loader} removed : '${actionRoute}', [${serverLoaders().join(", ")}]`)
             }
           }
           // Return early if the path doesn't exist.
@@ -179,7 +181,7 @@ export default defineNuxtModule({
             // If we don't have a handler for this path, we add it.
             // @todo add nitro scanners for this directory.
             if (!hasHandler) {
-              logger.info(`[form-actions] added new handler : '${actionRoute}'`)
+              logger.info(`[form-actions] {handler} added new : '${actionRoute}'`)
               addServerHandler({
                 method: "post",
                 route: `/${actionRoute}`,
@@ -191,12 +193,12 @@ export default defineNuxtModule({
             if (file.exports.loader) {
               const handler = await writeLoader(file, loaderDirectory, actionRoute)
               updateTemplates({ filter: t => t.filename === loaderTypesFilename })
-              logger.success(`[form-actions] loader updated : '${handler}'`)
+              logger.success(`[form-actions] {loader} updated : '${handler}'`)
               // Add to serverLoaders and types if newly created.
               if (!serverLoaders().includes(actionRoute)) {
                 loaderMap.set(actionRoute, { name: actionRoute, filePath: handler, url: getLoaderRoute(actionRoute) })
                 serverLoaders().push(actionRoute)
-                logger.success(`[form-actions] added new loader : '${actionRoute}' [${serverLoaders().join(", ")}]`)
+                logger.success(`[form-actions] {loader} added new : '${actionRoute}' [${serverLoaders().join(", ")}]`)
               }
             }
             else { // Remove from server loaders if no loader..

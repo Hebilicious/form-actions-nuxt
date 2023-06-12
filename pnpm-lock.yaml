@@ -102,6 +102,9 @@ importers:
       '@nuxt/module-builder':
         specifier: ^0.4.0
         version: 0.4.0(@nuxt/kit@3.5.2)(nuxi@3.5.3)
+      unbuild:
+        specifier: ^1.2.1
+        version: 1.2.1
 
   playgrounds:
     dependencies:
