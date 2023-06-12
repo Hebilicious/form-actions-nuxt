@@ -111,30 +111,25 @@ export default defineNuxtModule({
     }
 
     nuxt.hook("nitro:config", async (nitro) => {
-      // Form Actions
-      nitro.handlers = nitro.handlers || []
-
       nitro.runtimeConfig = nitro.runtimeConfig || {}
-      nitro.runtimeConfig.routesWithFallback = []
 
       // Loaders
       if (existsSync(loaderDirectory)) await fsp.rm(loaderDirectory, { recursive: true })
       await fsp.mkdir(loaderDirectory)
       await fsp.writeFile(`${loaderDirectory}/.gitignore`, "*")
 
+      // Form Actions
+      nitro.handlers = nitro.handlers || []
+
       for await (const actionPath of walkFiles(actionDirectoryPath)) {
         const actionRoute = getActionRoute(actionPath)
         const route = `/${actionRoute}`
         // Add the action handler ...
-        // @todo clean this up will real nitro config
-        // nitro.formActionsHandlers.push({ method: "post", route, lazy: true, handler: actionPath })
         nitro.handlers.push({
-          method: "post",
           route,
-          lazy: true,
-          handler: actionPath
+          handler: actionPath,
+          formAction: true
         })
-        nitro.runtimeConfig.routesWithFallback.push({ route, fallbackTo: "/**" })
         logger.success(`[form-actions] added form action '${route}' : ${actionPath}`)
 
         // 3. defineServerLoader
@@ -182,6 +177,7 @@ export default defineNuxtModule({
           if (file) {
             const hasHandler = nuxt.options.serverHandlers.some((handler: any) => handler.handler === path)
             // If we don't have a handler for this path, we add it.
+            // @todo add nitro scanners for this directory.
             if (!hasHandler) {
               logger.info(`[form-actions] added new handler : '${actionRoute}'`)
               addServerHandler({
