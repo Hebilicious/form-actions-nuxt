@@ -14,6 +14,9 @@ _🧪🧪🧪 This module API might change ! You MUST use a patched version of N
 
 ## 📦 Usage
 
+You can use this package in any Nuxt project.
+Create a new project from scratch with the official Nuxt CLI : `npx nuxi init`.
+
 ### Install
 
 ```bash
