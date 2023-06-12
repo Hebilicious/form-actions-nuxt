@@ -11,7 +11,6 @@
   "repository": "Hebilicious/form-actions-nuxt",
   "exports": {
     ".": {
-      "types": "./dist/module.d.ts",
       "require": {
         "types": "./dist/module.d.cts",
         "default": "./dist/module.cjs"
@@ -20,6 +19,7 @@
         "types": "./dist/module.d.mts",
         "default": "./dist/module.mjs"
       },
+      "types": "./dist/module.d.ts",
       "default": "./dist/module.mjs"
     },
     "./*": "./*"
