@@ -237,14 +237,14 @@ Linked [PR](https://github.com/unjs/nitro/pull/1286)
 Add the following to your package.json :
 
 NPM :
-```json
+```
   "overrides": {
     "nitropack": "npm:@hebilicious/nitro@latest"
   },
 ```
 
 PNPM
-```json
+```
 "pnpm":{
   "overrides":{
     "nitropack": "npm:@hebilicious/nitro@latest"
@@ -253,7 +253,7 @@ PNPM
 ```
 
 Yarn
-```json
+```
   "resolutions": {
     "nitropack": "npm:@hebilicious/nitro@latest"
   },

@@ -36,13 +36,10 @@
     "unbuild": "^1.2.1",
     "vitest": "^0.31.4"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx,vue,md}": [
-      "eslint --cache --fix"
-    ]
+  "pnpm": {
+    "overrides": {
+      "nitropack": "npm:@hebilicious/nitro@latest"
+    }
   },
   "overrides": {
     "nitropack": "npm:@hebilicious/nitro@latest"
@@ -50,9 +47,12 @@
   "resolutions": {
     "nitropack": "npm:@hebilicious/nitro@latest"
   },
-  "pnpm":{
-    "overrides":{
-      "nitropack": "npm:@hebilicious/nitro@latest"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,md}": [
+      "eslint --cache --fix"
+    ]
   }
 }
