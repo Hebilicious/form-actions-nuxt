@@ -5,44 +5,80 @@
 
 🚀 Welcome to __Nuxt Form Actions__!  
 
-This is a standalone Nuxt Module that implements https://github.com/nuxt/nuxt/pull/20852
+This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
-
 
 ## ⚠️ Disclaimer
 
-_🧪 This module is really unstable and is not recommended for production use. The API might change_
-_🧪 You MUST use a patched version of Nitro that support form actions, see below for instructions._
-
-
-# TODO
-
-- Docs
-- Tests
-
-## Nice to Have
-
-- Virtual file Loaders, moving loaders in .nuxt ?
-- Vue macro to automatically bind v-enhance to single forms
-- useFormActions to accept multiple syntax to shorten the api
-
+_🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
 
 ## 📦 Usage
 
-Install
+### Install
 
 ```bash
 npm i @hebilicious/form-actions-nuxt
 ```
 
-Add to your modules
+### Nuxt configuration
+
 ```ts
 export default defineNuxtConfig({
   modules: ["@hebilicious/form-actions-nuxt"]
 })
 ```
 
-## Docs 
+### Nitro Modifications
+
+Use this [Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) - [(linked PR)](https://github.com/unjs/nitro/pull/1286).
+
+The easiest way is to leverage your package manager features; add the following to your package.json :
+
+For NPM :
+
+```json
+{
+  "dependencies": {
+    "nuxt": "latest",
+    "@hebilicious/form-actions-nuxt": "latest"
+  },
+  "overrides": {
+    "nitropack": "npm:@hebilicious/nitro@latest"
+  }
+}
+```
+
+For PNPM :
+
+```json
+{
+  "dependencies": {
+    "nuxt": "latest",
+    "@hebilicious/form-actions-nuxt": "latest"
+  },
+  "pnpm": {
+    "overrides": {
+      "nitropack": "npm:@hebilicious/nitro@latest"
+    }
+  }
+}
+```
+
+And for Yarn :
+
+```json
+{
+  "dependencies": {
+    "nuxt": "latest",
+    "@hebilicious/form-actions-nuxt": "latest"
+  },
+  "resolutions": {
+    "nitropack": "npm:@hebilicious/nitro@latest"
+  }
+}
+```
+
+## Docs
 
 Define a simple form action in /server/actions/login.ts
 
@@ -229,35 +265,17 @@ const { enhance: deleteTodo } = await useFormAction({
 </template>
 ```
 
-## Nitro Modifications
+## TODO
 
-Use this [Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro)
-Linked [PR](https://github.com/unjs/nitro/pull/1286)
+- Docs
+- Tests
 
-Add the following to your package.json :
+## Maybe do
 
-NPM :
-```
-  "overrides": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
-  },
-```
+- Virtual file Loaders, moving loaders in .nuxt ?
+- Vue macro to automatically bind v-enhance to single forms
+- useFormActions to accept multiple syntax to shorten the api
 
-PNPM
-```
-"pnpm":{
-  "overrides":{
-    "nitropack": "npm:@hebilicious/nitro@latest"
-  }
-}
-```
-
-Yarn
-```
-  "resolutions": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
-  },
-```
 
 ## 📦 Contributing
 
