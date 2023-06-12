@@ -6,10 +6,8 @@
     "build": "nuxi build",
     "start": "nuxi preview"
   },
-  "dependencies": {
-    "nuxt": "latest"
-  },
   "devDependencies": {
-    "@nuxt/devtools": "^0.4.6"
+    "@nuxt/devtools": "^0.4.6",
+    "nuxt": "latest"
   }
 }
