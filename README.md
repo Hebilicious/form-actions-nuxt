@@ -2,7 +2,6 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![Github Actions][github-actions-src]][github-actions-href]
 
 [![CI](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml/badge.svg)](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,8 +10,6 @@
 [npm-version-href]: https://npmjs.com/package/@hebilicious/form-actions-nuxt
 [npm-downloads-src]: https://img.shields.io/npm/dm/@hebilicious/form-actions-nuxt?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/@hebilicious/form-actions-nuxt
-[github-actions-src]: https://img.shields.io/github/workflow/status/nuxt-modules/fontaine/ci/main?style=flat-square
-[github-actions-href]: https://github.com/nuxt-modules/fontaine/actions?query=workflow%3Aci
 
 🚀 Welcome to __Nuxt Form Actions__!  
 
