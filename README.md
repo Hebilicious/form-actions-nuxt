@@ -33,9 +33,11 @@ export default defineNuxtConfig({
 
 ### Nitro Modifications
 
-Use this [Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) - [(linked PR)](https://github.com/unjs/nitro/pull/1286).
+Nitro is the server engine that power Nuxt. As this module is really new, the necessary changes to use it are not yet merged in Nitro.
+You must use this [Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) in the meantime. [(linked PR)](https://github.com/unjs/nitro/pull/1286).
 
-The easiest way is to leverage your package manager features; add the following to your package.json :
+The easiest way to use this forked version in a project is to leverage your package manager features. 
+Add the following to your package.json :
 
 For NPM :
 
@@ -83,34 +85,46 @@ And for Yarn :
 
 ## Docs
 
-Define a simple form action in /server/actions/login.ts
+### Form actions 
+
+Define a form action. They must be in the `/server/actions` directory.
+
+`/server/actions/login.ts`
 
 ```ts
+import { createSession, getUser } from "../db"
 import { actionResponse, defineFormActions, getFormData } from "#form-actions"
-
-const createSession = async (_: any) => "session"
-const getUser = (email: string, ..._: any) => ({ email, username: "" })
 
 export default defineFormActions({
   signIn: async (event) => {
+    // use getFormData to obtain a FormData object
     const formData = await getFormData(event)
     const email = formData.get("email") as string
     const password = formData.get("password") as string
+
+    // Handle your errors
     if (!email) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
     if (!user) {
       return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
     }
-    setCookie(event, "session", await createSession(user)) // Attach a session
+
+    // Attach a session cookie to the response
+    setCookie(event, "session", await createSession(user))
+
     return actionResponse(event, { user }, { redirect: "/todos" })
   },
+  // Register another action
   register: (event) => {
+    // ...
     return actionResponse(event, { register: true })
   }
 })
 ```
 
-Create a login page in pages/login.vue
+Create a login page. The name must be the same as your action.
+
+`pages/login.vue`
 
 ```html
 <template>
@@ -124,11 +138,16 @@ Create a login page in pages/login.vue
       <input name="password" type="password" autocomplete="current-password">
     </label>
     <button>Log in</button>
+    <button formaction="login?register">
+      Register
+    </button>
   </form>
 </template>
 ```
 
-Use progressive enhancement to add CSR to the form.
+Use progressive enhancement to add client side rendering to the form.
+
+`pages/login.vue`
 
 ```html
 <script setup>
@@ -137,6 +156,7 @@ const { enhance, data } = await useFormAction()
 
 <template>
   <form v-enhance="enhance" method="POST" action="login">
+
     <p v-if="data.formResponse?.missing" class="error">
       The email field is required
     </p>
@@ -146,34 +166,49 @@ const { enhance, data } = await useFormAction()
     <p v-if="data.formResponse?.register" class="success">
       Succesfully Registered !
     </p>
+
     <label>
       Email
       <input name="email" type="email" :value="data.formResponse?.email ?? ''">
     </label>
+
     <label>
       Password
       <input name="password" type="password">
     </label>
+
     <button>Log in</button>
-    <button formaction="advanced-login?register">
+    
+    <button formaction="login?register">
       Register
     </button>
+
   </form>
 </template>
 
 ```
 
-Create server loaders :
+### Server Loaders
+
+Server loaders allows you easily load data from the server in your components.
+Your file _must_ export a function named `loader`.
+They must also be in the `/server/actions` directory.
+
+`/server/actions/books.ts`
 
 ```ts
 import { defineServerLoader } from "#form-actions"
 
 export const loader = defineServerLoader(async () => {
+  // This is an event handler, you can use any logic that you
+  // want here, including database calls, etc.
   return { books: ["title"], manybooks: [] }
 })
 ```
 
 Use them with type-safety everywhere.
+
+`components/Books.ts`
 
 ```html
 <script setup lang="ts">
@@ -188,7 +223,11 @@ const { result } = await useLoader("books")
 </template>
 ```
 
-Define them alongside form actions :
+### Form Actions alongside Server Loaders
+
+Define form actions and server loaders in the same file.
+
+`actions/todos.ts`
 
 ```ts
 import { createTodo, deleteTodo, getTodos } from "../db"
@@ -225,16 +264,19 @@ export const loader = defineServerLoader(async () => {
 })
 ```
 
-Use everything together
+Use them together in your pages :
+
+`pages/todos.vue`
 
 ```html
 <script setup lang="ts">
 const { data, enhance: createTodo } = await useFormAction({ loader: "todos" })
 const { enhance: deleteTodo } = await useFormAction({
-  loader: "todos", // This is needed for typesafety
+  loader: "todos", // This is needed for Typescript to infer the loader return type.
   run: ({ optimistic, formData }) => {
     // You can call cancel() here if you want to manually submit the form.
     optimistic(({ result }) => {
+      // This will update the results before any data-fetching.
       result.value.todos = result.value.todos.filter(todo => todo.id !== formData.id)
     })
   }
@@ -266,6 +308,47 @@ const { enhance: deleteTodo } = await useFormAction({
     </ul>
   </div>
 </template>
+```
+
+Here's the full interface for the `run` function :
+
+```ts
+interface ActionFunctionArgs<R extends LoaderName> {
+  /**
+   * Cancel the default submission.
+   */
+  cancel: () => void
+  /**
+   * Handle optimistic updates
+   *
+   * @param update Update callback to update the result.
+   */
+  optimistic: (update: UpdateFunction<R>) => void
+  /**
+   * An object version of the `FormData` from this form
+   */
+  formData: Record<string, any>
+  /**
+   * The original submit event.
+   */
+  event: SubmitEvent
+  /**
+   * The name of the action.
+   */
+  action: string
+  /**
+   * The form element.
+   */
+  form: HTMLFormElement
+  /**
+   * The Element that submitted.
+   */
+  submitter: HTMLElement
+  /**
+   * The loader URL.
+   */
+  loader: string
+}
 ```
 
 ## TODO
