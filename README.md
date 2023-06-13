@@ -12,6 +12,8 @@
 
 __🚀 Welcome to Nuxt Form Actions !__
 
+[![Nuxt banner](./.github/assets/banner.png)]
+
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
 _🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
