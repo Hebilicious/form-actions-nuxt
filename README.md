@@ -16,10 +16,6 @@
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Hebilicious/form-actions-nuxt&type=Date)](https://star-history.com/#Hebilicious/form-actions-nuxt&Date)
-
 ## ⚠️ Disclaimer
 
 _🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
@@ -375,6 +371,10 @@ interface ActionFunctionArgs<R extends LoaderName> {
   loader: string
 }
 ```
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Hebilicious/form-actions-nuxt&type=Date)](https://star-history.com/#Hebilicious/form-actions-nuxt&Date)
 
 ## TODO
 
