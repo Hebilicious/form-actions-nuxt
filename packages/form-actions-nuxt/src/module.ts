@@ -179,7 +179,7 @@ export default defineNuxtModule({
           if (file) {
             const hasHandler = nuxt.options.serverHandlers.some((handler: any) => handler.handler === path)
             // If we don't have a handler for this path, we add it.
-            // @todo add nitro scanners for this directory.
+            // @todo add nitro scanners for the action directory.
             if (!hasHandler) {
               logger.info(`[form-actions] {handler} added new : '${actionRoute}'`)
               addServerHandler({
@@ -192,7 +192,6 @@ export default defineNuxtModule({
             // Add or refresh the loader.
             if (file.exports.loader) {
               const handler = await writeLoader(file, loaderDirectory, actionRoute)
-              updateTemplates({ filter: t => t.filename === loaderTypesFilename })
               logger.success(`[form-actions] {loader} updated : '${handler}'`)
               // Add to serverLoaders and types if newly created.
               if (!serverLoaders().includes(actionRoute)) {
@@ -200,6 +199,7 @@ export default defineNuxtModule({
                 serverLoaders().push(actionRoute)
                 logger.success(`[form-actions] {loader} added new : '${actionRoute}' [${serverLoaders().join(", ")}]`)
               }
+              updateTemplates({ filter: t => t.filename === loaderTypesFilename })
             }
             else { // Remove from server loaders if no loader..
               removeLoaderFromServerLoader()
