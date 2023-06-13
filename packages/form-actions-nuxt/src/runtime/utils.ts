@@ -5,6 +5,9 @@ export const NITRO_LOADER_PREFIX = "_nitro/loader" as const
 
 export const loaderTypesBefore = /* typescript */`
 import type { EventHandler } from "h3"
+import type { Ref, WatchSource } from "vue"
+
+export type MultiWatchSources = (WatchSource<unknown> | object)[]
 
 type ExtractLoader<Type> = Type extends EventHandler<infer X> ? X : never;` as const
 
@@ -18,6 +21,7 @@ type FetchResult<T> = {
   result: Ref<T>
   refresh: (opts?: AsyncDataExecuteOptions) => Promise<void>
   pending: Ref<boolean>
+  error: Ref<FetchError | null>
 }
     
-export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, watch?: any[]) => Promise<FetchResult<Loaders[T]>>` as const
+export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, watch?: MultiWatchSources) => Promise<FetchResult<Loaders[T]>>` as const

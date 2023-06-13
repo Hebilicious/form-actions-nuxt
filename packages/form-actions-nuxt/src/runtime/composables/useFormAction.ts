@@ -2,7 +2,7 @@ import { type Ref, computed, reactive, ref } from "vue"
 import { NUXT_PE_HEADER } from "../utils"
 import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
 import { createError, navigateTo, useRoute } from "#imports"
-import type { LoaderName, Loaders } from "#build/types/form-action-loaders.d.ts"
+import type { LoaderName, Loaders, MultiWatchSources } from "#build/types/loader-types.d.ts"
 
 /**
  * The result ref can be manipulated directly.
@@ -65,15 +65,14 @@ interface ErrorRef {
  * - Refresh the loader
  * - Handle CSR navigation / error
  */
-export async function useFormAction<R extends LoaderName>({ run, loader }: { run?: ActionFunction<R>; loader?: R } = {}) {
+export async function useFormAction<R extends LoaderName>({ run, loader, watch }: { run?: ActionFunction<R>; loader?: R; watch?: MultiWatchSources } = {}) {
   const form = ref<HTMLFormElement>()
   const formResponse = ref<Record<string, any>>({})
   const actionResponse = ref<Record<string, any>>({})
   const cancelDefaultSubmit = ref(false)
   const error = ref<ErrorRef>()
 
-  const { result, refresh, pending } = await useLoader(loader)
-  const loading = computed(() => pending.value)
+  const { result, refresh, pending, error: loaderError } = await useLoader(loader, watch)
 
   const handleResponse = (response: ActionResponsePayload) => {
     // console.log('Handling response ...')
@@ -165,5 +164,8 @@ export async function useFormAction<R extends LoaderName>({ run, loader }: { run
   }
 
   const data = computed(() => reactive({ loader: result, formResponse, actionResponse }))
-  return { data, actionResponse, loading, error, enhance }
+  const combinedErrors = computed(() => loaderError.value ?? error.value)
+  const loading = computed(() => pending.value)
+
+  return { data, loading, error: combinedErrors, enhance }
 }

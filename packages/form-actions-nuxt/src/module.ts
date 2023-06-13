@@ -53,7 +53,7 @@ export default defineNuxtModule({
 
     // 0. Local variables and setup
     const loaderDirname = ".loader" as const
-    const loaderTypesFilename = "types/form-action-loaders.d.ts" as const
+    const loaderTypesFilename = "types/loader-types.d.ts" as const
     const actionDirectoryPath = resolve(nuxt.options.srcDir, "server/actions")
     if (!existsSync(actionDirectoryPath)) await fsp.mkdir(actionDirectoryPath)
     // Loaders

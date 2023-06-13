@@ -2,7 +2,7 @@ import { ref } from "vue"
 import { useThrottleFn } from "@vueuse/core"
 import { NITRO_LOADER_PREFIX } from "../utils"
 import { useFetch, useRoute, useRuntimeConfig } from "#imports"
-import type { FetchNuxtLoaderFunction, LoaderName } from "#build/types/form-action-loaders.d.ts"
+import type { FetchNuxtLoaderFunction, LoaderName, MultiWatchSources } from "#build/types/loader-types.d.ts"
 
 export type Loader = | LoaderName | undefined | false
 
@@ -15,21 +15,21 @@ export const getLoaderUrl = (loader?: Loader) => loader === false ? "" : `/${NIT
  * @param loader Loader
  * @returns
  */
-export function useLoader<R extends LoaderName>(loader?: R | undefined | false) {
-  const fetchNuxtLoader: FetchNuxtLoaderFunction<R> = async (url: string, watch?: any[]) => {
-    const { data: result, refresh, pending } = await useFetch(url, { watch, immediate: true })
-    return { result, refresh, pending } // Because we're forcing the return, we get a static type here.
+export function useLoader<R extends LoaderName>(loader?: R | undefined | false, watch?: MultiWatchSources) {
+  const fetchNuxtLoader: FetchNuxtLoaderFunction<R> = async (url: string, watch?: MultiWatchSources) => {
+    const { data: result, refresh, pending, error } = await useFetch(url, { watch, immediate: true })
+    return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
-  const load = useThrottleFn(async (loader?: Loader, watch?: any[]) => {
+  const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
     const hasLoader = useRuntimeConfig().public.__serverLoaders__.find((l: string) => l === getActionName(loader)) as boolean
 
     const url = getLoaderUrl(loader)
     if (hasLoader && url.length > 0) {
       return fetchNuxtLoader(url, watch)
     }
-    return { result: ref(null), refresh: () => {}, pending: ref(false) }
+    return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
   }, 75)
 
-  return load(loader)
+  return load(loader, watch)
 }

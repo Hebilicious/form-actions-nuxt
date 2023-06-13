@@ -1,10 +1,13 @@
 /**
  * This file is a reference for what the generated types should look like.
- * This file won't be included in the module, but `useFormAction` references it
- * through tsconfig in development only.
+ * This file won't be included in the module, but it is useful while developping
+ * The form-actions module.
  */
 
-import { type Ref } from "vue";
+import type { Ref, WatchSource } from "vue";
+import type { FetchError } from 'ofetch'
+
+export type MultiWatchSources = (WatchSource<unknown> | object)[]
 
 type LoaderUrl = "/__loader/books" | "/__loader/stuff" | "/__loader/todos"
 
@@ -27,6 +30,7 @@ type FetchResult<T> = {
     result: Ref<T | null>
     refresh: (opts?: AsyncDataExecuteOptions) => Promise<void>
     pending: Ref<boolean>
+    error: Ref<FetchError | null>
 }
   
-export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: string, watch?: any[]) => Promise<FetchResult<Loaders[T]>>
+export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: string, watch?: MultiWatchSources) => Promise<FetchResult<Loaders[T]>>
