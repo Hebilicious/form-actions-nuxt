@@ -6,15 +6,19 @@
 [![CI](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml/badge.svg)](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[npm-version-src]: https://img.shields.io/npm/v/@hebilicious/form-actions-nuxt?style=flat-square
+[npm-version-src]: https://img.shields.io/npm/v/@hebilicious/form-actions-nuxt
 [npm-version-href]: https://npmjs.com/package/@hebilicious/form-actions-nuxt
-[npm-downloads-src]: https://img.shields.io/npm/dm/@hebilicious/form-actions-nuxt?style=flat-square
+[npm-downloads-src]: https://img.shields.io/npm/dm/@hebilicious/form-actions-nuxt
 [npm-downloads-href]: https://npmjs.com/package/@hebilicious/form-actions-nuxt
 
 🚀 Welcome to __Nuxt Form Actions__!  
 
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Hebilicious/form-actions-nuxt&type=Date)](https://star-history.com/#Hebilicious/form-actions-nuxt&Date)
 
 ## ⚠️ Disclaimer
 
@@ -100,6 +104,18 @@ Define a form action. They must be in the `/server/actions` directory.
 `/server/actions/login.ts`
 
 ```ts
+import { defineFormActions } from "#form-actions"
+
+export default defineFormActions({
+  default: () => {
+    console.log("Login called !")
+  }
+})
+```
+
+Add logic for logging-in and registering users.
+
+```ts
 import { createSession, getUser } from "../db"
 import { actionResponse, defineFormActions, getFormData } from "#form-actions"
 
@@ -120,6 +136,7 @@ export default defineFormActions({
     // Attach a session cookie to the response
     setCookie(event, "session", await createSession(user))
 
+    // Respond with a redirect.
     return actionResponse(event, { user }, { redirect: "/todos" })
   },
   // Register another action
