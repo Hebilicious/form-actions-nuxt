@@ -8,9 +8,20 @@ describe("basic test", async () => {
   })
 
   it("displays data", async () => {
-    // Get response to a server-rendered page with `$fetch`.
     const html = await $fetch("/")
-    expect(html).toContain("Hello")
-    expect(html).toContain("World")
+    expect(html).toContain("Hello World !")
+  })
+
+  it("can use a loder", async () => {
+    const html = await $fetch("/")
+    expect(html).toContain("naruto")
+    expect(html).toContain("one-piece")
+  })
+
+  it("can use an action", async () => {
+    const body = new FormData()
+    body.append("book", "dragonball-z")
+    const html = await $fetch("/books", { method: "POST", body })
+    expect(html).toMatchObject({ action: {}, data: { book: "dragonball-z" } })
   })
 })
