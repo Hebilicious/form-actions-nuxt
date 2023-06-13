@@ -9,8 +9,8 @@ export default defineFormActions({
       return actionResponse(event, { todo })
     }
     catch (e) {
-      const error = e as Error
-      return actionResponse(event, { description }, { error: { code: 422, message: error?.message } })
+      if (e instanceof Error) return actionResponse(event, { description }, { error: { code: 422, message: e?.message } })
+      throw e
     }
   },
   delete: async (event) => {
@@ -20,8 +20,8 @@ export default defineFormActions({
       return actionResponse(event, { todo })
     }
     catch (e) {
-      const error = e as Error
-      return actionResponse(event, { todoId }, { error: { code: 422, message: error?.message } })
+      if (e instanceof Error) return actionResponse(event, { todoId }, { error: { code: 422, message: e?.message } })
+      throw e
     }
   }
 })

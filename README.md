@@ -2,7 +2,6 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-
 [![CI](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml/badge.svg)](https://github.com/Hebilicious/form-actions-nuxt/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -11,29 +10,38 @@
 [npm-downloads-src]: https://img.shields.io/npm/dm/@hebilicious/form-actions-nuxt
 [npm-downloads-href]: https://npmjs.com/package/@hebilicious/form-actions-nuxt
 
-🚀 Welcome to __Nuxt Form Actions__!  
+__🚀 Welcome to Nuxt Form Actions !__
 
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
-
-## ⚠️ Disclaimer
-
 _🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
 
 ## 📦 Usage
 
 You can use this package in any Nuxt project.
-Create a new project from scratch with the official Nuxt CLI : `npx nuxi init`.
+Create a new project from scratch with the official Nuxt CLI
+
+```bash
+npx nuxi init
+```
 
 ### Install
 
+Install the form-actions module from NPM.
+
 ```bash
+# With NPM
 npm i @hebilicious/form-actions-nuxt
+# With PNPM
+pnpm i @hebilicious/form-actions-nuxt
+# With Yarn
+yarn add @hebilicious/form-actions-nuxt
 ```
 
 ### Nuxt configuration
 
 ```ts
+// nuxt.config.ts
 export default defineNuxtConfig({
   modules: ["@hebilicious/form-actions-nuxt"]
 })
@@ -42,10 +50,9 @@ export default defineNuxtConfig({
 ### Nitro Modifications
 
 Nitro is the server engine that power Nuxt. As this module is really new, the necessary changes to use it are not yet merged in Nitro.
-You must use this [Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) in the meantime. [(linked PR)](https://github.com/unjs/nitro/pull/1286).
-
-The easiest way to use this forked version in a project is to leverage your package manager features. 
-Add the following to your package.json :
+You must use [this Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) in the meantime [(linked PR)](https://github.com/unjs/nitro/pull/1286).
+The easiest way to use this forked version in a project is to leverage your package manager features.
+Add the following to your `package.json` :
 
 For NPM :
 
@@ -91,11 +98,13 @@ And for Yarn :
 }
 ```
 
+_Note that for monorepos this must be done at the root of your repository._
+
 ## Docs
 
-### Form actions 
+### Form actions
 
-Define a form action. They must be in the `/server/actions` directory.
+Define a form action. They __must__ be in the `/server/actions` directory.
 
 `/server/actions/login.ts`
 
@@ -123,7 +132,7 @@ export default defineFormActions({
     const password = formData.get("password") as string
 
     // Handle your errors
-    if (!email) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
+    if (!email) return actionResponse(event, { missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
     if (!user) {
       return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
@@ -212,8 +221,9 @@ const { enhance, data } = await useFormAction()
 ### Server Loaders
 
 Server loaders allows you easily load data from the server in your components.
-Your file _must_ export a function named `loader`.
-They must also be in the `/server/actions` directory.
+Your file _must_ export an event handler named `loader`.
+Use the `defineServerLoader` helper for your convenience.
+They _must_ also be in the `/server/actions` directory.
 
 `/server/actions/books.ts`
 
@@ -221,7 +231,7 @@ They must also be in the `/server/actions` directory.
 import { defineServerLoader } from "#form-actions"
 
 export const loader = defineServerLoader(async () => {
-  // This is an event handler, you can use any logic that you
+  // This is an h3 event handler, you can use any logic that you
   // want here, including database calls, etc.
   return { books: ["title"], manybooks: [] }
 })
@@ -239,7 +249,7 @@ const { result } = await useLoader("books")
 <template>
   <div>
     <h1>Books</h1>
-    {{ result }}
+    {{ result }} <!-- result will be typed like this : { books: string[]; manybooks: never[];} | null -->
   </div>
 </template>
 ```
@@ -262,8 +272,8 @@ export default defineFormActions({
       return actionResponse(event, { todo })
     }
     catch (e) {
-      const error = e as Error
-      return actionResponse(event, { description }, { error: { code: 422, message: error?.message } })
+      if (e instanceof Error) return actionResponse(event, { todoId }, { error: { code: 422, message: e?.message } })
+      throw e
     }
   },
   delete: async (event) => {
@@ -273,8 +283,8 @@ export default defineFormActions({
       return actionResponse(event, { todo })
     }
     catch (e) {
-      const error = e as Error
-      return actionResponse(event, { todoId }, { error: { code: 422, message: error?.message } })
+      if (e instanceof Error) return actionResponse(event, { todoId }, { error: { code: 422, message: e?.message } })
+      throw e
     }
   }
 })
@@ -291,13 +301,14 @@ Use them together in your pages :
 
 ```html
 <script setup lang="ts">
+// Rename the enhance props to handle multiple forms on the same page.
 const { data, enhance: createTodo } = await useFormAction({ loader: "todos" })
 const { enhance: deleteTodo } = await useFormAction({
   loader: "todos", // This is needed for Typescript to infer the loader return type.
   run: ({ optimistic, formData }) => {
     // You can call cancel() here if you want to manually submit the form.
     optimistic(({ result }) => {
-      // This will update the results before any data-fetching.
+      // This will update the UI before any data-fetching.
       result.value.todos = result.value.todos.filter(todo => todo.id !== formData.id)
     })
   }
@@ -311,10 +322,7 @@ const { enhance: deleteTodo } = await useFormAction({
     <form v-enhance="createTodo" method="POST" action="todos">
       <label>
         add a todo:
-        <input
-          name="description"
-          autocomplete="off"
-        >
+        <input name="description" autocomplete="off">
       </label>
     </form>
 
@@ -331,7 +339,7 @@ const { enhance: deleteTodo } = await useFormAction({
 </template>
 ```
 
-Here's the full interface for the `run` function :
+Here's the full Typescript interface for the `run` function :
 
 ```ts
 interface ActionFunctionArgs<R extends LoaderName> {
