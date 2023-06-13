@@ -12,7 +12,7 @@
 
 __🚀 Welcome to Nuxt Form Actions !__
 
-[![Nuxt banner](./.github/assets/banner.png)]
+[![Nuxt banner](./.github/assets/banner.svg)]
 
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
