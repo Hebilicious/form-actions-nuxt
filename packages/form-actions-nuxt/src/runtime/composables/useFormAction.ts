@@ -46,6 +46,10 @@ interface ActionFunctionArgs<R extends LoaderName> {
    * The loader URL.
    */
   loader: string
+  /**
+   * The default submit function.
+   */
+  submitForm: () => Promise<void>
 }
 
 type ActionResponsePayload = Response & { _data: { data: Record<string, any>; action: Record<string, any> } }
@@ -97,7 +101,7 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
     }
   }
 
-  const submitForm = async (event: SubmitEvent) => {
+  const handleFormSubmit = async (event: SubmitEvent) => {
     const formToSubmit = event.target as HTMLFormElement
     const submitter = event.submitter as HTMLElement
     const formData = Object.fromEntries(new FormData(formToSubmit))
@@ -106,7 +110,7 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
     const getActionRoute = () => {
       return event.submitter?.getAttribute("formaction") ?? formToSubmit?.action ?? useRoute().path
     }
-    const defaultSubmit = async () => {
+    const submitForm = async () => {
       const response = await $fetch.raw(getActionRoute(), {
         method: "POST",
         headers: new Headers([[NUXT_PE_HEADER, "1"]]),
@@ -132,12 +136,13 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
         action: getActionName(loader),
         form: formToSubmit,
         submitter,
-        loader: getLoaderUrl(loader)
+        loader: getLoaderUrl(loader),
+        submitForm
       })
     }
     if (!cancelDefaultSubmit.value) {
       // console.log('Submitting default form ...')
-      await defaultSubmit()
+      await submitForm()
       cancelDefaultSubmit.value = false
     }
   }
@@ -151,7 +156,7 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
         if (eventListener) form.value?.removeEventListener("submit", eventListener)
         eventListener = (event) => {
           event.preventDefault()
-          submitForm(event)
+          handleFormSubmit(event)
         }
         // console.log('Adding event listener ...', form.value)
         form.value?.addEventListener("submit", eventListener)
