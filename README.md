@@ -379,6 +379,10 @@ interface ActionFunctionArgs<R extends LoaderName> {
    * The loader URL.
    */
   loader: string
+  /**
+   * The default submit function.
+   */
+  submitForm: () => Promise<void>
 }
 ```
 
