@@ -1,6 +1,6 @@
 import { existsSync, promises as fsp } from "node:fs"
 import { resolve as pathResolve } from "node:path"
-import { addImports, addPlugin, addServerHandler, addTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger } from "@nuxt/kit"
+import { addImports, addPlugin, addServerHandler, addTemplate, addTypeTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger } from "@nuxt/kit"
 import { generateCode, loadFile } from "magicast"
 import { transform } from "esbuild"
 import { NITRO_LOADER_PREFIX, loaderTypesAfter, loaderTypesBefore } from "./runtime/utils"
@@ -69,6 +69,11 @@ export default defineNuxtModule({
     })
 
     // Add types
+    addTypeTemplate({
+      filename: `types/nuxt-${name}.d.ts`,
+      src: resolve("./runtime/nuxt-types.d.ts")
+    })
+
     const filename = `types/${name}.d.ts`
     addTemplate({
       filename,
