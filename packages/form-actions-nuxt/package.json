@@ -21,8 +21,7 @@
       },
       "types": "./dist/module.d.ts",
       "default": "./dist/module.mjs"
-    },
-    "./*": "./*"
+    }
   },
   "main": "./dist/module.cjs",
   "module": "./dist/module.mjs",
@@ -39,17 +38,18 @@
     "postbuild": "pnpm dts && pnpm readme",
     "build:module": "nuxt-build-module",
     "build": "rimraf dist && pnpm build:module && pnpm postbuild",
+    "postinstall": "nuxi prepare",
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "h3": "^1.6.6",
+    "h3": "^1.7.0",
     "nuxt": "latest",
     "vite": "*"
   },
   "dependencies": {
-    "@nuxt/kit": "3.5.3",
+    "@nuxt/kit": "3.6.1",
     "defu": "^6.1.2",
-    "esbuild": "^0.18.4",
+    "esbuild": "^0.18.10",
     "magicast": "^0.2.9"
   },
   "devDependencies": {

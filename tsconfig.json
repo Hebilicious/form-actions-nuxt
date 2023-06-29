@@ -1,20 +1,11 @@
 {
+  "extends": "./packages/form-actions-nuxt/.nuxt/tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
     "baseUrl": ".",
-    "strict": true,
-    "module": "esnext",
-    "lib": ["esnext", "dom", "DOM.Iterable"],
-    "target": "esnext",
-    "moduleResolution": "node",
-    "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
     "paths": {
-      "#imports": ["packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
-      "#app": ["packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
-      "#build/types/loader-types.d.ts": ["packages/form-actions-nuxt/src/runtime/virtual:loader-types.d.ts"]
+      "#imports": ["./packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
+      "#app": ["./packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
+      "#build/types/loader-types.d.ts": ["./packages/form-actions-nuxt/src/runtime/virtual:loader-types.d.ts"]
     }
   },
   "exclude": [
