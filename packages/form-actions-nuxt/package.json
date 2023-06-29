@@ -21,8 +21,7 @@
       },
       "types": "./dist/module.d.ts",
       "default": "./dist/module.mjs"
-    },
-    "./*": "./*"
+    }
   },
   "main": "./dist/module.cjs",
   "module": "./dist/module.mjs",
