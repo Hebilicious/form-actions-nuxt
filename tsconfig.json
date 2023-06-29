@@ -1,10 +1,11 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
+  "extends": "./packages/form-actions-nuxt/.nuxt/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "#imports": ["packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
-      "#app": ["packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
-      "#build/types/loader-types.d.ts": ["packages/form-actions-nuxt/src/runtime/virtual:loader-types.d.ts"]
+      "#imports": ["./packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
+      "#app": ["./packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
+      "#build/types/loader-types.d.ts": ["./packages/form-actions-nuxt/src/runtime/virtual:loader-types.d.ts"]
     }
   },
   "exclude": [
