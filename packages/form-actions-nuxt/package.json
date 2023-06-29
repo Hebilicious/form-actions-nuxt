@@ -38,7 +38,6 @@
     "postbuild": "pnpm dts && pnpm readme",
     "build:module": "nuxt-build-module",
     "build": "rimraf dist && pnpm build:module && pnpm postbuild",
-    "postinstall": "nuxi prepare",
     "dev": "nuxi dev"
   },
   "peerDependencies": {
