@@ -22,8 +22,7 @@ export function useLoader<R extends LoaderName>(loader?: R | undefined | false, 
   }
 
   const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
-    const hasLoader = useRuntimeConfig().public.__serverLoaders__.find((l: string) => l === getActionName(loader)) as boolean
-
+    const hasLoader = !!useRuntimeConfig().public.__serverLoaders__.find(l => l === getActionName(loader))
     const url = getLoaderUrl(loader)
     if (hasLoader && url.length > 0) {
       return fetchNuxtLoader(url, watch)

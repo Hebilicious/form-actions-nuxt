@@ -60,7 +60,7 @@ export default defineNuxtModule({
     const loaderDirectory = resolve(actionDirectoryPath, `../${loaderDirname}`)
     const loaderMap = new Map()
     nuxt.options.runtimeConfig.public.__serverLoaders__ = []
-    const serverLoaders = () => nuxt.options.runtimeConfig.public.__serverLoaders__ as string[]
+    const serverLoaders = () => nuxt.options.runtimeConfig.public.__serverLoaders__
 
     // 1. Add H3 & Nitro imports
     nuxt.hook("nitro:config", (nitroConfig) => {
