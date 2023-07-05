@@ -42,14 +42,14 @@
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "h3": "^1.7.0",
+    "h3": "^1.7.1",
     "nuxt": "latest",
     "vite": "*"
   },
   "dependencies": {
-    "@nuxt/kit": "3.6.1",
+    "@nuxt/kit": "3.6.2",
     "defu": "^6.1.2",
-    "esbuild": "^0.18.10",
+    "esbuild": "^0.18.11",
     "magicast": "^0.2.9"
   },
   "devDependencies": {

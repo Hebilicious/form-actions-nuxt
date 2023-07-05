@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.10",
   "private": true,
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.6.6",
   "scripts": {
     "build": "rimraf packages/*/dist && pnpm -r --filter=./packages/* run build",
     "nx:build": "nx run-many --target=build --p @hebilicious/form-actions-nuxt",
@@ -15,26 +15,26 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.5",
+    "@antfu/eslint-config": "^0.39.7",
     "@antfu/ni": "^0.21.4",
-    "@nuxt/test-utils": "^3.6.1",
-    "@types/node": "^18.16.18",
+    "@nuxt/test-utils": "^3.6.2",
+    "@types/node": "^18.16.19",
     "bumpp": "^9.1.1",
     "conventional-changelog-cli": "^3.0.0",
-    "eslint": "8.43.0",
+    "eslint": "8.44.0",
     "esno": "^0.16.3",
-    "fast-glob": "^3.2.12",
-    "lint-staged": "^13.2.2",
-    "nx": "^16.4.0",
-    "pnpm": "8.6.5",
+    "fast-glob": "^3.3.0",
+    "lint-staged": "^13.2.3",
+    "nx": "^16.5.0",
+    "pnpm": "8.6.6",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "simple-git-hooks": "^2.8.1",
-    "taze": "^0.10.2",
+    "taze": "^0.11.2",
     "tsup": "^7.1.0",
-    "typescript": "^5.1.5",
+    "typescript": "^5.1.6",
     "unbuild": "^1.2.1",
-    "vitest": "^0.32.2"
+    "vitest": "^0.32.4"
   },
   "pnpm": {
     "overrides": {
