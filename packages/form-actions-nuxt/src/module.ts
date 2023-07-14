@@ -23,7 +23,8 @@ export async function* walkFiles(dir: string): AsyncGenerator<string> {
 export async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>>, loaderDirectoryPath = "", actionRoute = "") {
   file.exports.default = file.exports.loader
   delete file.exports.loader
-  // If we have relative imports, we add one level of nesting
+  // If we have relative imports, we add one level of nesting because we move
+  // from /actions to .generated/.loader
   for (const [key, imp] of Object.entries(file.imports)) {
     if (imp.from.startsWith("../")) {
       file.imports[key].from = `../${imp.from}`
@@ -34,7 +35,7 @@ export async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>
   const handler = `${loaderDirectoryPath}/${actionRoute}.get.ts`
   if (!existsSync(dirname(handler))) await fsp.mkdir(dirname(handler), { recursive: true })
   await fsp.writeFile(handler, GENERATED_TEXT)
-  await fsp.appendFile(handler, shaked.code) // ...and we write it to the loader directory @todo Use virtualfiles ?
+  await fsp.appendFile(handler, shaked.code) // ...and we write it to the loader directory.
   return handler
 }
 
@@ -49,7 +50,13 @@ export default defineNuxtModule({
 
     logger.info(`Adding ${name} module...`)
 
-    // 0. Add Module runtime
+    // 1. Add useFormAction composables
+    addImports(["useFormAction", "useLoader"].map(name => ({ name, from: resolve(`./runtime/composables/${name}`) })))
+
+    // 2. Add v-enhance directive
+    addPlugin(resolve("./runtime/plugin"))
+
+    // 3. Add Module runtime
     nuxt.hook("nitro:config", (nitroConfig) => {
       nitroConfig.alias = nitroConfig.alias || {}
       nitroConfig.alias[`#${name}`] = resolve("./runtime/server")
@@ -69,7 +76,12 @@ export default defineNuxtModule({
       options.references.push({ path: resolve(nuxt.options.buildDir, filename) })
     })
 
-    // 1. Local variables and setup
+    // Add nitro auto-imports
+    addImports(["defineServerLoader", "defineFormActions", "actionResponse"].map(name => ({ name, from: resolve("./runtime/server/nitro") })))
+    // Add h3 auto-imports
+    addImports(["getFormData"].map(name => ({ name, from: resolve("./runtime/server/h3") })))
+
+    // 4. Local variables and setup
     const loaderTypesFilename = "types/loader-types.d.ts" as const
     const actionDirectoryPath = resolve(nuxt.options.srcDir, "server/actions")
     if (!existsSync(actionDirectoryPath)) await fsp.mkdir(actionDirectoryPath)
@@ -128,7 +140,7 @@ export default defineNuxtModule({
     }
 
     nuxt.hook("nitro:config", async (nitro) => {
-      // 2. Form Actions
+      // 5. Form Actions
       nitro.handlers = nitro.handlers || []
 
       for await (const actionPath of walkFiles(actionDirectoryPath)) {
@@ -141,7 +153,7 @@ export default defineNuxtModule({
           logger.success(`[form-actions] {form action} added : '${route}'`)
         }
 
-        // 3. defineServerLoader
+        // 6. defineServerLoader
         // Find loaders with magicast and add a  GET handler for each one of them.
         if (file.exports.loader) {
           const handler = await writeLoader(file, loaderDirectoryPath, actionRoute)
@@ -160,7 +172,6 @@ export default defineNuxtModule({
      * Add a loader to the handlers and regenerate its types.
      */
     async function addLoader(handler: string, actionRoute: string, route: string) {
-      // Add to serverLoaders and types if newly created.
       if (!loaderCache.has(actionRoute)) {
         logger.info(`[form-actions] {loader} updated : '${handler}'`)
         const loader = { method: "get", route, lazy: true, handler }
@@ -220,12 +231,6 @@ export default defineNuxtModule({
         logger.error(`[form-actions] error while handling '${event}'`, error)
       }
     })
-
-    // 4. Add useFormAction composables
-    addImports(["useFormAction", "useLoader"].map(name => ({ name, from: resolve(`./runtime/composables/${name}`) })))
-
-    // 5. Add v-enhance directive
-    addPlugin(resolve("./runtime/plugin"))
 
     logger.success(`Added ${name} module successfully.`)
   }
