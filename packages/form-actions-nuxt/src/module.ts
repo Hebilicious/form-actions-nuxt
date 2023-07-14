@@ -93,20 +93,15 @@ export default defineNuxtModule({
       await fsp.writeFile(`${loaderDirectoryPath}/.gitignore`, "*")
     }
 
-    nuxt.options.runtimeConfig.public.__serverLoaders__ = []
-    const serverLoaders = () => nuxt.options.runtimeConfig.public.__serverLoaders__
-
     function getLoaderCache() {
       type CacheValue = [NitroEventHandler, { name: string; filePath: string; url: string }]
       const loaderCache = new Map <string, CacheValue >()
       return {
         set: (actionRoute: string, value: CacheValue) => {
-          if (!serverLoaders().includes(actionRoute)) {
-            serverLoaders().push(actionRoute)
-          }
           loaderCache.set(actionRoute, value)
         },
         has: (url: string) => loaderCache.has(url),
+        keys: () => loaderCache.keys(),
         values: () => loaderCache.values(),
         entries: () => loaderCache.entries()
       }
@@ -165,7 +160,7 @@ export default defineNuxtModule({
         }
       }
       addLoaderTypes() // Add generated loader types.
-      logger.success(`[form-actions] {loader} added to the config : ${serverLoaders().join(", ")}`)
+      logger.success(`[form-actions] {loader} added to the config : ${[...loaderCache.keys()].join(", ")}`)
     })
 
     /**
@@ -185,7 +180,7 @@ export default defineNuxtModule({
       }
       updateTemplates({ filter: t => t.filename === loaderTypesFilename })
       // @todo find a way to refresh the nuxt data await nuxt.callHook("app:data:refresh")
-      logger.success(`[form-actions] {loader} added new : '${actionRoute}' [${serverLoaders().join(", ")}]`)
+      logger.success(`[form-actions] {loader} added new : '${actionRoute}' [${[...loaderCache.keys()].join(", ")}]`)
       logger.success(`[form-actions] scannedHandlers : [${useNitro().scannedHandlers.map(h => h.route).join(", ")}]`)
     }
 
