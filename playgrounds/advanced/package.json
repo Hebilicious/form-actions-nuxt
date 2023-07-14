@@ -7,6 +7,8 @@
     "start": "nuxi preview"
   },
   "devDependencies": {
+    "@hebilicious/server-block-nuxt": "latest",
+    "@hebilicious/sfc-server-volar": "latest",
     "@nuxt/devtools": "^0.6.7",
     "nuxt": "latest"
   }
