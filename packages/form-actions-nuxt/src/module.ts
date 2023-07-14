@@ -1,9 +1,42 @@
 import { existsSync, promises as fsp } from "node:fs"
+import { dirname, resolve as pathResolve } from "node:path"
 import { addImports, addPlugin, addServerHandler, addTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger, useNitro } from "@nuxt/kit"
-import { loadFile } from "magicast"
+import { generateCode, loadFile } from "magicast"
 import { pascalCase } from "scule"
 import type { NitroEventHandler } from "nitropack"
-import { NITRO_LOADER_PREFIX, addLoaderPrefix, getActionRoute, getLoaderRoute, loaderTypesAfter, loaderTypesBefore, walkFiles, writeLoader } from "./runtime/utils"
+import { transform } from "esbuild"
+import { GENERATED_TEXT, NITRO_LOADER_PREFIX, addLoaderPrefix, getActionRoute, getLoaderRoute, loaderTypesAfter, loaderTypesBefore } from "./runtime/utils"
+
+export async function* walkFiles(dir: string): AsyncGenerator<string> {
+  const entries = await fsp.readdir(dir, { withFileTypes: true })
+  for (const entry of entries) {
+    const res = pathResolve(dir, entry.name)
+    if (entry.isDirectory()) {
+      yield * walkFiles(res)
+    }
+    else {
+      yield res
+    }
+  }
+}
+
+export async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>>, loaderDirectoryPath = "", actionRoute = "") {
+  file.exports.default = file.exports.loader
+  delete file.exports.loader
+  // If we have relative imports, we add one level of nesting
+  for (const [key, imp] of Object.entries(file.imports)) {
+    if (imp.from.startsWith("../")) {
+      file.imports[key].from = `../${imp.from}`
+    }
+  }
+  const { code } = generateCode(file) // We extract it with magicast...
+  const shaked = await transform(code, { treeShaking: true, loader: "ts" }) // ...we clean it with esbuild ...
+  const handler = `${loaderDirectoryPath}/${actionRoute}.get.ts`
+  if (!existsSync(dirname(handler))) await fsp.mkdir(dirname(handler), { recursive: true })
+  await fsp.writeFile(handler, GENERATED_TEXT)
+  await fsp.appendFile(handler, shaked.code) // ...and we write it to the loader directory @todo Use virtualfiles ?
+  return handler
+}
 
 const name = "form-actions"
 export default defineNuxtModule({
