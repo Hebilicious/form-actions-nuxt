@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-playground",
+  "name": "advanced-playground",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
