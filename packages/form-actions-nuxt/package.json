@@ -43,14 +43,15 @@
   },
   "peerDependencies": {
     "h3": "^1.7.1",
-    "nuxt": "latest",
+    "nuxt": "*",
     "vite": "*"
   },
   "dependencies": {
     "@nuxt/kit": "3.6.2",
     "defu": "^6.1.2",
     "esbuild": "^0.18.11",
-    "magicast": "^0.2.9"
+    "magicast": "^0.2.9",
+    "scule": "^1.0.0"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.4.0"

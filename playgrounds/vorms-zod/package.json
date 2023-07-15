@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-playground",
+  "name": "vorms-zod-playground",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
