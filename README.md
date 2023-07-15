@@ -480,10 +480,29 @@ const { value: remember, attrs: rememberAttrs } = register("remember")
 </template>
 ```
 
+### Server blocks
 
-## Star History
+With https://github.com/Hebilicious/server-block-nuxt ...
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Hebilicious/form-actions-nuxt&type=Date)](https://star-history.com/#Hebilicious/form-actions-nuxt&Date)
+```html
+<server lang="ts">
+import { defineServerLoader } from "#form-actions"
+export const loader = defineServerLoader(async () => {
+  return { cool: "stuff", supercool: "more-stuffsss" }
+})
+</server>
+
+<script setup lang="ts">
+const { result } = await useLoader("cool")
+</script>
+
+<template>
+  <div>
+    <h1>Stuff</h1>
+    {{ result }}
+  </div>
+</template>
+```
 
 ## TODO
 

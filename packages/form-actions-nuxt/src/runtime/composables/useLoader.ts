@@ -1,7 +1,7 @@
 import { ref } from "vue"
 import { useThrottleFn } from "@vueuse/core"
 import { NITRO_LOADER_PREFIX } from "../utils"
-import { useFetch, useRoute, useRuntimeConfig } from "#imports"
+import { useFetch, useRoute } from "#imports"
 import type { FetchNuxtLoaderFunction, LoaderName, MultiWatchSources } from "#build/types/loader-types.d.ts"
 
 export type Loader = | LoaderName | undefined | false
@@ -22,9 +22,8 @@ export function useLoader<R extends LoaderName>(loader?: R | undefined | false, 
   }
 
   const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
-    const hasLoader = !!useRuntimeConfig().public.__serverLoaders__.find(l => l === getActionName(loader))
     const url = getLoaderUrl(loader)
-    if (hasLoader && url.length > 0) {
+    if (url.length > 0) {
       return fetchNuxtLoader(url, watch)
     }
     return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
