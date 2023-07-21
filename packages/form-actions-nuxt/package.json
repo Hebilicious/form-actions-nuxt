@@ -47,9 +47,9 @@
     "vite": "*"
   },
   "dependencies": {
-    "@nuxt/kit": "3.6.3",
+    "@nuxt/kit": "3.6.5",
     "defu": "^6.1.2",
-    "esbuild": "^0.18.13",
+    "esbuild": "^0.18.15",
     "magicast": "^0.2.9",
     "scule": "^1.0.0"
   },

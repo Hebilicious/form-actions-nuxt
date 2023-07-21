@@ -7,7 +7,7 @@
     "start": "nuxi preview"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^0.6.7",
+    "@nuxt/devtools": "^0.7.0",
     "@vorms/resolvers": "^1.1.0",
     "nuxt": "latest",
     "zod": "^3.21.4"
