@@ -101,7 +101,7 @@ export default defineNuxtModule({
       }
     }
     const loaderCache = getLoaderCache()
-    const actionCache = new Map<string, [NitroEventHandler & {formAction: boolean}]>()
+    const actionCache = new Map<string, [NitroEventHandler & { formAction: boolean }]>()
 
     const addLoaderTypes = () => {
       const loaders = () => Array.from(loaderCache.values())
