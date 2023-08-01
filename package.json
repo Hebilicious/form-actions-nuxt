@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@8.6.11",
   "scripts": {
     "build": "rimraf packages/*/dist && turbo run build --filter=@hebilicious/form-actions-nuxt",
     "build:all": "turbo run build",
@@ -15,26 +15,25 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.8",
     "@antfu/ni": "^0.21.5",
+    "@hebilicious/eslint-config": "0.0.3-beta.1",
     "@nuxt/test-utils": "^3.6.5",
     "@types/node": "^18.17.1",
     "bumpp": "^9.1.1",
     "conventional-changelog-cli": "^3.0.0",
-    "eslint": "8.45.0",
+    "eslint": "8.46.0",
     "esno": "^0.17.0",
     "fast-glob": "^3.3.1",
     "lint-staged": "^13.2.3",
-    "pnpm": "8.6.10",
+    "pnpm": "8.6.11",
     "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
     "simple-git-hooks": "^2.9.0",
     "taze": "^0.11.2",
-    "tsup": "^7.1.0",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6",
     "unbuild": "^1.2.1",
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.1"
   },
   "pnpm": {
     "overrides": {

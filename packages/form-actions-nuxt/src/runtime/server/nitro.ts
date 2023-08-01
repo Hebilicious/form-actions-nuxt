@@ -45,9 +45,7 @@ export function actionResponse(event: H3Event, data: Record<string, unknown>, ac
       data
     })
   }
-  if (action.redirect) {
-    return respondWithRedirect(event, action.redirect, 302)
-  }
+  if (action.redirect) return respondWithRedirect(event, action.redirect, 302)
   // Fallback case
   return { data, action }
 }

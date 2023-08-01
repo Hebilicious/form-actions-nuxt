@@ -23,9 +23,7 @@ export function useLoader<R extends LoaderName>(loader?: R | undefined | false, 
 
   const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
     const url = getLoaderUrl(loader)
-    if (url.length > 0) {
-      return fetchNuxtLoader(url, watch)
-    }
+    if (url.length > 0) return fetchNuxtLoader(url, watch)
     return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
   }, 75)
 

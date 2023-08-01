@@ -86,9 +86,8 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
     actionResponse.value = action
     formResponse.value = data
     // CSR redirect
-    if (action && action.redirect) {
-      navigateTo(action.redirect)
-    }
+    if (action && action.redirect) navigateTo(action.redirect)
+
     // Handle errors
     if (action && action.error) {
       const newError = {
