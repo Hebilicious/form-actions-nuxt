@@ -9,7 +9,7 @@
   "devDependencies": {
     "@hebilicious/server-block-nuxt": "latest",
     "@hebilicious/sfc-server-volar": "latest",
-    "@nuxt/devtools": "^0.7.1",
+    "@nuxt/devtools": "^0.7.4",
     "nuxt": "latest"
   }
 }
