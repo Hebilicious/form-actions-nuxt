@@ -136,9 +136,8 @@ export default defineFormActions({
     // Handle your errors
     if (!email) return actionResponse(event, { missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
-    if (!user) {
+    if (!user)
       return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
-    }
 
     // Attach a session cookie to the response
     setCookie(event, "session", await createSession(user))

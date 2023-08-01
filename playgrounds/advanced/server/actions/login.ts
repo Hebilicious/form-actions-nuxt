@@ -10,9 +10,7 @@ export default defineFormActions({
     const password = formData.get("password") as string
     if (!email) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
-    if (!user) {
-      return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
-    }
+    if (!user) return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
     setCookie(event, "session", await createSession(user)) // Attach a session
     return actionResponse(event, { user }, { redirect: "/todos" })
   },

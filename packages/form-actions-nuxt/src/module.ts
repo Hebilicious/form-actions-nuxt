@@ -11,12 +11,8 @@ export async function* walkFiles(dir: string): AsyncGenerator<string> {
   const entries = await fsp.readdir(dir, { withFileTypes: true })
   for (const entry of entries) {
     const res = pathResolve(dir, entry.name)
-    if (entry.isDirectory()) {
-      yield * walkFiles(res)
-    }
-    else {
-      yield res
-    }
+    if (entry.isDirectory()) yield * walkFiles(res)
+    else yield res
   }
 }
 
@@ -25,9 +21,8 @@ export async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>
   delete file.exports.loader
   // If we have relative imports, we add one level of nesting because we move
   // from /actions to .generated/.loader
-  for (const [key, imp] of Object.entries(file.imports)) {
+  for (const [key, imp] of Object.entries(file.imports))
     if (imp.from.startsWith("../")) file.imports[key].from = `../${imp.from}`
-  }
 
   const { code } = generateCode(file) // We extract it with magicast...
   const shaked = await transform(code, { treeShaking: true, loader: "ts" }) // ...we clean it with esbuild ...
@@ -106,7 +101,7 @@ export default defineNuxtModule({
       }
     }
     const loaderCache = getLoaderCache()
-    const actionCache = new Map<string, [NitroEventHandler]>()
+    const actionCache = new Map<string, [NitroEventHandler & { formAction: boolean }]>()
 
     const addLoaderTypes = () => {
       const loaders = () => Array.from(loaderCache.values())
@@ -230,9 +225,8 @@ export default defineNuxtModule({
 
     // Add external loaders without relying on build:watch
     nuxt.hook("nitro:build:before", async () => {
-      for await (const loaderPath of walkFiles(loaderDirectoryPath)) {
+      for await (const loaderPath of walkFiles(loaderDirectoryPath))
         await addHandlers(loaderPath, "nitro:build:before")
-      }
     })
 
     // On watch, add new actions, extract loaders and add loaders.

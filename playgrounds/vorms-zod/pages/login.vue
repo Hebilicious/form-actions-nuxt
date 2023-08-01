@@ -22,9 +22,7 @@ const { enhance } = await useFormAction({
   run: async ({ cancel, submitForm }) => {
     cancel() // Cancel the default form submission
     const result = await validateForm() // Validate with the library
-    if (Object.keys(result).length === 0) {
-      await submitForm() // Submit the form if valid ...
-    }
+    if (Object.keys(result).length === 0) await submitForm() // Submit the form if valid ...
   }
 })
 

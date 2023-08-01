@@ -5,9 +5,8 @@ export async function respondWithResponse(event: H3Event, response: Response) {
   for (const [key, value] of response.headers) event.node.res.setHeader(key, value)
   if (response.body) {
     const contentType = response.headers.get("Content-Type") || ""
-    if (contentType.includes("text") || contentType.includes("json")) {
+    if (contentType.includes("text") || contentType.includes("json"))
       for await (const chunk of response.body as unknown as AsyncIterable<Uint8Array>) event.node.res.write(new TextDecoder().decode(chunk))
-    }
     else for await (const chunk of response.body as unknown as AsyncIterable<Uint8Array>) event.node.res.write(chunk)
   }
   return event.node.res.end()
