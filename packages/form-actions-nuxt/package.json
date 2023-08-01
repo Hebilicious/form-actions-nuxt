@@ -50,7 +50,7 @@
     "@nuxt/kit": "3.6.5",
     "defu": "^6.1.2",
     "esbuild": "^0.18.17",
-    "magicast": "^0.2.9",
+    "magicast": "^0.2.10",
     "scule": "^1.0.0"
   },
   "devDependencies": {
