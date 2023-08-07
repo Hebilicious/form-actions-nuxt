@@ -16,6 +16,7 @@ __🚀 Welcome to Nuxt Form Actions !__
 
 This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
 You will need to patch Nitropack to use it.
+
 _🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
 
 ## 📦 Usage
@@ -101,6 +102,14 @@ And for Yarn :
 ```
 
 _Note that for monorepos this must be done at the root of your repository._
+
+### Form Actions should be integrated in Nuxt !
+
+The Nuxt team is considering adding this feature at the framework level. If you'd like to show support, you can :
+
+- use this package and star this repository
+- upvote / add relevant comment on the related issues https://github.com/nuxt/nuxt/issues/20649
+- start discussions in the Nuxt discussions/discord or on Twitter about this feature to make it more popular
 
 ## Docs
 
