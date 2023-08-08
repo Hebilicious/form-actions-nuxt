@@ -2,6 +2,8 @@
   "name": "basic-fixture",
   "private": true,
   "dependencies": {
-    "nuxt": "3.5.2"
+    "h3": "^1.8.0-rc.3",
+    "nitropack": "2.5.2",
+    "nuxt": "3.6.5"
   }
 }

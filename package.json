@@ -35,16 +35,10 @@
     "unbuild": "^1.2.1",
     "vitest": "^0.34.1"
   },
-  "pnpm": {
-    "overrides": {
-      "nitropack": "npm:@hebilicious/nitro@latest"
-    }
-  },
-  "overrides": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
-  },
   "resolutions": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
+    "h3": "^1.8.0-rc.3",
+    "nitropack": "2.5.2",
+    "nuxt": "3.6.5"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

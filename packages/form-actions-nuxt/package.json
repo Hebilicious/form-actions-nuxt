@@ -42,9 +42,9 @@
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "h3": "^1.7.1",
-    "nuxt": "*",
-    "vite": "*"
+    "h3": "^1.8.0-rc.3",
+    "nuxt": "^3.6.5",
+    "vite": "latest"
   },
   "dependencies": {
     "@nuxt/kit": "3.6.5",
