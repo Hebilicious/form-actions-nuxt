@@ -51,7 +51,7 @@
     "@nuxt/kit": "3.6.5",
     "@vueuse/core": "^10.3.0",
     "defu": "^6.1.2",
-    "esbuild": "^0.18.17",
+    "esbuild": "^0.18.20",
     "magicast": "^0.2.10",
     "scule": "^1.0.0"
   },
