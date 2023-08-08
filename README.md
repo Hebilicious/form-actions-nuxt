@@ -101,11 +101,11 @@ The Nuxt team is considering adding this feature at the framework level. If you 
 
 Define a form action. They __must__ be in the `/server/actions` directory.
 
+Note: Server composables `defineFormActions`, `actionResponse` and `defineServerLoader` are auto-imported, but you can explicitly them from `#form-actions`.
+
 `/server/actions/login.ts`
 
 ```ts
-import { defineFormActions } from "#form-actions"
-
 export default defineFormActions({
   default: () => {
     console.log("Login called !")
@@ -117,7 +117,6 @@ Add logic for logging-in and registering users.
 
 ```ts
 import { createSession, getUser } from "../db"
-import { actionResponse, defineFormActions } from "#form-actions"
 
 const validValue = (v: unknown): v is string => typeof v === "string" && v.length > 0
 export default defineFormActions({
@@ -225,8 +224,6 @@ Use the `defineServerLoader` helper for your convenience.
 `/server/actions/books.ts`
 
 ```ts
-import { defineServerLoader } from "#form-actions"
-
 export const loader = defineServerLoader(async () => {
   // This is an h3 event handler, you can use any logic that you
   // want here, including database calls, etc.
@@ -263,7 +260,6 @@ You can define form actions and server loaders in the same file.
 
 ```ts
 import { createTodo, deleteTodo, getTodos } from "../db"
-import { actionResponse, defineFormActions, defineServerLoader } from "#form-actions"
 
 export default defineFormActions({
   add: async (event) => {
@@ -377,7 +373,7 @@ interface ActionFunctionArgs<R extends LoaderName> {
   /**
    * The loader URL.
    */
-  loader: string
+  loader: string | undefined
   /**
    * The default submit function.
    */
@@ -492,7 +488,6 @@ export default defineNuxtConfig({
 
 ```html
 <server lang="ts">
-import { defineServerLoader } from "#form-actions"
 export const loader = defineServerLoader(async () => {
   return { cool: "stuff", supercool: "more-stuffsss" }
 })
