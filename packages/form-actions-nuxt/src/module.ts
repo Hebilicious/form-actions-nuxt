@@ -5,6 +5,7 @@ import { generateCode, loadFile } from "magicast"
 import { pascalCase } from "scule"
 import type { NitroEventHandler } from "nitropack"
 import { transform } from "esbuild"
+import { defu } from "defu"
 import { GENERATED_TEXT, NITRO_LOADER_PREFIX, addLoaderPrefix, getActionRoute, getLoaderRoute, loaderTypesAfter, loaderTypesBefore } from "./runtime/utils"
 
 export async function* walkFiles(dir: string): AsyncGenerator<string> {
@@ -51,24 +52,36 @@ export default defineNuxtModule({
     // 2. Add v-enhance directive
     addPlugin(resolve("./runtime/plugin"))
 
-    // 3. Add Module runtime
+    const serverUtilities = ["defineServerLoader", "defineFormActions", "actionResponse"]
+
+    // 3. Add Module runtime and imports
     nuxt.hook("nitro:config", (nitroConfig) => {
       nitroConfig.alias = nitroConfig.alias || {}
+      // add alias to import from #form-actions
       nitroConfig.alias[`#${name}`] = resolve("./runtime/server")
+      // add to externals
+      nitroConfig.externals = defu(nitroConfig.externals, {
+        inline: [resolve("./runtime/server")]
+      })
+      // add to imports
+      nitroConfig.imports = defu(nitroConfig.imports, {
+        presets: [
+          {
+            from: resolve("./runtime/server"),
+            imports: serverUtilities
+          }
+        ]
+      })
     })
 
-    const serverUtilities = ["defineServerLoader", "defineFormActions", "actionResponse"]
     addTypeTemplate({
       filename: `types/${name}.d.ts`,
       write: true,
       getContents: () => `
       declare module '#${name}' {
-      ${serverUtilities.map(name => `const ${name}: typeof import('${resolve("./runtime/server")}')['${name}']`).join("\n")}
+      ${serverUtilities.map(name => `const ${name}: typeof import('${resolve("./runtime/server/")}')['${name}']`).join("\n")}
       }`
     })
-
-    // Add nitro auto-imports
-    addImports(serverUtilities.map(name => ({ name, from: resolve("./runtime/server/nitro") })))
 
     // 4. Local variables and setup
     const loaderTypesFilename = "types/loader-types.d.ts" as const
