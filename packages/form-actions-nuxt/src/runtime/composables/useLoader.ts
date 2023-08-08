@@ -2,7 +2,7 @@ import { ref } from "vue"
 import { useThrottleFn } from "@vueuse/core"
 import { NITRO_LOADER_PREFIX } from "../utils"
 import { useFetch, useRoute } from "#imports"
-import type { FetchNuxtLoaderFunction, LoaderName, MultiWatchSources } from "#build/types/loader-types.d.ts"
+import type { FetchNuxtLoaderFunction, LoaderName, LoaderOptions } from "#build/types/loader-types.d.ts"
 
 export type Loader = | LoaderName | undefined | false
 
@@ -17,18 +17,18 @@ export const getLoaderUrl = (loader: Loader) => validLoaderName(loader) ? getLoa
  * @param loader Loader
  * @returns
  */
-export function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, watch?: MultiWatchSources) {
-  const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, watch?: MultiWatchSources) => {
-    const { data: result, refresh, pending, error } = await useFetch(url, { watch, immediate: true })
+export function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, loaderOptions?: LoaderOptions) {
+  const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, loaderOptions?: LoaderOptions) => {
+    const { data: result, refresh, pending, error } = await useFetch(url, { immediate: true, params: useRoute().params, ...loaderOptions })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
-  const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
+  const load = useThrottleFn(async (loader?: Loader, loaderOptions?: LoaderOptions) => {
     const url = getLoaderUrl(loader)
     // @todo automatically detect if the loader doesn't exist.
-    if (url) return fetchNuxtLoader(url, watch)
+    if (url) return fetchNuxtLoader(url, loaderOptions)
     return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
   }, 75)
 
-  return load(loader, watch)
+  return load(loader, loaderOptions)
 }

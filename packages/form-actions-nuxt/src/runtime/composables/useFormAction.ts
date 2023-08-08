@@ -2,9 +2,9 @@ import { type Ref, computed, reactive, ref } from "vue"
 import { NUXT_PE_HEADER } from "../utils"
 import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
 import { createError, navigateTo, useRoute } from "#imports"
-import type { LoaderName, Loaders, MultiWatchSources } from "#build/types/loader-types.d.ts"
+import type { LoaderName, LoaderOptions, Loaders } from "#build/types/loader-types.d.ts"
 
-interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; watch?: MultiWatchSources }
+interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; loaderOptions?: LoaderOptions }
 
 type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
 
@@ -69,14 +69,14 @@ interface ErrorRef {
  * - Refresh the loader
  * - Handle CSR navigation / error
  */
-export async function useFormAction<Name extends LoaderName>({ run, loader, watch }: UseFormAction<Name> = {}) {
+export async function useFormAction<Name extends LoaderName>({ run, loader, loaderOptions }: UseFormAction<Name> = {}) {
   const form = ref<HTMLFormElement>()
   const formResponse = ref<Record<string, any>>({})
   const actionResponse = ref<Record<string, any>>({})
   const cancelDefaultSubmit = ref(false)
   const error = ref<ErrorRef>()
 
-  const { result, refresh, pending, error: loaderError } = await useLoader(loader, watch)
+  const { result, refresh, pending, error: loaderError } = await useLoader(loader, loaderOptions)
 
   const handleResponse = (response: ActionResponsePayload) => {
     // console.log('Handling response ...')
