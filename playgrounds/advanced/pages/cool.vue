@@ -1,5 +1,4 @@
 <server lang="ts">
-import { defineServerLoader } from "#form-actions"
 export const loader = defineServerLoader(async () => {
   return { cool: "stuff", supercool: "more-stuffsss" }
 })
