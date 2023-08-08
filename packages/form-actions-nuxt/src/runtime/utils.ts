@@ -27,19 +27,19 @@ import type { Ref, WatchSource } from "vue"
 
 export type MultiWatchSources = (WatchSource<unknown> | object)[]
 
-type ExtractLoader<Type> = Type extends EventHandler<infer X> ? X : never;` as const
+type ExtractLoader<T> = ReturnType<T> extends Promise<infer U> ? U : never;` as const
 
 export const loaderTypesAfter = /* typescript */`
 interface AsyncDataExecuteOptions {
     _initial?: boolean
     dedupe?: boolean
   }
-  
+
 type FetchResult<T> = {
   result: Ref<T>
   refresh: (opts?: AsyncDataExecuteOptions) => Promise<void>
   pending: Ref<boolean>
   error: Ref<FetchError | null>
 }
-    
+
 export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, watch?: MultiWatchSources) => Promise<FetchResult<Loaders[T]>>` as const

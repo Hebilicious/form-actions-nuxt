@@ -1,9 +1,8 @@
 import { createTodo, deleteTodo, getTodos } from "../db"
-import { actionResponse, defineFormActions, defineServerLoader, getFormData } from "#form-actions"
 
 export default defineFormActions({
   add: async (event) => {
-    const description = (await getFormData(event)).get("description") as string
+    const description = (await readFormData(event)).get("description") as string
     try {
       const todo = await createTodo(description)
       return actionResponse(event, { todo })
@@ -14,7 +13,7 @@ export default defineFormActions({
     }
   },
   delete: async (event) => {
-    const todoId = (await getFormData(event)).get("id") as string
+    const todoId = (await readFormData(event)).get("id") as string
     try {
       const todo = await deleteTodo(todoId)
       return actionResponse(event, { todo })

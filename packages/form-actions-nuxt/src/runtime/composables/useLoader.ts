@@ -6,24 +6,27 @@ import type { FetchNuxtLoaderFunction, LoaderName, MultiWatchSources } from "#bu
 
 export type Loader = | LoaderName | undefined | false
 
+const getLoaderName = (loaderName: LoaderName) => `/${NITRO_LOADER_PREFIX}/${loaderName}` as const
 const lastSubpath = (path: string) => path.split("/").pop() as string
-export const getActionName = (loader?: Loader) => typeof loader === "string" ? loader : lastSubpath(useRoute().path.substring(1))
-export const getLoaderUrl = (loader?: Loader) => loader === false ? "" : `/${NITRO_LOADER_PREFIX}/${getActionName(loader)}`
+const validLoaderName = (loader: Loader): loader is LoaderName => typeof loader === "string" && loader.length > 0
+export const getActionName = (loader: Loader): LoaderName | string => validLoaderName(loader) ? loader : lastSubpath(useRoute().path.substring(1))
+export const getLoaderUrl = (loader: Loader) => validLoaderName(loader) ? getLoaderName(loader) : undefined
 
 /**
  * Return data from a loader with type-safety.
  * @param loader Loader
  * @returns
  */
-export function useLoader<R extends LoaderName>(loader?: R | undefined | false, watch?: MultiWatchSources) {
-  const fetchNuxtLoader: FetchNuxtLoaderFunction<R> = async (url: string, watch?: MultiWatchSources) => {
+export function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, watch?: MultiWatchSources) {
+  const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, watch?: MultiWatchSources) => {
     const { data: result, refresh, pending, error } = await useFetch(url, { watch, immediate: true })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
   const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
     const url = getLoaderUrl(loader)
-    if (url.length > 0) return fetchNuxtLoader(url, watch)
+    // @todo automatically detect if the loader doesn't exist.
+    if (url) return fetchNuxtLoader(url, watch)
     return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
   }, 75)
 

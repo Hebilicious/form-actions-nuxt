@@ -36,60 +36,64 @@ const { value: remember, attrs: rememberAttrs } = register("remember")
 </script>
 
 <template>
-  <form v-enhance="enhance">
-    <div class="field">
-      <input
-        v-model="account"
-        class="field__input"
-        type="text"
-        placeholder="Account"
-        v-bind="accountAttrs"
-      >
-      <div v-show="'account' in errors" class="field__error">
-        {{ errors.account }}
+  <div class="Wrapper">
+    <form v-enhance="enhance">
+      <div class="field">
+        <input
+          v-model="account"
+          class="field__input"
+          type="text"
+          placeholder="Account"
+          v-bind="accountAttrs"
+        >
+        <div v-show="'account' in errors" class="field__error">
+          {{ errors.account }}
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <input
-        v-model="password"
-        class="field__input"
-        type="password"
-        placeholder="Password"
-        v-bind="passwordAttrs"
-      >
-      <div v-show="'password' in errors" class="field__error">
-        {{ errors.password }}
+      <div class="field">
+        <input
+          v-model="password"
+          class="field__input"
+          type="password"
+          placeholder="Password"
+          v-bind="passwordAttrs"
+        >
+        <div v-show="'password' in errors" class="field__error">
+          {{ errors.password }}
+        </div>
       </div>
-    </div>
 
-    <div class="field checkbox">
-      <input
-        id="remember"
-        v-model="remember"
-        class="field__checkbox"
-        type="checkbox"
-        v-bind="rememberAttrs"
-      >
-      <label for="remember">remember</label>
-    </div>
+      <div class="field checkbox">
+        <input
+          id="remember"
+          v-model="remember"
+          class="field__checkbox"
+          type="checkbox"
+          v-bind="rememberAttrs"
+        >
+        <label for="remember">remember</label>
+      </div>
 
-    <div class="field">
-      <input type="submit">
-    </div>
-  </form>
+      <div class="field">
+        <input type="submit">
+      </div>
+    </form>
+  </div>
 </template>
 
-<style>
+<style lang="css">
 body {
   background: #344951;
   color: white;
 }
+.Wrapper {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+}
 
-#app {
-  width: 92.25%;
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 50px 0;
+form {
+  min-width: 25rem;
 }
 
 .field + .field {

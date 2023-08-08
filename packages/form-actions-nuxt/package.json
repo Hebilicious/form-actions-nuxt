@@ -42,8 +42,9 @@
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "h3": "^1.7.1",
-    "nuxt": "*",
+    "h3": "^1.8.0-rc.3",
+    "nitropack": "2.5.2",
+    "nuxt": "^3.6.5",
     "vite": "*"
   },
   "dependencies": {

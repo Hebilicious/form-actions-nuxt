@@ -14,11 +14,11 @@ __🚀 Welcome to Nuxt Form Actions !__
 
 [![Nuxt banner](./.github/assets/banner.svg)]
 
-This is a standalone Nuxt Module that implements <https://github.com/nuxt/nuxt/pull/20852>
-You will need to patch Nitropack to use it.
+Form Actions and Server Loaders paradigms for Nuxt.
 
-_🧪🧪🧪 This module API might change ! You MUST use a patched version of Nitro that support form actions, see below for instructions.🧪🧪🧪_
-
+- Form Actions are a convenient way to send data to your server using native HTML forms that can be progressively enhanced.
+- Server Loaders are a convenient way to load type-safe data from your server into your pages and components, without manually fetching from an API route.
+  
 ## 📦 Usage
 
 You can use this package in any Nuxt project.
@@ -50,66 +50,50 @@ export default defineNuxtConfig({
 })
 ```
 
-### Nitro Modifications
+### Use the latest versions of Nuxt, Nitro and H3
 
-Nitro is the server engine that power Nuxt. As this module is really new, the necessary changes to use it are not yet merged in Nitro.
-You must use [this Nitro fork](https://www.npmjs.com/package/@hebilicious/nitro) in the meantime [(linked PR)](https://github.com/unjs/nitro/pull/1286).
-The easiest way to use this forked version in a project is to leverage your package manager features.
-Add the following to your `package.json` :
+This module has been tested with the following dependencies:
 
-For NPM :
+- Nuxt 3.6.5+
+- H3 1.8.0.rc-3 +
+- Nitro 2.5.2
+
+You can use your package manager to enforce these versions :
+
+For `npm` :
 
 ```json
 {
-  "dependencies": {
-    "nuxt": "latest",
-    "@hebilicious/form-actions-nuxt": "latest"
-  },
   "overrides": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
+    "h3": "1.8.0-rc.3",
+    "nitropack": "2.5.2",
+    "nuxt": "3.6.5"
   }
 }
 ```
 
-For PNPM :
+For `pnpm` and `yarn` :
 
 ```json
 {
-  "dependencies": {
-    "nuxt": "latest",
-    "@hebilicious/form-actions-nuxt": "latest"
-  },
-  "pnpm": {
-    "overrides": {
-      "nitropack": "npm:@hebilicious/nitro@latest"
-    }
-  }
-}
-```
-
-And for Yarn :
-
-```json
-{
-  "dependencies": {
-    "nuxt": "latest",
-    "@hebilicious/form-actions-nuxt": "latest"
-  },
   "resolutions": {
-    "nitropack": "npm:@hebilicious/nitro@latest"
+    "h3": "1.8.0-rc.3",
+    "nitropack": "2.5.2",
+    "nuxt": "3.6.5"
   }
 }
 ```
 
 _Note that for monorepos this must be done at the root of your repository._
 
-### Form Actions should be integrated in Nuxt !
+### Why is this module not included in Nuxt by default ?
 
-The Nuxt team is considering adding this feature at the framework level. If you'd like to show support, you can :
+The Nuxt team is considering adding this feature at the framework level. If you want to show support, you can :
 
 - use this package and star this repository
-- upvote / add relevant comment on the related issues https://github.com/nuxt/nuxt/issues/20649
-- start discussions in the Nuxt discussions/discord or on Twitter about this feature to make it more popular
+- upvote / add relevant comment on the related [issue](https://github.com/nuxt/nuxt/issues/20649) and [PR](https://github.com/nuxt/nuxt/pull/20852).
+- start [discussions](https://github.com/nuxt/nuxt/discussions), spread the word on [discord](https://discord.com/invite/nuxt) or on Twitter about this module and this paradigm
+- provide [feedback](https://github.com/Hebilicious/form-actions-nuxt/discussions)
 
 ## Docs
 
@@ -117,11 +101,11 @@ The Nuxt team is considering adding this feature at the framework level. If you'
 
 Define a form action. They __must__ be in the `/server/actions` directory.
 
+Note: Server composables `defineFormActions`, `actionResponse` and `defineServerLoader` are auto-imported, but you can explicitly them from `#form-actions`.
+
 `/server/actions/login.ts`
 
 ```ts
-import { defineFormActions } from "#form-actions"
-
 export default defineFormActions({
   default: () => {
     console.log("Login called !")
@@ -133,20 +117,19 @@ Add logic for logging-in and registering users.
 
 ```ts
 import { createSession, getUser } from "../db"
-import { actionResponse, defineFormActions, getFormData } from "#form-actions"
 
+const validValue = (v: unknown): v is string => typeof v === "string" && v.length > 0
 export default defineFormActions({
   signIn: async (event) => {
-    // use getFormData to obtain a FormData object
-    const formData = await getFormData(event)
+    // use readFormData to obtain a FormData object
+    const formData = await readFormData(event)
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
     // Handle your errors
-    if (!email) return actionResponse(event, { missing: true }, { error: { message: "Missing email" } })
+    if (!validValue(email)) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
-    if (!user)
-      return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
+    if (!validValue(user)) return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
 
     // Attach a session cookie to the response
     setCookie(event, "session", await createSession(user))
@@ -162,7 +145,7 @@ export default defineFormActions({
 })
 ```
 
-Create a login page. The name must be the same as your action.
+Create a login page. The name _must_ be the same as your action.
 
 `pages/login.vue`
 
@@ -190,8 +173,8 @@ Use progressive enhancement to add client side rendering to the form.
 `pages/login.vue`
 
 ```html
-<script setup>
-const { enhance, data } = await useFormAction()
+<script setup lang="ts">
+const { enhance, data } = await useFormAction() 
 </script>
 
 <template>
@@ -230,16 +213,17 @@ const { enhance, data } = await useFormAction()
 
 ### Server Loaders
 
-Server loaders allows you easily load data from the server in your components.
-Your file _must_ export an event handler named `loader`.
+Server loaders are a convenient way to load data from the server in your components.
+
+- Your file _must_ export an event handler named `loader`.
+- Server loaders _must_ be in the `/server/actions` directory.
+- The loader name will be the name of the file path (relative to `/server/actions`).
+
 Use the `defineServerLoader` helper for your convenience.
-They _must_ also be in the `/server/actions` directory.
 
 `/server/actions/books.ts`
 
 ```ts
-import { defineServerLoader } from "#form-actions"
-
 export const loader = defineServerLoader(async () => {
   // This is an h3 event handler, you can use any logic that you
   // want here, including database calls, etc.
@@ -264,19 +248,22 @@ const { result } = await useLoader("books")
 </template>
 ```
 
+Under the hood, server loaders will create regular Nitro server handlers, so they will _always_ run on the server.
+The returned data will be serialized and sent to the client, which means that while hydrating, they will run once.
+`useLoaders` and `useFormAction` use `useFetch` under the hood, which will handle caching.
+
 ### Form Actions alongside Server Loaders
 
-Define form actions and server loaders in the same file.
+You can define form actions and server loaders in the same file.
 
 `actions/todos.ts`
 
 ```ts
 import { createTodo, deleteTodo, getTodos } from "../db"
-import { actionResponse, defineFormActions, defineServerLoader, getFormData } from "#form-actions"
 
 export default defineFormActions({
   add: async (event) => {
-    const description = (await getFormData(event)).get("description") as string
+    const description = (await readFormData(event)).get("description") as string
     try {
       const todo = await createTodo(description)
       return actionResponse(event, { todo })
@@ -287,7 +274,7 @@ export default defineFormActions({
     }
   },
   delete: async (event) => {
-    const todoId = (await getFormData(event)).get("id") as string
+    const todoId = (await readFormData(event)).get("id") as string
     try {
       const todo = await deleteTodo(todoId)
       return actionResponse(event, { todo })
@@ -386,7 +373,7 @@ interface ActionFunctionArgs<R extends LoaderName> {
   /**
    * The loader URL.
    */
-  loader: string
+  loader: string | undefined
   /**
    * The default submit function.
    */
@@ -490,11 +477,17 @@ const { value: remember, attrs: rememberAttrs } = register("remember")
 
 ### Server blocks
 
-With https://github.com/Hebilicious/server-block-nuxt ...
+Install the server block [module](https://github.com/Hebilicious/server-block-nuxt) :
+You can combine form actions and loaders with it.
+
+```ts
+export default defineNuxtConfig({
+  modules: ["@hebilicious/server-block-nuxt", "@hebilicious/form-actions-nuxt"] // the order is important
+})
+```
 
 ```html
 <server lang="ts">
-import { defineServerLoader } from "#form-actions"
 export const loader = defineServerLoader(async () => {
   return { cool: "stuff", supercool: "more-stuffsss" }
 })
@@ -512,17 +505,19 @@ const { result } = await useLoader("cool")
 </template>
 ```
 
-## TODO
+## Future Plans
 
-- Docs
-- Tests
-
-## Maybe do
-
-- Virtual file Loaders, moving loaders in .nuxt ?
+- Vue query integration
 - Vue macro to automatically bind v-enhance to single forms
-- useFormActions to accept multiple syntax to shorten the api
+- overload useFormActions to accept multiple syntaxes and shorten the api
 
+## Prior Art
+
+- [Svelte Form actions](https://kit.svelte.dev/docs/form-actions), [Discussion for semantic form actions](https://github.com/sveltejs/kit/discussions/5875)
+- [Solid Start actions](https://start.solidjs.com/core-concepts/actions)
+- [Remix Actions](https://remix.run/docs/en/main/route/action)
+- [Kent PESPA article](https://www.epicweb.dev/the-webs-next-transition)
+- [Next.js Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions)
 
 ## 📦 Contributing
 
