@@ -130,7 +130,7 @@ export default defineNuxtModule({
         const file = await loadFile(actionPath)
         if (file.exports.default) {
           const route = `/${routeName}`
-          actionCache.set(routeName, [{ route, method: "post", handler: actionPath }])
+          actionCache.set(routeName, [{ route, handler: actionPath, method: "post", lazy: true }])
         }
 
         // 6. defineServerLoader
@@ -138,7 +138,7 @@ export default defineNuxtModule({
         if (file.exports.loader) {
           const handler = await writeLoader(file, loaderDirectoryPath, routeName)
           const route = addLoaderPrefix(routeName)
-          const loader = { method: "get", route, lazy: true, handler }
+          const loader = { route, handler, method: "get", lazy: true }
           loaderCache.set(routeName, [loader, { name: routeName, filePath: handler, url: route }]) // Add loader to the types array
         }
       }
@@ -160,7 +160,7 @@ export default defineNuxtModule({
     async function addLoader(handler: string, routeName: string, route: string) {
       if (!loaderCache.has(routeName)) {
         logger.info(`[form-actions] {loader} : '${handler}' ...`)
-        const loader = { method: "get", route, lazy: true, handler }
+        const loader = { route, handler, method: "get", lazy: true }
         loaderCache.set(routeName, [loader, { name: routeName, filePath: handler, url: route }])
       }
       for (const [path, [handler]] of loaderCache.entries()) {
@@ -179,7 +179,7 @@ export default defineNuxtModule({
     async function addAction(handler: string, routeName: string, route: string) {
       if (!actionCache.has(routeName)) {
         logger.info(`[form-actions] {action} '${handler}' ...`)
-        actionCache.set(routeName, [{ route, method: "post", handler, lazy: true }])
+        actionCache.set(routeName, [{ route, handler, method: "post", lazy: true }])
       }
       for (const [path, [handler]] of actionCache.entries()) {
         if (useNitro().options.handlers.some(h => h.handler === path)) continue // Skip if already added.
