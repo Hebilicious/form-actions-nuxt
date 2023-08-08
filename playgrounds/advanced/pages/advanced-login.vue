@@ -1,5 +1,5 @@
 <script setup>
-const { enhance, data } = await useFormAction()
+const { enhance, data } = await useFormAction({ loader: false })
 </script>
 
 <template>

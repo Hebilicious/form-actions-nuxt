@@ -1,16 +1,17 @@
-import { actionResponse, defineFormActions, getFormData } from "#form-actions"
+import { actionResponse, defineFormActions } from "#form-actions"
 
 const createSession = async (_: any) => "session"
 const getUser = (email: string, ..._: any) => ({ email, username: "" })
 
+const validValue = (v: unknown): v is string => typeof v === "string" && v.length > 0
 export default defineFormActions({
   signIn: async (event) => {
-    const formData = await getFormData(event)
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
-    if (!email) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
+    const formData = await readFormData(event)
+    const email = formData.get("email")
+    const password = formData.get("password")
+    if (!validValue(email)) return actionResponse(event, { email, missing: true }, { error: { message: "Missing email" } })
     const user = getUser(email, password) // Load the user somehow
-    if (!user) return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
+    if (!validValue(user)) return actionResponse(event, { email, incorrect: true }, { error: { message: "No user found" } })
     setCookie(event, "session", await createSession(user)) // Attach a session
     return actionResponse(event, { user }, { redirect: "/todos" })
   },

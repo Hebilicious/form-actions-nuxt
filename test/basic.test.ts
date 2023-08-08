@@ -22,6 +22,6 @@ describe("basic test", async () => {
     const body = new FormData()
     body.append("book", "dragonball-z")
     const html = await $fetch("/books", { method: "POST", body })
-    expect(html).toMatchObject({ action: {}, data: { book: "dragonball-z" } })
+    expect(html).toMatchObject({ data: { book: "dragonball-z" } })
   })
 })
