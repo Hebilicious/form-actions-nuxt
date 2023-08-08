@@ -19,7 +19,6 @@ const { register, errors, validateForm } = useForm({
 })
 
 const { enhance } = await useFormAction({
-  loader: false,
   run: async ({ cancel, submitForm }) => {
     cancel() // Cancel the default form submission
     const result = await validateForm() // Validate with the library

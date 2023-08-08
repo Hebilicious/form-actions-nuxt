@@ -45,7 +45,7 @@ interface ActionFunctionArgs<N extends LoaderName> {
   /**
    * The loader URL.
    */
-  loader: string
+  loader: string | undefined
   /**
    * The default submit function.
    */
