@@ -45,7 +45,7 @@
     "h3": "^1.8.0-rc.3",
     "nitropack": "2.5.2",
     "nuxt": "^3.6.5",
-    "vite": "latest"
+    "vite": "*"
   },
   "dependencies": {
     "@nuxt/kit": "3.6.5",

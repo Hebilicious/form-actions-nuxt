@@ -107,8 +107,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       vite:
-        specifier: latest
-        version: 4.4.9(@types/node@18.17.3)
+        specifier: '*'
+        version: 4.3.9(@types/node@18.17.3)
     devDependencies:
       '@nuxt/module-builder':
         specifier: ^0.4.0
