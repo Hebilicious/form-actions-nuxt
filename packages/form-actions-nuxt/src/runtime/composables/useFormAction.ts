@@ -7,11 +7,11 @@ import type { LoaderName, Loaders, MultiWatchSources } from "#build/types/loader
 /**
  * The result ref can be manipulated directly.
  */
-type UpdateFunction<R extends LoaderName> = (args: UpdateArguments<R>) => void
-interface UpdateArguments<R extends LoaderName> { result: Ref<Loaders[R]> }
+type UpdateFunction<N extends LoaderName> = (args: UpdateArguments<N>) => void
+interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
 
-type ActionFunction<R extends LoaderName> = (args: ActionFunctionArgs<R>) => void
-interface ActionFunctionArgs<R extends LoaderName> {
+type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
+interface ActionFunctionArgs<N extends LoaderName> {
   /**
    * Cancel the default submission.
    */
@@ -21,7 +21,7 @@ interface ActionFunctionArgs<R extends LoaderName> {
    *
    * @param update Update callback to update the result.
    */
-  optimistic: (update: UpdateFunction<R>) => void
+  optimistic: (update: UpdateFunction<N>) => void
   /**
    * An object version of the `FormData` from this form
    */
@@ -69,7 +69,7 @@ interface ErrorRef {
  * - Refresh the loader
  * - Handle CSR navigation / error
  */
-export async function useFormAction<R extends LoaderName>({ run, loader, watch }: { run?: ActionFunction<R>; loader?: R; watch?: MultiWatchSources } = {}) {
+export async function useFormAction<Name extends LoaderName>({ run, loader, watch }: { run?: ActionFunction<Name>; loader?: Name; watch?: MultiWatchSources } = {}) {
   const form = ref<HTMLFormElement>()
   const formResponse = ref<Record<string, any>>({})
   const actionResponse = ref<Record<string, any>>({})
@@ -113,7 +113,8 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
       const response = await $fetch.raw(getActionRoute(), {
         method: "POST",
         headers: new Headers([[NUXT_PE_HEADER, "1"]]),
-        body: new FormData(formToSubmit)
+        body: new FormData(formToSubmit),
+        ignoreResponseError: true
       })
       refresh({ dedupe: true })
       handleResponse(response as ActionResponsePayload)
@@ -124,7 +125,7 @@ export async function useFormAction<R extends LoaderName>({ run, loader, watch }
         // console.log('Cancelling default submit ...')
         cancelDefaultSubmit.value = true
       }
-      const optimistic = (update: UpdateFunction<R>) => {
+      const optimistic = (update: UpdateFunction<Name>) => {
         update({ result })
       }
       run({

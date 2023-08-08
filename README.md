@@ -133,12 +133,12 @@ Add logic for logging-in and registering users.
 
 ```ts
 import { createSession, getUser } from "../db"
-import { actionResponse, defineFormActions, getFormData } from "#form-actions"
+import { actionResponse, defineFormActions } from "#form-actions"
 
 export default defineFormActions({
   signIn: async (event) => {
-    // use getFormData to obtain a FormData object
-    const formData = await getFormData(event)
+    // use readFormData to obtain a FormData object
+    const formData = await readFormData(event)
     const email = formData.get("email") as string
     const password = formData.get("password") as string
 
@@ -272,11 +272,11 @@ Define form actions and server loaders in the same file.
 
 ```ts
 import { createTodo, deleteTodo, getTodos } from "../db"
-import { actionResponse, defineFormActions, defineServerLoader, getFormData } from "#form-actions"
+import { actionResponse, defineFormActions, defineServerLoader } from "#form-actions"
 
 export default defineFormActions({
   add: async (event) => {
-    const description = (await getFormData(event)).get("description") as string
+    const description = (await readFormData(event)).get("description") as string
     try {
       const todo = await createTodo(description)
       return actionResponse(event, { todo })
@@ -287,7 +287,7 @@ export default defineFormActions({
     }
   },
   delete: async (event) => {
-    const todoId = (await getFormData(event)).get("id") as string
+    const todoId = (await readFormData(event)).get("id") as string
     try {
       const todo = await deleteTodo(todoId)
       return actionResponse(event, { todo })

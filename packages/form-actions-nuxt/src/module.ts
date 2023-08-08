@@ -1,6 +1,6 @@
 import { existsSync, promises as fsp } from "node:fs"
 import { dirname, resolve as pathResolve } from "node:path"
-import { addImports, addPlugin, addTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger, useNitro } from "@nuxt/kit"
+import { addImports, addPlugin, addTemplate, addTypeTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger, useNitro } from "@nuxt/kit"
 import { generateCode, loadFile } from "magicast"
 import { pascalCase } from "scule"
 import type { NitroEventHandler } from "nitropack"
@@ -57,24 +57,18 @@ export default defineNuxtModule({
       nitroConfig.alias[`#${name}`] = resolve("./runtime/server")
     })
 
-    const filename = `types/${name}.d.ts`
-    addTemplate({
-      filename,
+    const serverUtilities = ["defineServerLoader", "defineFormActions", "actionResponse"]
+    addTypeTemplate({
+      filename: `types/${name}.d.ts`,
+      write: true,
       getContents: () => `
       declare module '#${name}' {
-      ${["getRequestFromEvent", "respondWithResponse", "respondWithRedirect", "getFormData", "defineServerLoader", "defineFormActions", "actionResponse"]
-        .map(name => `const ${name}: typeof import('${resolve("./runtime/server")}')['${name}']`).join("\n")}
+      ${serverUtilities.map(name => `const ${name}: typeof import('${resolve("./runtime/server")}')['${name}']`).join("\n")}
       }`
     })
 
-    nuxt.hook("prepare:types", (options) => {
-      options.references.push({ path: resolve(nuxt.options.buildDir, filename) })
-    })
-
     // Add nitro auto-imports
-    addImports(["defineServerLoader", "defineFormActions", "actionResponse"].map(name => ({ name, from: resolve("./runtime/server/nitro") })))
-    // Add h3 auto-imports
-    addImports(["getFormData"].map(name => ({ name, from: resolve("./runtime/server/h3") })))
+    addImports(serverUtilities.map(name => ({ name, from: resolve("./runtime/server/nitro") })))
 
     // 4. Local variables and setup
     const loaderTypesFilename = "types/loader-types.d.ts" as const
@@ -87,21 +81,8 @@ export default defineNuxtModule({
     await fsp.mkdir(loaderDirectoryPath, { recursive: true })
     await fsp.writeFile(`${loaderDirectoryPath}/.gitignore`, "*")
 
-    function getLoaderCache() {
-      type CacheValue = [NitroEventHandler, { name: string; filePath: string; url: string }]
-      const loaderCache = new Map <string, CacheValue >()
-      return {
-        set: (routeName: string, value: CacheValue) => {
-          loaderCache.set(routeName, value)
-        },
-        has: (url: string) => loaderCache.has(url),
-        keys: () => loaderCache.keys(),
-        values: () => loaderCache.values(),
-        entries: () => loaderCache.entries()
-      }
-    }
-    const loaderCache = getLoaderCache()
-    const actionCache = new Map<string, [NitroEventHandler & { formAction: boolean }]>()
+    const loaderCache = new Map<string, [NitroEventHandler, { name: string; filePath: string; url: string }] >()
+    const actionCache = new Map<string, [NitroEventHandler]>()
 
     const addLoaderTypes = () => {
       const loaders = () => Array.from(loaderCache.values())
@@ -116,7 +97,7 @@ export default defineNuxtModule({
           type LoaderUrl = ${l.map(l => `"${l[1].url}"`).join(" | ")}
 
           type LoaderName = ${l.map(l => `"${l[1].name}"`).join(" | ")}
-          
+
           ${l.map(l => `type Loader${pascalCase(l[1].name)} = typeof import("${l[1].filePath}").default`).join("\n")}
 
           export interface Loaders {
@@ -136,7 +117,7 @@ export default defineNuxtModule({
         const file = await loadFile(actionPath)
         if (file.exports.default) {
           const route = `/${routeName}`
-          actionCache.set(routeName, [{ route, handler: actionPath, formAction: true }])
+          actionCache.set(routeName, [{ route, method: "post", handler: actionPath }])
         }
 
         // 6. defineServerLoader
@@ -185,7 +166,7 @@ export default defineNuxtModule({
     async function addAction(handler: string, routeName: string, route: string) {
       if (!actionCache.has(routeName)) {
         logger.info(`[form-actions] {action} '${handler}' ...`)
-        actionCache.set(routeName, [{ route, handler, lazy: true, formAction: true }])
+        actionCache.set(routeName, [{ route, method: "post", handler, lazy: true }])
       }
       for (const [path, [handler]] of actionCache.entries()) {
         if (useNitro().options.handlers.some(h => h.handler === path)) continue // Skip if already added.
