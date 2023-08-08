@@ -1,3 +1,17 @@
+# [0.2.0-beta.0](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.1.0...v0.2.0-beta.0) (2023-08-08)
+
+
+### Bug Fixes
+
+* add vueuse dependency ([#28](https://github.com/Hebilicious/form-actions-nuxt/issues/28)) ([49fdaf0](https://github.com/Hebilicious/form-actions-nuxt/commit/49fdaf0ba24f237c9e285d06b061697f9cf79136))
+
+
+### Features
+
+* implement with official nitro ([#26](https://github.com/Hebilicious/form-actions-nuxt/issues/26)) ([27bf50f](https://github.com/Hebilicious/form-actions-nuxt/commit/27bf50fd0985b641eab40b31ee7f4fcd9b3ee816))
+
+
+
 # [0.1.0](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.0.10...v0.1.0) (2023-07-15)
 
 
