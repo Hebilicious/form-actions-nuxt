@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  h3: ^1.8.0-rc.3
+  h3: 1.8.0-rc.3
   nitropack: 2.5.2
   nuxt: 3.6.5
 
@@ -97,6 +97,9 @@ importers:
       magicast:
         specifier: ^0.2.10
         version: 0.2.10
+      nitropack:
+        specifier: 2.5.2
+        version: 2.5.2
       nuxt:
         specifier: ^3.6.5
         version: 3.6.5(@types/node@18.17.3)(eslint@8.46.0)(rollup@3.27.2)(typescript@5.1.6)
@@ -123,7 +126,7 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)
       h3:
-        specifier: ^1.8.0-rc.3
+        specifier: 1.8.0-rc.3
         version: 1.8.0-rc.3
       nitropack:
         specifier: 2.5.2
@@ -145,7 +148,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       h3:
-        specifier: ^1.8.0-rc.3
+        specifier: 1.8.0-rc.3
         version: 1.8.0-rc.3
       nitropack:
         specifier: 2.5.2
@@ -162,7 +165,7 @@ importers:
   test/fixtures/basic:
     dependencies:
       h3:
-        specifier: ^1.8.0-rc.3
+        specifier: 1.8.0-rc.3
         version: 1.8.0-rc.3
       nitropack:
         specifier: 2.5.2

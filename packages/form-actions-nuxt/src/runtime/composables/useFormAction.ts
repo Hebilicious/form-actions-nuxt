@@ -4,13 +4,13 @@ import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
 import { createError, navigateTo, useRoute } from "#imports"
 import type { LoaderName, Loaders, MultiWatchSources } from "#build/types/loader-types.d.ts"
 
-/**
- * The result ref can be manipulated directly.
- */
-type UpdateFunction<N extends LoaderName> = (args: UpdateArguments<N>) => void
-interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
+interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; watch?: MultiWatchSources }
 
 type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
+
+type UpdateFunction<N extends LoaderName> = (args: UpdateArguments<N>) => void
+
+interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
 interface ActionFunctionArgs<N extends LoaderName> {
   /**
    * Cancel the default submission.
@@ -69,7 +69,7 @@ interface ErrorRef {
  * - Refresh the loader
  * - Handle CSR navigation / error
  */
-export async function useFormAction<Name extends LoaderName>({ run, loader, watch }: { run?: ActionFunction<Name>; loader?: Name; watch?: MultiWatchSources } = {}) {
+export async function useFormAction<Name extends LoaderName>({ run, loader, watch }: UseFormAction<Name> = {}) {
   const form = ref<HTMLFormElement>()
   const formResponse = ref<Record<string, any>>({})
   const actionResponse = ref<Record<string, any>>({})

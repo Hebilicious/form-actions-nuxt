@@ -15,14 +15,15 @@ export const getLoaderUrl = (loader?: Loader) => loader === false ? "" : `/${NIT
  * @param loader Loader
  * @returns
  */
-export function useLoader<R extends LoaderName>(loader?: R | undefined | false, watch?: MultiWatchSources) {
-  const fetchNuxtLoader: FetchNuxtLoaderFunction<R> = async (url: string, watch?: MultiWatchSources) => {
+export function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, watch?: MultiWatchSources) {
+  const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, watch?: MultiWatchSources) => {
     const { data: result, refresh, pending, error } = await useFetch(url, { watch, immediate: true })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
   const load = useThrottleFn(async (loader?: Loader, watch?: MultiWatchSources) => {
     const url = getLoaderUrl(loader)
+    // @todo automatically detect if the loader doesn't exist.
     if (url.length > 0) return fetchNuxtLoader(url, watch)
     return { result: ref(null), refresh: () => {}, pending: ref(false), error: ref(null) }
   }, 75)
