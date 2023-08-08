@@ -9,7 +9,7 @@
   "devDependencies": {
     "@hebilicious/server-block-nuxt": "0.3.3",
     "@hebilicious/sfc-server-volar": "0.3.3",
-    "@nuxt/devtools": "^0.7.4",
+    "@nuxt/devtools": "^0.7.5",
     "h3": "^1.8.0-rc.3",
     "nitropack": "2.5.2",
     "nuxt": "3.6.5"
