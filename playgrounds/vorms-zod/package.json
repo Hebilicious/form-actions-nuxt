@@ -9,7 +9,7 @@
   "devDependencies": {
     "@nuxt/devtools": "^0.7.4",
     "@vorms/resolvers": "^1.1.0",
-    "h3": "^1.8.0-rc.3",
+    "h3": "^2.0.0",
     "nitropack": "2.5.2",
     "nuxt": "3.6.5",
     "zod": "^3.21.4"
