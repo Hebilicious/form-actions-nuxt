@@ -248,9 +248,40 @@ const { result } = await useLoader("books")
 </template>
 ```
 
+#### Using query parameters
+
+You can use route parameters in your server loaders.
+
+`/server/actions/books.ts`
+
+```ts
+export const loader = defineServerLoader(async (event) => {
+  // Use H3 helpers to grab the requests params
+  const params = getQuery(event)
+  return { books: ["title"], manybooks: [], params }
+})
+```
+
+`pages/books/[id].vue`
+
+```html
+<script setup lang="ts">
+const { result } = await useLoader("books")
+</script>
+
+<template>
+  <div>
+    <h1>Params</h1>
+    {{ result.params }} <!-- params will be typed like this : { id: string } -->
+  </div>
+</template>
+```
+
 Under the hood, server loaders will create regular Nitro server handlers, so they will _always_ run on the server.
 The returned data will be serialized and sent to the client, which means that while hydrating, they will run once.
-`useLoaders` and `useFormAction` use `useFetch` under the hood, which will handle caching.
+`useLoader` and `useFormAction` use `useFetch` under the hood, which will handle caching.
+`useLoader` 2nd argument and `useFormAction({ loaderOptions })` can be used to pass a subset of the supported `useFetch`
+options to the underlying `useFetch` call.
 
 ### Form Actions alongside Server Loaders
 
