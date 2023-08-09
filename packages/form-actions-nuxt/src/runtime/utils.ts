@@ -24,8 +24,14 @@ export function getLoaderRoute(path: string) {
 export const loaderTypesBefore = /* typescript */`
 import type { EventHandler } from "h3"
 import type { Ref, WatchSource } from "vue"
+import type { FetchError, SearchParameters } from "ofetch"
 
-export type MultiWatchSources = (WatchSource<unknown> | object)[]
+type MultiWatchSources = (WatchSource<unknown> | object)[]
+
+export type LoaderOptions = {
+  watch?: MultiWatchSources
+  params?: SearchParameters
+}
 
 type ExtractLoader<T> = ReturnType<T> extends Promise<infer U> ? U : never;` as const
 
@@ -42,4 +48,4 @@ type FetchResult<T> = {
   error: Ref<FetchError | null>
 }
 
-export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, watch?: MultiWatchSources) => Promise<FetchResult<Loaders[T]>>` as const
+export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: T, loaderOptions?: LoaderOptions) => Promise<FetchResult<Loaders[T]>>` as const

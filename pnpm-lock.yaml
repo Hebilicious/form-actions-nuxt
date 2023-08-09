@@ -120,11 +120,11 @@ importers:
   playgrounds/advanced:
     devDependencies:
       '@hebilicious/server-block-nuxt':
-        specifier: 0.3.3
-        version: 0.3.3(@hebilicious/sfc-server-volar@0.3.3)(h3@1.8.0-rc.3)(nitropack@2.5.2)(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)(vue@3.3.4)
+        specifier: 0.3.4
+        version: 0.3.4(@hebilicious/sfc-server-volar@0.3.4)(h3@1.8.0-rc.3)(nitropack@2.5.2)(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)(vue@3.3.4)
       '@hebilicious/sfc-server-volar':
-        specifier: 0.3.3
-        version: 0.3.3
+        specifier: 0.3.4
+        version: 0.3.4
       '@nuxt/devtools':
         specifier: ^0.7.5
         version: 0.7.5(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)
@@ -1025,8 +1025,8 @@ packages:
       - typescript
     dev: true
 
-  /@hebilicious/extract-sfc-block@0.3.3(vite@4.4.9)(vue@3.3.4):
-    resolution: {integrity: sha512-2h3E90Gt5xfb7zVNTY30pnL9pLTSufOoBe4fm8Fz2a2m0rvIfa1o3B+n5ua7OOsIXMlNrQJugAZ/ra+OL+WXeg==}
+  /@hebilicious/extract-sfc-block@0.3.4(vite@4.4.9)(vue@3.3.4):
+    resolution: {integrity: sha512-KwVHa/efuGUUs0hDG5gTSycREP8Psg+NYXJdI5PXqlg54RWGSQObQYjRSM1M/y6Kx2368SWTEE7Z4kJHiAGNbw==}
     dependencies:
       '@vitejs/plugin-vue': 4.2.3(vite@4.4.9)(vue@3.3.4)
       '@vue/shared': 3.3.4
@@ -1036,18 +1036,18 @@ packages:
       - vue
     dev: true
 
-  /@hebilicious/server-block-nuxt@0.3.3(@hebilicious/sfc-server-volar@0.3.3)(h3@1.8.0-rc.3)(nitropack@2.5.2)(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)(vue@3.3.4):
-    resolution: {integrity: sha512-gRdEQ8yJ+e/W9clt/LRuAtbGWTwSfuAZSQ/fxGq9szej1tMbolnlUo8yq7HCvtI+3vX2sP2O21erSPpe6AeqbQ==}
+  /@hebilicious/server-block-nuxt@0.3.4(@hebilicious/sfc-server-volar@0.3.4)(h3@1.8.0-rc.3)(nitropack@2.5.2)(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)(vue@3.3.4):
+    resolution: {integrity: sha512-mnZzxENJ6lMwGoG/sVmgxm3qSBsemYxvA6s1Yb4nZmiJwLKnORknVXlvlLypMNAeM5k59/DTG2W37usCs1N+vw==}
     requiresBuild: true
     peerDependencies:
-      '@hebilicious/sfc-server-volar': '*'
+      '@hebilicious/sfc-server-volar': latest
       h3: '*'
       nitropack: '*'
       nuxt: '*'
       vite: '*'
     dependencies:
-      '@hebilicious/extract-sfc-block': 0.3.3(vite@4.4.9)(vue@3.3.4)
-      '@hebilicious/sfc-server-volar': 0.3.3
+      '@hebilicious/extract-sfc-block': 0.3.4(vite@4.4.9)(vue@3.3.4)
+      '@hebilicious/sfc-server-volar': 0.3.4
       '@nuxt/kit': 3.6.5(rollup@3.27.2)
       consola: 3.2.3
       defu: 6.1.2
@@ -1063,8 +1063,8 @@ packages:
       - vue
     dev: true
 
-  /@hebilicious/sfc-server-volar@0.3.3:
-    resolution: {integrity: sha512-x5bqP7QsvMLvz5/76HwY+W/WUo07zsbChJ8fz+B4yrO75BjPXNrZU42FFcdAmiJLENJTdlGwWv69Fwxi1cQnug==}
+  /@hebilicious/sfc-server-volar@0.3.4:
+    resolution: {integrity: sha512-54Lu2uF2DcAs8s8R5/0QwrNAyvYHVkGeTAZjOluCiseSMdqvi6cPG2XJvIwDv4ftPA09a+wWgRZW/DqGXf3mAA==}
     dev: true
 
   /@humanwhocodes/config-array@0.11.10:

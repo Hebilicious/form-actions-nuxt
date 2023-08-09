@@ -5,9 +5,14 @@
  */
 
 import type { Ref, WatchSource } from "vue";
-import type { FetchError } from 'ofetch'
+import type { FetchError, SearchParameters } from "ofetch"
 
-export type MultiWatchSources = (WatchSource<unknown> | object)[]
+type MultiWatchSources = (WatchSource<unknown> | object)[]
+
+export type LoaderOptions = {
+  watch?: MultiWatchSources
+  params?: SearchParameters
+}
 
 type LoaderUrl = "/__loader/books" | "/__loader/stuff" | "/__loader/todos"
 
@@ -32,5 +37,5 @@ type FetchResult<T> = {
     pending: Ref<boolean>
     error: Ref<FetchError | null>
 }
-  
-export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: string, watch?: MultiWatchSources) => Promise<FetchResult<Loaders[T]>>
+
+export type FetchNuxtLoaderFunction<T extends LoaderName> = (url: string, loaderOptions?: LoaderOptions) => Promise<FetchResult<Loaders[T]>>
