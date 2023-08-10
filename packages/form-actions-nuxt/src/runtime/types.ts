@@ -1,14 +1,15 @@
 import { type Ref } from "vue"
 import type { LoaderName, LoaderOptions, Loaders } from "#build/types/loader-types.d.ts"
 
-export interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; loaderOptions?: LoaderOptions }
-
-export type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
-
 export type UpdateFunction<N extends LoaderName> = (args: UpdateArguments<N>) => void
 
-export interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
-export interface ActionFunctionArgs<N extends LoaderName> {
+interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
+
+export interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; loaderOptions?: LoaderOptions }
+
+type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
+
+interface ActionFunctionArgs<N extends LoaderName> {
   /**
    * Cancel the default submission.
    */

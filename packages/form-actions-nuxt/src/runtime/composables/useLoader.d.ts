@@ -1,5 +1,5 @@
-import type { FetchResult, Loaders, LoaderName, LoaderOptions } from "#build/types/loader-types.d.ts"
 import type { Ref } from "vue"
+import type { FetchResult, Loaders, LoaderName, LoaderOptions } from "#build/types/loader-types.d.ts"
 /**
  * Return data from a loader with type-safety.
  * @param loader Loader
