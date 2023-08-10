@@ -120,7 +120,7 @@ importers:
   playgrounds/advanced:
     devDependencies:
       '@hebilicious/form-actions-nuxt':
-        specifier: 0.2.0-beta.1
+        specifier: latest
         version: link:../../packages/form-actions-nuxt
       '@hebilicious/server-block-nuxt':
         specifier: 0.3.4
