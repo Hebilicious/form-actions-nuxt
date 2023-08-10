@@ -36,6 +36,7 @@
     "dts": "esno scripts/dts.ts",
     "readme": "esno scripts/readme.ts",
     "postbuild": "pnpm dts && pnpm readme",
+    "build:stub": "nuxt-build-module --stub",
     "build:module": "nuxt-build-module",
     "build": "rimraf dist && pnpm build:module && pnpm postbuild",
     "postinstall": "nuxi prepare",

@@ -4,7 +4,7 @@ import { NITRO_LOADER_PREFIX } from "../utils"
 import { useFetch, useRoute } from "#imports"
 import type { FetchNuxtLoaderFunction, LoaderName, LoaderOptions } from "#build/types/loader-types.d.ts"
 
-export type Loader = | LoaderName | undefined | false
+type Loader = | LoaderName | undefined | false
 
 const getLoaderName = (loaderName: LoaderName) => `/${NITRO_LOADER_PREFIX}/${loaderName}` as const
 const lastSubpath = (path: string) => path.split("/").pop() as string
@@ -17,7 +17,7 @@ export const getLoaderUrl = (loader: Loader) => validLoaderName(loader) ? getLoa
  * @param loader Loader
  * @returns
  */
-export function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, loaderOptions?: LoaderOptions) {
+export async function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, loaderOptions?: LoaderOptions) {
   const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, loaderOptions?: LoaderOptions) => {
     const { data: result, refresh, pending, error } = await useFetch(url, { immediate: true, params: useRoute().params, ...loaderOptions })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
