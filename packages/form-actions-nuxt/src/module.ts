@@ -54,6 +54,7 @@ export default defineNuxtModule({
 
     const serverUtilities = ["defineServerLoader", "defineFormActions", "actionResponse"]
 
+    // @todo add server import nuxt kit utility ?
     // 3. Add Module runtime and imports
     nuxt.hook("nitro:config", (nitroConfig) => {
       nitroConfig.alias = nitroConfig.alias || {}

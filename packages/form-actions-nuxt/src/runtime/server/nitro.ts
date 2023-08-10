@@ -1,7 +1,5 @@
 import { type EventHandler, type H3Event, createError, defineEventHandler, getQuery, getRequestHeader } from "h3"
-
-// import { NUXT_PE_HEADER } from "../utils" // @todo investigate bug with imports ?
-const NUXT_PE_HEADER = "x-nuxt-progressive-enhancement" as const
+import { NUXT_PE_HEADER } from "./utils"
 
 interface Actions {
   [key: string]: EventHandler
