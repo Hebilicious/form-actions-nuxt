@@ -19,7 +19,7 @@ export const getLoaderUrl = (loader: Loader) => validLoaderName(loader) ? getLoa
  */
 export async function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, loaderOptions?: LoaderOptions) {
   const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, loaderOptions?: LoaderOptions) => {
-    const { data: result, refresh, pending, error } = await useFetch(url, { immediate: true, params: useRoute().params, ...loaderOptions })
+    const { data: result, refresh, pending, error } = await useFetch(url, { key: url, immediate: true, params: useRoute().params, ...loaderOptions })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
