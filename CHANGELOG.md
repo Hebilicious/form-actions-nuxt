@@ -1,3 +1,12 @@
+# [0.2.0-beta.4](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.3...v0.2.0-beta.4) (2023-08-10)
+
+
+### Features
+
+* change loader prefix ([4233258](https://github.com/Hebilicious/form-actions-nuxt/commit/423325822beaa1e52e88b08c93b2449465f065ac))
+
+
+
 # [0.2.0-beta.3](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2023-08-10)
 
 
