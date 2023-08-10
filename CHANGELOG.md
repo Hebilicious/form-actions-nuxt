@@ -1,3 +1,12 @@
+# [0.2.0-beta.3](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.2...v0.2.0-beta.3) (2023-08-10)
+
+
+### Bug Fixes
+
+* useFetch hydration mismatches ([#36](https://github.com/Hebilicious/form-actions-nuxt/issues/36)) ([3a541cb](https://github.com/Hebilicious/form-actions-nuxt/commit/3a541cb62d23d77eaa6bd2c3e0bd5927fe208819))
+
+
+
 # [0.2.0-beta.2](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-08-10)
 
 
