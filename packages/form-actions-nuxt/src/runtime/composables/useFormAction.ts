@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from "vue"
-import { NUXT_PE_HEADER } from "../utils"
+import { NUXT_PE_HEADER } from "../server/utils"
 import type { ActionResponsePayload, ErrorRef, UpdateFunction, UseFormAction } from "../types"
 import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
 import { createError, navigateTo, useRoute } from "#imports"
