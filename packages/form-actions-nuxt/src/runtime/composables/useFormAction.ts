@@ -1,64 +1,9 @@
-import { type Ref, computed, reactive, ref } from "vue"
+import { computed, reactive, ref } from "vue"
 import { NUXT_PE_HEADER } from "../utils"
+import type { ActionResponsePayload, ErrorRef, UpdateFunction, UseFormAction } from "../types"
 import { getActionName, getLoaderUrl, useLoader } from "./useLoader"
 import { createError, navigateTo, useRoute } from "#imports"
-import type { LoaderName, LoaderOptions, Loaders } from "#build/types/loader-types.d.ts"
-
-interface UseFormAction<N extends LoaderName> { run?: ActionFunction<N>; loader?: N; loaderOptions?: LoaderOptions }
-
-type ActionFunction<N extends LoaderName> = (args: ActionFunctionArgs<N>) => void
-
-type UpdateFunction<N extends LoaderName> = (args: UpdateArguments<N>) => void
-
-interface UpdateArguments<N extends LoaderName> { result: Ref<Loaders[N]> }
-interface ActionFunctionArgs<N extends LoaderName> {
-  /**
-   * Cancel the default submission.
-   */
-  cancel: () => void
-  /**
-   * Handle optimistic updates
-   *
-   * @param update Update callback to update the result.
-   */
-  optimistic: (update: UpdateFunction<N>) => void
-  /**
-   * An object version of the `FormData` from this form
-   */
-  formData: Record<string, any>
-  /**
-   * The original submit event.
-   */
-  event: SubmitEvent
-  /**
-   * The name of the action.
-   */
-  action: string
-  /**
-   * The form element.
-   */
-  form: HTMLFormElement
-  /**
-   * The Element that submitted.
-   */
-  submitter: HTMLElement
-  /**
-   * The loader URL.
-   */
-  loader: string | undefined
-  /**
-   * The default submit function.
-   */
-  submitForm: () => Promise<void>
-}
-
-type ActionResponsePayload = Response & { _data: { data: Record<string, any>; action: Record<string, any> } }
-
-interface ErrorRef {
-  statusCode: number
-  statusMessage: string
-  data: any
-}
+import type { LoaderName } from "#build/types/loader-types.d.ts"
 
 /**
  * Use form action does the following :
@@ -71,8 +16,8 @@ interface ErrorRef {
  */
 export async function useFormAction<Name extends LoaderName>({ run, loader, loaderOptions }: UseFormAction<Name> = {}) {
   const form = ref<HTMLFormElement>()
-  const formResponse = ref<Record<string, any>>({})
-  const actionResponse = ref<Record<string, any>>({})
+  const formResponse = ref<Record<string, unknown>>({})
+  const actionResponse = ref<Record<string, unknown>>({})
   const cancelDefaultSubmit = ref(false)
   const error = ref<ErrorRef>()
 
@@ -83,8 +28,8 @@ export async function useFormAction<Name extends LoaderName>({ run, loader, load
     if (!response.headers.has(NUXT_PE_HEADER)) return
     const { data, action } = response?._data
     // console.log('Handling response ...', action, data)
-    actionResponse.value = action
-    formResponse.value = data
+    actionResponse.value = action ?? {}
+    formResponse.value = data ?? {}
     // CSR redirect
     if (action && action.redirect) navigateTo(action.redirect)
 

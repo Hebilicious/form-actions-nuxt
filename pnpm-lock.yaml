@@ -119,6 +119,9 @@ importers:
 
   playgrounds/advanced:
     devDependencies:
+      '@hebilicious/form-actions-nuxt':
+        specifier: latest
+        version: link:../../packages/form-actions-nuxt
       '@hebilicious/server-block-nuxt':
         specifier: 0.3.4
         version: 0.3.4(@hebilicious/sfc-server-volar@0.3.4)(h3@1.8.0-rc.3)(nitropack@2.5.2)(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)(vue@3.3.4)
@@ -144,6 +147,9 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(vue@3.3.4)
     devDependencies:
+      '@hebilicious/form-actions-nuxt':
+        specifier: latest
+        version: link:../../packages/form-actions-nuxt
       '@nuxt/devtools':
         specifier: ^0.7.5
         version: 0.7.5(nuxt@3.6.5)(rollup@3.27.2)(vite@4.4.9)
