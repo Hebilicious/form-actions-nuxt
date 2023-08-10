@@ -1,3 +1,13 @@
+# [0.2.0-beta.2](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2023-08-10)
+
+
+### Bug Fixes
+
+* add declaration files for composables ([#32](https://github.com/Hebilicious/form-actions-nuxt/issues/32)) ([c4fbd55](https://github.com/Hebilicious/form-actions-nuxt/commit/c4fbd5525db021aaa561e4483e9c097558ef93ba))
+* relative import in module server runtime ([#35](https://github.com/Hebilicious/form-actions-nuxt/issues/35)) ([f1e6a51](https://github.com/Hebilicious/form-actions-nuxt/commit/f1e6a5164c0672006356fe26f224bdeafddb4609))
+
+
+
 # [0.2.0-beta.1](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.1.0...v0.2.0-beta.1) (2023-08-09)
 
 
