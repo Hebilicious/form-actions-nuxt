@@ -233,7 +233,7 @@ export const loader = defineServerLoader(async () => {
 
 Use them with type-safety everywhere.
 
-`components/Books.ts`
+`components/Books.vue`
 
 ```html
 <script setup lang="ts">
