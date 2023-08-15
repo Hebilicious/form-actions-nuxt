@@ -16,17 +16,17 @@
   },
   "devDependencies": {
     "@antfu/ni": "^0.21.5",
-    "@hebilicious/eslint-config": "0.0.3-beta.2",
+    "@hebilicious/eslint-config": "0.0.3-beta.3",
     "@nuxt/test-utils": "^3.6.5",
-    "@types/node": "^18.17.3",
+    "@types/node": "^18.17.5",
     "bumpp": "^9.1.1",
     "conventional-changelog-cli": "^3.0.0",
-    "eslint": "8.46.0",
+    "eslint": "8.47.0",
     "esno": "^0.17.0",
     "fast-glob": "^3.3.1",
-    "lint-staged": "^13.2.3",
+    "lint-staged": "^13.3.0",
     "pnpm": "8.6.12",
-    "prettier": "^3.0.1",
+    "prettier": "^3.0.2",
     "rimraf": "^5.0.1",
     "simple-git-hooks": "^2.9.0",
     "taze": "^0.11.2",
@@ -36,7 +36,7 @@
     "vitest": "^0.34.1"
   },
   "resolutions": {
-    "h3": "1.8.0-rc.3",
+    "h3": "1.8.0",
     "nitropack": "2.5.2",
     "nuxt": "3.6.5"
   },
