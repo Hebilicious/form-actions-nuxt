@@ -10,9 +10,9 @@
     "@hebilicious/form-actions-nuxt": "latest",
     "@hebilicious/server-block-nuxt": "0.3.4",
     "@hebilicious/sfc-server-volar": "0.3.4",
-    "@nuxt/devtools": "^0.8.0",
-    "h3": "^1.8.0",
-    "nitropack": "2.5.2",
-    "nuxt": "3.6.5"
+    "@nuxt/devtools": "^0.8.2",
+    "h3": "^1.8.1",
+    "nitropack": "2.6.2",
+    "nuxt": "3.7.0"
   }
 }

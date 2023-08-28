@@ -8,12 +8,12 @@
   },
   "devDependencies": {
     "@hebilicious/form-actions-nuxt": "latest",
-    "@nuxt/devtools": "^0.8.0",
+    "@nuxt/devtools": "^0.8.2",
     "@vorms/resolvers": "^1.1.0",
-    "h3": "^1.8.0",
-    "nitropack": "2.5.2",
-    "nuxt": "3.6.5",
-    "zod": "^3.22.1"
+    "h3": "^1.8.1",
+    "nitropack": "2.6.2",
+    "nuxt": "3.7.0",
+    "zod": "^3.22.2"
   },
   "dependencies": {
     "@vorms/core": "^1.1.0"
