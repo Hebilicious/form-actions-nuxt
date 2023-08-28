@@ -1,3 +1,12 @@
+# [0.2.0-beta.5](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.4...v0.2.0-beta.5) (2023-08-28)
+
+
+### Bug Fixes
+
+* dynamic parameters route loaders ([#45](https://github.com/Hebilicious/form-actions-nuxt/issues/45)) ([7a26b49](https://github.com/Hebilicious/form-actions-nuxt/commit/7a26b493b2e5bf787167579415db6503895fa636))
+
+
+
 # [0.2.0-beta.4](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.3...v0.2.0-beta.4) (2023-08-10)
 
 
