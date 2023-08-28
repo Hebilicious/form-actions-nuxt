@@ -1,6 +1,6 @@
 export default defineFormActions({
   default: (event) => {
-    return actionResponse(event, { test: "test" })
+    return actionResponse(event, { test: "here" })
   }
 })
 

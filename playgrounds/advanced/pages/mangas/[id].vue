@@ -10,7 +10,7 @@ const { result } = await useLoader("mangas")
 
 <template>
   <div>
-    <h1>Mangas</h1>
+    <h1>Mangas Nested</h1>
     {{ result }}
   </div>
 </template>
