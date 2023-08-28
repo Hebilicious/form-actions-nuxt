@@ -31,7 +31,6 @@
     "taze": "^0.11.2",
     "turbo": "^1.10.13",
     "typescript": "^5.2.2",
-    "unbuild": "^1.2.1",
     "vitest": "^0.34.3"
   },
   "resolutions": {
