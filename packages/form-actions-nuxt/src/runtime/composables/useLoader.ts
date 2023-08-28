@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { useThrottleFn } from "@vueuse/core"
 import { NITRO_LOADER_PREFIX } from "../utils"
 import { useFetch, useRoute } from "#imports"
@@ -18,8 +18,10 @@ export const getLoaderUrl = (loader: Loader) => validLoaderName(loader) ? getLoa
  * @returns
  */
 export async function useLoader<Name extends LoaderName>(loader?: Name | undefined | false, loaderOptions?: LoaderOptions) {
+  const params = computed(() => useRoute().params)
+
   const fetchNuxtLoader: FetchNuxtLoaderFunction<Name> = async (url: string, loaderOptions?: LoaderOptions) => {
-    const { data: result, refresh, pending, error } = await useFetch(url, { key: url, immediate: true, params: useRoute().params, ...loaderOptions })
+    const { data: result, refresh, pending, error } = await useFetch(url, { key: url, immediate: true, params, ...loaderOptions })
     return { result, refresh, pending, error } // Because we're forcing the return, we get a static type here.
   }
 
