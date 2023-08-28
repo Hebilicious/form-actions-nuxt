@@ -5,7 +5,7 @@ const { result } = await useLoader("books")
 
 <template>
   <div>
-    <h1>Dynamic Books</h1>
+    <h1>Main Books</h1>
     {{ route.params }}
     {{ result }}
   </div>
