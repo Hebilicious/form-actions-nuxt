@@ -8,7 +8,7 @@ import { transform } from "esbuild"
 import { defu } from "defu"
 import { GENERATED_TEXT, NITRO_LOADER_PREFIX, addLoaderPrefix, getActionRoute, getLoaderRoute, loaderTypesAfter, loaderTypesBefore } from "./runtime/utils"
 
-export async function* walkFiles(dir: string): AsyncGenerator<string> {
+async function* walkFiles(dir: string): AsyncGenerator<string> {
   const entries = await fsp.readdir(dir, { withFileTypes: true })
   for (const entry of entries) {
     const res = pathResolve(dir, entry.name)
@@ -17,7 +17,7 @@ export async function* walkFiles(dir: string): AsyncGenerator<string> {
   }
 }
 
-export async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>>, loaderDirectoryPath = "", routeName = "") {
+async function writeLoader(file: Awaited<ReturnType<typeof loadFile<any>>>, loaderDirectoryPath = "", routeName = "") {
   file.exports.default = file.exports.loader
   delete file.exports.loader
   // If we have relative imports, we add one level of nesting because we move
