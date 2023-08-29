@@ -2,7 +2,7 @@ import { type EventHandler, type H3Event, createError, defineEventHandler, getQu
 import { NUXT_PE_HEADER } from "./utils"
 
 interface Actions {
-  [key: string]: EventHandler
+  [key: string]: EventHandler | undefined
 }
 type ResponseAction = { error: { message?: string; code?: number } } | { redirect: string }
 
@@ -20,11 +20,20 @@ export function defineServerLoader<T>(loader: Loader<T>) {
   return defineEventHandler(event => loader(event))
 }
 
+const actionNotFound = ({ actions, action }: { actions: Actions; action: string }) =>
+  createError({
+    statusCode: 500,
+    statusMessage: process.dev
+      ? `The action \`${action}\` wasn't found in the actions. The following actions are available on this path: ${Object.keys(actions).join(", ")}`
+      : "Internal Server Error."
+  })
+
 // Nitro : This register Post only routes for the form actions
 export function defineFormActions(actions: Actions) {
   return (event: H3Event) => {
     const action = Object.keys(getQuery(event))[0]
     const handler = action ? actions[action] : Object.values(actions)[0]
+    if (!handler) throw actionNotFound({ actions, action })
     return handler(event)
   }
 }
