@@ -1,3 +1,12 @@
+## [0.2.1](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0...v0.2.1) (2023-08-29)
+
+
+### Bug Fixes
+
+* add h3 send redirect ([#51](https://github.com/Hebilicious/form-actions-nuxt/issues/51)) ([78a20a3](https://github.com/Hebilicious/form-actions-nuxt/commit/78a20a33849eb0f1b98e7024f9fd5ecd37527347))
+
+
+
 # [0.2.0](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0-beta.5...v0.2.0) (2023-08-28)
 
 
