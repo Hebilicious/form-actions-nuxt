@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'playgrounds/**'
+      - '.github/workflows/playgrounds.yaml'
   workflow_dispatch:
 
 jobs:
@@ -21,7 +22,7 @@ jobs:
 
     - name: Sync directories to child repo branches
       run: |
-        git remote add child_repo https://${{ github.token }}/Hebilicious/form-actions-nuxt-examples.git
+        git remote add child_repo https://github.com/Hebilicious/form-actions-nuxt-examples.git
         for dir in $(find playgrounds -maxdepth 1 -mindepth 1 -type d); do
           branch_name=$(basename $dir)
           git subtree split --prefix=$dir -b $branch_name
