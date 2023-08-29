@@ -12,7 +12,7 @@ export function getActionRoute(actionPath: string) {
 export const addLoaderPrefix = (route: string) => `/${NITRO_LOADER_PREFIX}/${route}`
 
 export function getLoaderRoute(path: string) {
-  const regex = /\/server\/\.generated\/\.loader\/(.*?)\.get\.ts/
+  const regex = /server\/\.generated\/\.loader\/(.*?)\.get\.ts/
   const loaderRoute = regex.exec(path)?.[1]
   if (!loaderRoute) throw new Error(`Could not parse loader route from ${path}`)
   return addLoaderPrefix(loaderRoute)
