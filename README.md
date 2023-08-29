@@ -50,41 +50,9 @@ export default defineNuxtConfig({
 })
 ```
 
-### Use the latest versions of Nuxt, Nitro and H3
+### Use a recent version of Nuxt
 
-This module has been tested with the following dependencies:
-
-- Nuxt 3.6.5+
-- H3 1.8.0.rc-3 +
-- Nitro 2.5.2
-
-You can use your package manager to enforce these versions :
-
-For `npm` :
-
-```json
-{
-  "overrides": {
-    "h3": "1.8.0-rc.3",
-    "nitropack": "2.5.2",
-    "nuxt": "3.6.5"
-  }
-}
-```
-
-For `pnpm` and `yarn` :
-
-```json
-{
-  "resolutions": {
-    "h3": "1.8.0-rc.3",
-    "nitropack": "2.5.2",
-    "nuxt": "3.6.5"
-  }
-}
-```
-
-_Note that for monorepos this must be done at the root of your repository._
+This module requires Nuxt 3.7.0. If you must use an older Nuxt version, this module should work as long as you have Nitro > 2.6.0 and h3 > 1.8.0.
 
 ### Why is this module not included in Nuxt by default ?
 
