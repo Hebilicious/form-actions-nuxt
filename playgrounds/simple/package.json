@@ -1,5 +1,5 @@
 {
-  "name": "vorms-zod-playground",
+  "name": "simple-playground",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
@@ -9,9 +9,6 @@
   "devDependencies": {
     "@hebilicious/form-actions-nuxt": "latest",
     "@nuxt/devtools": "^0.8.2",
-    "@vorms/core": "^1.1.0",
-    "@vorms/resolvers": "^1.1.0",
-    "nuxt": "3.7.0",
-    "zod": "^3.22.2"
+    "nuxt": "3.7.0"
   }
 }
