@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'playgrounds/**'
-      - '.github/workflows/playgrounds.yaml'
+      - .github/workflows/playgrounds.yaml
   workflow_dispatch:
 
 jobs:
@@ -12,21 +12,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Git config
-      run: |
-        git config --global user.name "GitHub Actions Bot"
-        git config --global user.email "actions@github.com"
+      - name: Set up Git config
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
 
-    - name: Sync directories to child repo branches
-      run: |
-        git remote add child_repo https://github.com/Hebilicious/form-actions-nuxt-examples.git
-        for dir in $(find playgrounds -maxdepth 1 -mindepth 1 -type d); do
-          branch_name=$(basename $dir)
-          git subtree split --prefix=$dir -b $branch_name
-          git push --force child_repo $branch_name:$branch_name
-        done
-      env:
-        github.token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sync directories to child repo branches
+        run: |
+          git remote add child_repo https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/form-actions-nuxt-examples
+          for dir in $(find playgrounds -maxdepth 1 -mindepth 1 -type d); do
+            branch_name=$(basename $dir)
+            git subtree split --prefix=$dir -b $branch_name
+            git push --force child_repo $branch_name:$branch_name
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.HEB_TOKEN }}
