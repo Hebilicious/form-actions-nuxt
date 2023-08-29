@@ -22,7 +22,7 @@ const { enhance, data } = await useFormAction()
       <input name="password" type="password">
     </label>
     <button>Log in</button>
-    <button formaction="advanced-login?register">
+    <button formaction="login?register">
       Register
     </button>
   </form>

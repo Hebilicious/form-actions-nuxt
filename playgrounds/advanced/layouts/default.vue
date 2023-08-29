@@ -9,7 +9,7 @@ const pages = [
   { name: "Todos", path: "/todos" },
   { name: "Login", path: "/login" },
   { name: "Advanced Login", path: "/advanced-login" },
-  { name: "Nested:Test", path: "/nested/test" },
+  { name: "Nested:Here", path: "/nested/here" },
   { name: "Nested:NestedAgain:Books", path: "/nested/nested-again/books" },
   { name: "Nested:NestedAgain:Stuff", path: "/nested/nested-again/stuff" }
 ]
