@@ -22,7 +22,7 @@ jobs:
 
       - name: Sync directories to child repo branches
         run: |
-          git remote add child_repo https://Hebilicious:${{ secrets.GITHUB_TOKEN }}@github.com/Hebilicious/form-actions-nuxt-examples
+          git remote add child_repo https://${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/Hebilicious/form-actions-nuxt-examples
           for dir in $(find playgrounds -maxdepth 1 -mindepth 1 -type d); do
             branch_name=$(basename $dir)
             git subtree split --prefix=$dir -b $branch_name
