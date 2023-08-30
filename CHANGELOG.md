@@ -1,3 +1,18 @@
+## [0.2.2](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.1...v0.2.2) (2023-08-30)
+
+
+### Bug Fixes
+
+* correct regex match for getLoaderRoute ([a257c23](https://github.com/Hebilicious/form-actions-nuxt/commit/a257c232d9555a76fe912b59bb65bfa0ca3ad506))
+
+
+### Features
+
+* add a simple playground ([#61](https://github.com/Hebilicious/form-actions-nuxt/issues/61)) ([3f48956](https://github.com/Hebilicious/form-actions-nuxt/commit/3f489560ca5ed4fb5135e6388bd892996224fd11))
+* improve error message for action not found ([#57](https://github.com/Hebilicious/form-actions-nuxt/issues/57)) ([70f8641](https://github.com/Hebilicious/form-actions-nuxt/commit/70f8641cc6d485995b78135f59b623b3ef9723e4))
+
+
+
 ## [0.2.1](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.0...v0.2.1) (2023-08-29)
 
 
