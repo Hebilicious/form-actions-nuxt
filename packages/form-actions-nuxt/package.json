@@ -34,6 +34,7 @@
   ],
   "scripts": {
     "readme": "bun scripts/readme.ts",
+    "prebuild": "bun postinstall",
     "postbuild": "bun readme",
     "build:stub": "nuxt-build-module --stub",
     "build:module": "nuxt-build-module",
@@ -57,6 +58,5 @@
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.5.0"
-  },
-  "trustedDependencies": ["nuxt"]
+  }
 }
