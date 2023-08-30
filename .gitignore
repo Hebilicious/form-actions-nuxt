@@ -3,3 +3,4 @@ dist
 .nuxt
 .eslintcache
 .turbo
+.output

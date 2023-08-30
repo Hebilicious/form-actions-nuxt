@@ -32,7 +32,11 @@ const actionNotFound = ({ actions, action }: { actions: Actions; action: string 
 export function defineFormActions(actions: Actions) {
   return (event: H3Event) => {
     const action = Object.keys(getQuery(event))[0]
-    const handler = action ? actions[action] : Object.values(actions)[0]
+    const handler = action
+      ? actions[action]
+      : "default" in actions
+        ? actions.default
+        : Object.values(actions)[0]
     if (!handler) throw actionNotFound({ actions, action })
     return handler(event)
   }

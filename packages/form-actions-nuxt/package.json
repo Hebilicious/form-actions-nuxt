@@ -33,11 +33,12 @@
     "*.mjs"
   ],
   "scripts": {
-    "readme": "esno scripts/readme.ts",
-    "postbuild": "pnpm readme",
+    "readme": "bun scripts/readme.ts",
+    "prebuild": "bun postinstall",
+    "postbuild": "bun readme",
     "build:stub": "nuxt-build-module --stub",
     "build:module": "nuxt-build-module",
-    "build": "rimraf dist && pnpm build:module && pnpm postbuild",
+    "build": "rimraf dist && bun build:module",
     "postinstall": "nuxi prepare",
     "dev": "nuxi dev"
   },

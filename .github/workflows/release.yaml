@@ -27,16 +27,20 @@ jobs:
           cache: pnpm
           registry-url: "https://registry.npmjs.org"
 
-      - run: npx changelogithub
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - run: bunx changelogithub
         continue-on-error: false
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Install Dependencies
-        run: pnpm i
+      - name: Install
+        run: bun install
 
-      - name: PNPM build
-        run: pnpm run build
+      - name: Build
+        run: bun run build
 
       - name: Publish to NPM
         run: pnpm -r publish --access public --no-git-checks
