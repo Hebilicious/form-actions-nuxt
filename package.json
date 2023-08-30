@@ -9,7 +9,7 @@
     "lint": "eslint --cache .",
     "lint:fix": "bun run lint --fix",
     "docs:dev": "bun nuxt dev docs",
-    "docs:build": "cd docs && nuxt generate",
+    "docs:build": "cd docs && nuxt build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "bun lint:fix && bumpp -r -x \"bun run changelog\" --all",
     "typecheck": "tsc --noEmit",
@@ -33,7 +33,7 @@
     "vitest": "^0.34.3"
   },
   "resolutions": {
-    "micromark": "3.2.0"
+    "micromark": "4.0.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

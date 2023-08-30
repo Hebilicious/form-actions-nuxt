@@ -30,11 +30,19 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "cloudflare-pages",
+    static: true,
+    routeRules: {
+      "/": { prerender: false }
+    },
     prerender: {
       // Waiting for https://github.com/nuxt/nuxt/issues/22763
+      crawlLinks: true,
       concurrency: 1,
       routes: ["/api/search.json"]
     }
+  },
+  experimental: {
+    payloadExtraction: true
   },
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558
@@ -49,8 +57,5 @@ export default defineNuxtConfig({
           comp.global = "sync"
       }
     }
-  },
-  experimental: {
-    payloadExtraction: true
   }
 })
