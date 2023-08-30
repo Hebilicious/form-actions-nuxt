@@ -2,8 +2,8 @@
 definePageMeta({
   colorMode: "dark"
 })
-const title = "Nuxt Image: Optimized Images for your Nuxt Apps"
-const description = "Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN."
+const title = "Form Action Nuxt"
+const description = "A Nuxt module that enables Form actions and Server loaders paradigms for Nuxt.js"
 useSeoMeta({
   titleTemplate: "",
   title,
@@ -13,13 +13,8 @@ useSeoMeta({
   ogImage: "https://image.nuxt.com/social-card.png",
   twitterImage: "https://image.nuxt.com/social-card.png"
 })
-const source = ref("npm i @nuxt/image@rc")
+const source = ref("npm i @hebilicious/form-action-nuxt")
 const { copy, copied } = useClipboard({ source })
-
-const providers = ["cloudflare", "cloudimage", "cloudinary", "directus", "edgio", "fastly", "glide", "gumlet", "imageengine", "imagekit", "imgix", "ipx", "netlify", "prepr", "prismic", "sanity", "storyblok", "strapi", "twicpics", "unsplash", "uploadcare", "vercel"]
-// Disabling because svg to png does not work now with SSG
-// Related issue: https://github.com/unjs/ipx/issues/160
-// const img = useImage()
 </script>
 
 <template>
@@ -27,10 +22,10 @@ const providers = ["cloudflare", "cloudimage", "cloudinary", "directus", "edgio"
   <ULandingHero direction="horizontal" :ui="{ container: 'flex lg:gap-12' }">
     <Illustration class="hidden lg:block h-64" />
     <template #title>
-      Optimized Images for your <span class="text-primary-400">Nuxt Apps</span>
+      Form Actions and Server Loaders for your <span class="text-primary-400">Nuxt Apps</span>
     </template>
     <template #description>
-      Plug-and-play image optimization for Nuxt apps. Resize and transform your images using built-in optimizer or your favorite images CDN.
+      A Nuxt module that enables Form actions and Server loaders paradigms for Nuxt.js
     </template>
     <template #links>
       <UButton to="/get-started/installation" icon="i-ph-rocket-launch-duotone" size="xl">
@@ -60,51 +55,28 @@ const providers = ["cloudflare", "cloudimage", "cloudinary", "directus", "edgio"
   </UContainer>
   <ULandingSection>
     <template #title>
-      Get the most of your images with<br><span class="text-primary-400">dynamic features</span>
+      Handle form submissions with <br><span class="text-primary-400">simplicity.</span>
     </template>
     <UPageGrid>
-      <UPageCard to="/usage/nuxt-img" icon="i-ph-image-duotone">
-        <template #title>
-          Drop-in Replacement
-        </template>
-        Leverage <code>&lt;nuxt-img&gt;</code> and <code>&lt;nuxt-picture&gt;</code> drop-in replacement for the native <code>&lt;img&gt;</code> and <code>&lt;picture&gt;</code> elements.
+      <UPageCard to="/usage/form-actions" title="Form Actions" icon="i-ph-image-duotone">
+        Learn how to handle form submissions with Form Actions.
       </UPageCard>
-      <UPageCard to="/providers/ipx" title="Built-in resizer" icon="i-ph-crop">
-        Unlock the power of our built-in image resizer and transformer with IPX.
+      <UPageCard to="/usage/server-loaders" title="Server Loaders" icon="i-ph-crop">
+        Learn how to use Server Loaders to simplify your data fetching.
       </UPageCard>
-      <UPageCard to="/get-started/providers" title="20+ Providers Supported" icon="i-ph-plug-duotone">
-        Choose over 20 image providers to optimize your images, no vendor lock-in.
+      <UPageCard to="/usage/advanced" title="Advanced" icon="i-ph-magic-wand-duotone">
+        Multiple forms ? Optimistic updates ? We got you covered.
       </UPageCard>
-      <UPageCard to="/usage/nuxt-img#sizes" title="Responsive Ready" icon="i-ph-frame-corners">
-        Nuxt Image dynamically generates responsive sizes. Your visuals adapt effortlessly to every screen size, offering a seamless user experience.
+      <UPageCard to="/integrations/validation-libraries" title="3rd party Integrations" icon="i-ph-plug-duotone">
+        Integrate with Zod, Valibot, Vorms and all your favourite libraries.
       </UPageCard>
-      <UPageCard to="/usage/nuxt-img#format" title="Future-Proof Formats" icon="i-ph-magic-wand-duotone">
-        Embrace the future of visual optimization with support for modern formats like webp and avif.
+      <UPageCard to="/integrations/server-block" title="Server Block" icon="i-ph-frame-corners">
+        Want to combine Form Actions and Loaders with the Server Block module ? You can.
       </UPageCard>
-      <UPageCard to="/get-started/installation" title="Streamlined Performance" icon="i-ph-rocket-launch-duotone">
-        Deliver visually stunning content with lightning-fast load times, keeping your audience engaged and delighted.
+      <UPageCard to="/get-started/installation" title="Powerful Paradigms" icon="i-ph-rocket-launch-duotone">
+        Form Actions are powerful and pleasant to work with.
       </UPageCard>
     </UPageGrid>
-  </ULandingSection>
-  <ULandingSection align="left">
-    <template #title>
-      Choose your<br><span class="text-primary-400">favorite provider</span>
-    </template>
-    <template #description>
-      Nuxt Image supports multiple providers for high performance.<br>
-      Providers are integrations between Nuxt Image and third-party image transformation services. Each provider is responsible for generating correct URLs for that image transformation service. Nuxt Image can also be configured to work with any external image transformation service.
-    </template>
-    <template #links>
-      <UButton to="/get-started/installation" icon="i-ph-rocket-launch-duotone" size="xl">
-        Get Started
-      </UButton>
-    </template>
-    <div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-6 gap-4 sm:gap-5 lg:gap-6">
-      <NuxtLink v-for="(provider, index) in providers" :key="index" :to="`/providers/${provider}`" class="block lg:hover:scale-110 transition">
-        <!-- <NuxtImg :placeholder="img(`/providers/${provider}.svg`, { h: 10, f: 'png', blur: 2, q: 50 })" :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" /> -->
-        <NuxtImg :src="`/providers/${provider}.svg`" :alt="provider" width="64" height="64" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl" loading="lazy" />
-      </NuxtLink>
-    </div>
   </ULandingSection>
 </template>
 

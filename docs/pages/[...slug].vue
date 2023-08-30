@@ -13,12 +13,11 @@ const { data: surround } = await useAsyncData(`docs-${route.path}-surround`, () 
   .where({ _extension: "md", navigation: { $ne: false } })
   .findSurround(route.path.endsWith("/") ? route.path.slice(0, -1) : route.path)
 )
-const isProvider = page.value._path.startsWith("/providers")
 
 useSeoMeta({
-  titleTemplate: isProvider ? "%s - Nuxt Image Providers" : "%s - Nuxt Image",
+  titleTemplate: "Form Actions Nuxt Documentation",
   title: page.value.title,
-  ogTitle: `${page.value.title} - ${isProvider ? "Nuxt Image Providers" : "Nuxt Image"}`,
+  ogTitle: `${page.value.title} - Form Actions`,
   description: page.value.description,
   ogDescription: page.value.description
 })
@@ -27,7 +26,7 @@ defineOgImage({
   component: "Docs",
   title: page.value.title,
   description: page.value.description,
-  image: isProvider ? `${page.value._path}.svg` : ""
+  image: ""
 })
 
 const headline = computed(() => findPageHeadline(page.value))
@@ -35,13 +34,13 @@ const communityLinks = computed(() => [
   {
     icon: "i-ph-pen-duotone",
     label: "Edit this page",
-    to: `https://github.com/nuxt/image/edit/main/docs/content/${page?.value?._file}`,
+    to: `https://github.com/Hebilicious/form-actions-nuxt/edit/main/docs/content/${page?.value?._file}`,
     target: "_blank"
   },
   {
     icon: "i-ph-shooting-star-duotone",
     label: "Star on GitHub",
-    to: "https://github.com/nuxt/image",
+    to: "https://github.com/Hebilicious/form-actions-nuxt",
     target: "_blank"
   },
   {
@@ -53,7 +52,7 @@ const communityLinks = computed(() => [
   {
     icon: "i-ph-hand-heart-duotone",
     label: "Become a Sponsor",
-    to: "https://github.com/sponsors/nuxt",
+    to: "https://github.com/sponsors/Hebilicious",
     target: "_blank"
   },
   {

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  extends: process.env.NUXT_ELEMENTS_PATH || "@nuxthq/elements",
+  extends: "@nuxthq/elements",
   modules: [
     "@nuxt/image",
     "@nuxt/content",
