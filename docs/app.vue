@@ -22,9 +22,9 @@ const links = [{
   icon: "i-heroicons-rocket-launch-solid",
   to: "https://github.com/Hebilicious/form-actions-nuxt/releases",
   target: "_blank"
-  }]
+}]
 
-  const socialLinks = [{
+const socialLinks = [{
   label: "Nuxt Website",
   icon: "i-simple-icons-nuxtdotjs",
   to: "https://nuxt.com"
@@ -36,7 +36,7 @@ const links = [{
   label: "Form Actions Nuxt on GitHub",
   icon: "i-simple-icons-github",
   to: "https://github.com/Hebilicious/form-actions-nuxt"
-    }]
+}]
 
 const { data: files } = useLazyFetch("/api/search.json", {
   default: () => [],
