@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "#imports": ["./packages/form-actions-nuxt/node_modules/nuxt/app.d.ts"],
-      "#app": ["./packages/form-actions-nuxt/node_modules/nuxt/dist/app"],
+      "#imports": ["./node_modules/nuxt/app.d.ts"],
+      "#app": ["./node_modules/nuxt/dist/app"],
       "#build/types/loader-types.d.ts": ["./packages/form-actions-nuxt/src/runtime/virtual:loader-types.d.ts"]
     }
   },

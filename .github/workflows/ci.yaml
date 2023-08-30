@@ -15,20 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Set node
-        uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: 20
-          cache: pnpm
+          bun-version: latest
 
       - name: Install
-        run: pnpm i
+        run: bun install
 
       - name: Lint
-        run: pnpm lint
+        run: bun run lint
 
   test:
     runs-on: ubuntu-latest
@@ -36,23 +31,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Set node
-        uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: 18
-          cache: pnpm
+          bun-version: latest
 
       - name: Install
-        run: pnpm i
+        run: bun install
 
       - name: Build
-        run: pnpm build
+        run: bun run build
 
       - name: Test
-        run: pnpm test
+        run: bun run test
 
       - name: Typecheck
-        run: pnpm typecheck
+        run: bun run typecheck

@@ -1,6 +1,0 @@
-packages:
-  - docs
-  - docs-working
-  - packages/**
-  - playgrounds/**
-  - test/**
