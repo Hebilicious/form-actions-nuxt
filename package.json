@@ -32,6 +32,9 @@
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   },
+  "resolutions": {
+    "micromark": "3.2.0"
+  },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
