@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: "cloudflare-pages-static",
+    preset: "cloudflare-pages",
     prerender: {
       // Waiting for https://github.com/nuxt/nuxt/issues/22763
       concurrency: 1,
