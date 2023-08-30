@@ -57,5 +57,6 @@
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.5.0"
-  }
+  },
+  "trustedDependencies": ["nuxt"]
 }
