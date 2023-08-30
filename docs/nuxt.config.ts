@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: true, timeline: true },
   extends: "@nuxthq/elements",
   modules: [
     "@nuxt/image",
@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
+    preset: "cloudflare-pages-static",
     prerender: {
       // Waiting for https://github.com/nuxt/nuxt/issues/22763
       concurrency: 1,
@@ -48,5 +49,8 @@ export default defineNuxtConfig({
           comp.global = "sync"
       }
     }
+  },
+  experimental: {
+    payloadExtraction: true
   }
 })

@@ -58,10 +58,10 @@ const { copy, copied } = useClipboard({ source })
       Handle form submissions with <br><span class="text-primary-400">simplicity.</span>
     </template>
     <UPageGrid>
-      <UPageCard to="/usage/form-actions" title="Form Actions" icon="i-ph-image-duotone">
+      <UPageCard to="/usage/form-actions" title="Form Actions" icon="i-ph-codesandbox-logo">
         Learn how to handle form submissions with Form Actions.
       </UPageCard>
-      <UPageCard to="/usage/server-loaders" title="Server Loaders" icon="i-ph-crop">
+      <UPageCard to="/usage/server-loaders" title="Server Loaders" icon="i-ph-download">
         Learn how to use Server Loaders to simplify your data fetching.
       </UPageCard>
       <UPageCard to="/usage/advanced" title="Advanced" icon="i-ph-magic-wand-duotone">

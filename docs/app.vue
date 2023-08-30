@@ -12,20 +12,32 @@ useHead({
     lang: "en"
   }
 })
+
 const links = [{
   label: "Documentation",
   icon: "i-heroicons-book-open-solid",
   to: "/get-started/installation"
 }, {
-  label: "Playground",
-  icon: "i-ph-play-duotone",
-  to: "/playground"
-}, {
   label: "Releases",
   icon: "i-heroicons-rocket-launch-solid",
-  to: "https://github.com/nuxt/image/releases",
+  to: "https://github.com/Hebilicious/form-actions-nuxt/releases",
   target: "_blank"
-}]
+  }]
+
+  const socialLinks = [{
+  label: "Nuxt Website",
+  icon: "i-simple-icons-nuxtdotjs",
+  to: "https://nuxt.com"
+}, {
+  label: "Hebilicious on X",
+  icon: "i-simple-icons-x",
+  to: "https://x.com/its_hebilicious"
+}, {
+  label: "Form Actions Nuxt on GitHub",
+  icon: "i-simple-icons-github",
+  to: "https://github.com/Hebilicious/form-actions-nuxt"
+    }]
+
 const { data: files } = useLazyFetch("/api/search.json", {
   default: () => [],
   server: false
@@ -36,13 +48,11 @@ const navigation = await useNavigation()
 <template>
   <UHeader :links="links">
     <template #logo>
-      <Logo />
+      <FANLogo />
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" />
-      <USocialButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" />
-      <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
+      <USocialButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" />
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
@@ -56,16 +66,14 @@ const navigation = await useNavigation()
   <UFooter :links="links">
     <template #left>
       <span class="text-sm">
-        Published under <NuxtLink to="https://github.com/nuxt/image" target="_blank" class="underline">
+        Published under <NuxtLink to="https://github.com/Hebilicious/form-actions-nuxt" target="_blank" class="underline">
           MIT License
         </NuxtLink>
       </span>
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton aria-label="Nuxt Website" icon="i-simple-icons-nuxtdotjs" to="https://nuxt.com" />
-      <USocialButton aria-label="Nuxt on X" icon="i-simple-icons-x" to="https://x.com/nuxt_js" />
-      <USocialButton aria-label="Nuxt Image on GitHub" icon="i-simple-icons-github" to="https://github.com/nuxt/image" />
+      <USocialButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" />
     </template>
   </UFooter>
   <ClientOnly>

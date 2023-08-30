@@ -1,5 +1,6 @@
 packages:
-  - docs/**
+  - docs
+  - docs-working
   - packages/**
   - playgrounds/**
   - test/**
