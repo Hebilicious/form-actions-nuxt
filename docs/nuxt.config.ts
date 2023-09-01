@@ -33,11 +33,13 @@ export default defineNuxtConfig({
       "/": { prerender: true }
     },
     prerender: {
-      crawlLinks: true,
+      crawlLinks: true
     }
   },
   experimental: {
-    payloadExtraction: true
+    payloadExtraction: true,
+    typedPages: true,
+    componentIslands: true
   },
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558

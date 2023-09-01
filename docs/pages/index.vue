@@ -9,9 +9,9 @@ useSeoMeta({
   title,
   ogTitle: title,
   description,
-  ogDescription: description,
-  ogImage: "https://image.nuxt.com/social-card.png",
-  twitterImage: "https://image.nuxt.com/social-card.png"
+  ogDescription: description
+  // ogImage: "https://image.nuxt.com/social-card.png",
+  // twitterImage: "https://image.nuxt.com/social-card.png"
 })
 const source = ref("npm i @hebilicious/form-action-nuxt")
 const { copy, copied } = useClipboard({ source })
@@ -31,7 +31,7 @@ const { copy, copied } = useClipboard({ source })
       <UButton to="/get-started/introduction" icon="i-ph-rocket-launch-duotone" size="xl">
         Get started
       </UButton>
-      <UInput aria-label="Copy code to get started" :model-value="source" name="get-started" disabled autocomplete="off" size="xl" :ui="{ base: 'disabled:cursor-default', icon: { trailing: { pointer: '' } } }">
+      <UInput class="Install" aria-label="Copy code to get started" :model-value="source" name="get-started" disabled autocomplete="off" size="xl" :ui="{ base: 'disabled:cursor-default', icon: { trailing: { pointer: '' } } }">
         <template #leading>
           <UIcon name="i-ph-terminal" />
         </template>
@@ -80,7 +80,7 @@ const { copy, copied } = useClipboard({ source })
   </ULandingSection>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
 .gradient {
   position: fixed;
   top: 10rem;
@@ -91,5 +91,9 @@ const { copy, copied } = useClipboard({ source })
   opacity: 0.5;
   z-index: -1;
   animation: colorChange 5s infinite alternate;
+}
+
+.Install {
+    min-width: 35ch;
 }
 </style>
