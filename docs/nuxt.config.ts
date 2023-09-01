@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/fontaine",
     "@nuxtjs/google-fonts",
-    "@nuxtjs/plausible",
     "nuxt-og-image"
   ],
   colorMode: {
@@ -30,13 +29,11 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "cloudflare-pages",
-    static: false,
     routeRules: {
-      "/": { prerender: true },
-      "/api/search.json": { prerender: true }
+      "/": { prerender: true }
     },
     prerender: {
-      crawlLinks: true
+      crawlLinks: true,
     }
   },
   experimental: {

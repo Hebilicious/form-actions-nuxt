@@ -8,7 +8,7 @@
     "build": "rimraf packages/*/dist && cd packages/form-actions-nuxt && bun run build",
     "lint": "eslint --cache .",
     "lint:fix": "bun run lint --fix",
-    "docs:dev": "bun nuxt dev docs",
+    "docs:dev": "cd docs && nuxt dev",
     "docs:build": "cd docs && nuxt build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "bun lint:fix && bumpp -r -x \"bun run changelog\" --all",
@@ -31,10 +31,6 @@
     "taze": "^0.11.2",
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
-  },
-  "resolutions": {
-    "@nuxt/image-edge": "npm:@nuxt/image-edge@1.0.0-rc.1-28224985.8423773",
-    "@nuxt/image": "npm:@nuxt/image-edge@1.0.0-rc.1-28224985.8423773"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
