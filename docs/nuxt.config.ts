@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: "cloudflare-pages-static",
+    // preset: "cloudflare-pages-static",
     // static: false,
     // routeRules: {
     //   "/": { prerender: false },
