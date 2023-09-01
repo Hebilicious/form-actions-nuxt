@@ -31,19 +31,18 @@ export default defineNuxtConfig({
   nitro: {
     preset: "cloudflare-pages",
     // static: false,
-    // routeRules: {
-    //   "/": { prerender: false },
-    //   "/api/search.json": { prerender: false }
-    // },
+    routeRules: {
+      "/": { prerender: true },
+      "/api/search.json": { prerender: true }
+    },
     prerender: {
-      routes: ["/api/search.json"]
-    //   crawlLinks: false,
-    //   concurrency: 1
+      // routes: ["/api/search.json"]
+      crawlLinks: true
     }
   },
-  // experimental: {
-  //   payloadExtraction: true
-  // },
+  experimental: {
+    payloadExtraction: true
+  },
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558
     // Adding all global components to the main entry

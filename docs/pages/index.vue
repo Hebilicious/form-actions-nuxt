@@ -28,7 +28,7 @@ const { copy, copied } = useClipboard({ source })
       A Nuxt module that enables Form actions and Server loaders paradigms for Nuxt.js
     </template>
     <template #links>
-      <UButton to="/get-started/installation" icon="i-ph-rocket-launch-duotone" size="xl">
+      <UButton to="/get-started" icon="i-ph-rocket-launch-duotone" size="xl">
         Get started
       </UButton>
       <UInput aria-label="Copy code to get started" :model-value="source" name="get-started" disabled autocomplete="off" size="xl" :ui="{ base: 'disabled:cursor-default', icon: { trailing: { pointer: '' } } }">

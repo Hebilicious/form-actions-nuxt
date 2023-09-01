@@ -16,7 +16,7 @@ useHead({
 const links = [{
   label: "Documentation",
   icon: "i-heroicons-book-open-solid",
-  to: "/get-started/installation"
+  to: "/get-started/introduction"
 }, {
   label: "Releases",
   icon: "i-heroicons-rocket-launch-solid",
