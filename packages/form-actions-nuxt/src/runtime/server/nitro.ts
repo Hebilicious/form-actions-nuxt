@@ -1,14 +1,11 @@
-import { type EventHandler, type H3Event, createError, defineEventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
+import type { EventHandler, EventHandlerObject, EventHandlerRequest, H3Event } from "h3"
+import { createError, eventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
 import { NUXT_PE_HEADER } from "./utils"
 
-interface Actions {
-  [key: string]: EventHandler | undefined
-}
+type Actions<T = unknown> = Record<string, Handler<T>>
 type ResponseAction = { error: { message?: string; code?: number } } | { redirect: string }
 
-interface Loader<T> {
-  (event: H3Event): Promise<T>
-}
+type Handler<T> = EventHandler<EventHandlerRequest, T> | EventHandlerObject<EventHandlerRequest, T>
 
 async function respondWithRedirect(event: H3Event, url: string, status = 302) {
   await sendRedirect(event, url, status)
@@ -16,8 +13,8 @@ async function respondWithRedirect(event: H3Event, url: string, status = 302) {
 }
 
 // Nitro : This register a special internal namespaced route for the loader
-export function defineServerLoader<T>(loader: Loader<T>) {
-  return defineEventHandler(event => loader(event))
+export function defineServerLoader<T>(loader: Handler<T>) {
+  return eventHandler(loader)
 }
 
 const actionNotFound = ({ actions, action }: { actions: Actions; action: string }) =>
@@ -30,16 +27,16 @@ const actionNotFound = ({ actions, action }: { actions: Actions; action: string 
 
 // Nitro : This register Post only routes for the form actions
 export function defineFormActions(actions: Actions) {
-  return (event: H3Event) => {
+  return eventHandler((event) => {
     const action = Object.keys(getQuery(event))[0]
     const handler = action
       ? actions[action]
-      : "default" in actions
+      : "default" in actions // "default" has priority over the first action
         ? actions.default
         : Object.values(actions)[0]
     if (!handler) throw actionNotFound({ actions, action })
-    return handler(event)
-  }
+    return eventHandler(handler)(event)
+  })
 }
 
 // Nitro : This is a helper to handle the response of the form actions
