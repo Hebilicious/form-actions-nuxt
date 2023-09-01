@@ -2,7 +2,7 @@
   "name": "form-action-nuxt-docs",
   "private": true,
   "scripts": {
-    "build": "nuxt generate",
+    "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview"
   },
