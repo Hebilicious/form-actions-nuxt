@@ -33,7 +33,8 @@
     "vitest": "^0.34.3"
   },
   "resolutions": {
-    "@nuxt/image": "@npm:nuxt/image-edge@1.0.0-rc.1-28224985.8423773"
+    "@nuxt/image-edge": "npm:@nuxt/image-edge@1.0.0-rc.1-28224985.8423773",
+    "@nuxt/image": "npm:@nuxt/image-edge@1.0.0-rc.1-28224985.8423773"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
