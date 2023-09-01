@@ -2,9 +2,7 @@ import type { EventHandler, EventHandlerObject, EventHandlerRequest, H3Event } f
 import { createError, eventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
 import { NUXT_PE_HEADER } from "./utils"
 
-interface Actions {
-  [key: string]: EventHandler | EventHandlerObject | undefined
-}
+type Actions<T = unknown> = Record<string, Handler<T>>
 type ResponseAction = { error: { message?: string; code?: number } } | { redirect: string }
 
 type Handler<T> = EventHandler<EventHandlerRequest, T> | EventHandlerObject<EventHandlerRequest, T>
