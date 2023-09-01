@@ -24,6 +24,6 @@
   "devDependencies": {
     "@nuxt/devtools": "0.8.2",
     "nuxt": "^3.7.0",
-    "nuxt-og-image": "^2.0.23"
+    "nuxt-og-image": "^2.0.24"
   }
 }
