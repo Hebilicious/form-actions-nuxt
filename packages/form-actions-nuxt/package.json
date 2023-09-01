@@ -57,6 +57,6 @@
     "scule": "^1.0.0"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.5.0"
+    "@nuxt/module-builder": "^0.5.1"
   }
 }
