@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     static: true,
     routeRules: {
       "/": { prerender: false },
-      "/api/search.json": { prerender: true }
+      "/api/search.json": { prerender: false }
     },
     prerender: {
       // Waiting for https://github.com/nuxt/nuxt/issues/22763
