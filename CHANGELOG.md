@@ -1,3 +1,12 @@
+## [0.2.4-beta.1](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.3...v0.2.4-beta.1) (2023-09-01)
+
+
+### Features
+
+* add object syntax for form actions and loaders ([#68](https://github.com/Hebilicious/form-actions-nuxt/issues/68)) ([3dd0ac5](https://github.com/Hebilicious/form-actions-nuxt/commit/3dd0ac5823f606c092e4d8238b99cf811ed9dcb4))
+
+
+
 ## [0.2.4-beta.0](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.3...v0.2.4-beta.0) (2023-09-01)
 
 
