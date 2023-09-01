@@ -1,4 +1,4 @@
-import { type EventHandler, type H3Event, createError, defineEventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
+import { type EventHandler, type H3Event, createError, eventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
 import { NUXT_PE_HEADER } from "./utils"
 
 interface Actions {
@@ -17,7 +17,7 @@ async function respondWithRedirect(event: H3Event, url: string, status = 302) {
 
 // Nitro : This register a special internal namespaced route for the loader
 export function defineServerLoader<T>(loader: Loader<T>) {
-  return defineEventHandler(event => loader(event))
+  return eventHandler(event => loader(event))
 }
 
 const actionNotFound = ({ actions, action }: { actions: Actions; action: string }) =>
@@ -38,7 +38,7 @@ export function defineFormActions(actions: Actions) {
         ? actions.default
         : Object.values(actions)[0]
     if (!handler) throw actionNotFound({ actions, action })
-    return handler(event)
+    return eventHandler(handler(event))
   }
 }
 
