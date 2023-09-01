@@ -29,21 +29,21 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: "cloudflare-pages",
-    static: true,
-    routeRules: {
-      "/": { prerender: false },
-      "/api/search.json": { prerender: false }
-    },
-    prerender: {
-      // Waiting for https://github.com/nuxt/nuxt/issues/22763
-      crawlLinks: true,
-      concurrency: 1
-    }
+    preset: "cloudflare-pages"
+    // static: false,
+    // routeRules: {
+    //   "/": { prerender: false },
+    //   "/api/search.json": { prerender: false }
+    // },
+    // prerender: {
+    //   // Waiting for https://github.com/nuxt/nuxt/issues/22763
+    //   crawlLinks: false,
+    //   concurrency: 1
+    // }
   },
-  experimental: {
-    payloadExtraction: true
-  },
+  // experimental: {
+  //   payloadExtraction: true
+  // },
   hooks: {
     // Related to https://github.com/nuxt/nuxt/pull/22558
     // Adding all global components to the main entry
