@@ -33,9 +33,9 @@
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   },
-  "trustedDependencies": {
-    "@hebilicious/form-actions-nuxt": "latest"
-  },
+  "trustedDependencies": [
+    "@hebilicious/form-actions-nuxt"
+  ],
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
