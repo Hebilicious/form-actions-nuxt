@@ -32,13 +32,13 @@ export default defineNuxtConfig({
     preset: "cloudflare-pages",
     static: true,
     routeRules: {
-      "/": { prerender: false }
+      "/": { prerender: false },
+      "/api/search.json": { prerender: true }
     },
     prerender: {
       // Waiting for https://github.com/nuxt/nuxt/issues/22763
       crawlLinks: true,
-      concurrency: 1,
-      routes: ["/api/search.json"]
+      concurrency: 1
     }
   },
   experimental: {
