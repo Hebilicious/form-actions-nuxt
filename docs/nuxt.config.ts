@@ -29,17 +29,17 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: "cloudflare-pages"
+    preset: "cloudflare-pages",
     // static: false,
     // routeRules: {
     //   "/": { prerender: false },
     //   "/api/search.json": { prerender: false }
     // },
-    // prerender: {
-    //   // Waiting for https://github.com/nuxt/nuxt/issues/22763
+    prerender: {
+      routes: ["/api/search.json"]
     //   crawlLinks: false,
     //   concurrency: 1
-    // }
+    }
   },
   // experimental: {
   //   payloadExtraction: true
