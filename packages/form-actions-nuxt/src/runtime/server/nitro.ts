@@ -9,9 +9,6 @@ type ResponseAction = { error: { message?: string; code?: number } } | { redirec
 
 type Handler<T> = EventHandler<EventHandlerRequest, T> | EventHandlerObject<EventHandlerRequest, T>
 
-const callHandler = <T>(h: Handler<T>, event: H3Event): T =>
-  "handler" in h ? h.handler(event) : h(event)
-
 async function respondWithRedirect(event: H3Event, url: string, status = 302) {
   await sendRedirect(event, url, status)
   return event.node.res.end()
@@ -19,7 +16,7 @@ async function respondWithRedirect(event: H3Event, url: string, status = 302) {
 
 // Nitro : This register a special internal namespaced route for the loader
 export function defineServerLoader<T>(loader: Handler<T>) {
-  return eventHandler(event => callHandler(loader, event))
+  return eventHandler(loader)
 }
 
 const actionNotFound = ({ actions, action }: { actions: Actions; action: string }) =>
@@ -32,16 +29,16 @@ const actionNotFound = ({ actions, action }: { actions: Actions; action: string 
 
 // Nitro : This register Post only routes for the form actions
 export function defineFormActions(actions: Actions) {
-  return (event: H3Event) => {
+  return eventHandler((event) => {
     const action = Object.keys(getQuery(event))[0]
     const handler = action
       ? actions[action]
-      : "default" in actions
+      : "default" in actions // "default" has priority over the first action
         ? actions.default
         : Object.values(actions)[0]
     if (!handler) throw actionNotFound({ actions, action })
-    return callHandler(handler, event)
-  }
+    return eventHandler(handler)(event)
+  })
 }
 
 // Nitro : This is a helper to handle the response of the form actions
