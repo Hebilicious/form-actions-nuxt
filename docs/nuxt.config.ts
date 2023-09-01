@@ -30,13 +30,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "cloudflare-pages",
-    // static: false,
+    static: false,
     routeRules: {
       "/": { prerender: true },
       "/api/search.json": { prerender: true }
     },
     prerender: {
-      // routes: ["/api/search.json"]
       crawlLinks: true
     }
   },
