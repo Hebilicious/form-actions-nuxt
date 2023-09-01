@@ -1,9 +1,14 @@
 {
   "name": "form-actions-nuxt",
   "type": "module",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
-  "workspaces": ["packages/*", "playgrounds/*", "test", "docs"],
+  "workspaces": [
+    "packages/*",
+    "playgrounds/*",
+    "test",
+    "docs"
+  ],
   "scripts": {
     "build": "rimraf packages/*/dist && cd packages/form-actions-nuxt && bun run build",
     "lint": "eslint --cache .",
