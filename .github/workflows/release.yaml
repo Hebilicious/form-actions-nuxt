@@ -17,16 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-
-      - name: Set node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: pnpm
-          registry-url: "https://registry.npmjs.org"
-
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
@@ -43,7 +33,7 @@ jobs:
         run: bun run build
 
       - name: Publish to NPM
-        run: pnpm -r publish --access public --no-git-checks
+        run: bun run publish:ci
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           NPM_CONFIG_PROVENANCE: true
