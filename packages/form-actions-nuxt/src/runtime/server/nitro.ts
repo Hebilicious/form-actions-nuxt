@@ -1,4 +1,5 @@
-import { type EventHandler, type EventHandlerObject, type H3Event, createError, eventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
+import type { EventHandler, EventHandlerObject, EventHandlerRequest, H3Event } from "h3"
+import { createError, eventHandler, getQuery, getRequestHeader, sendRedirect } from "h3"
 import { NUXT_PE_HEADER } from "./utils"
 
 interface Actions {
@@ -6,9 +7,10 @@ interface Actions {
 }
 type ResponseAction = { error: { message?: string; code?: number } } | { redirect: string }
 
-type Loader<T> = EventHandler<Request, T> | EventHandlerObject<Request, T>
+type Handler<T> = EventHandler<EventHandlerRequest, T> | EventHandlerObject<EventHandlerRequest, T>
 
-const callHandler = (h: EventHandler | EventHandlerObject, event: H3Event) => "handler" in h ? h.handler(event) : h(event)
+const callHandler = <T>(h: Handler<T>, event: H3Event): T =>
+  "handler" in h ? h.handler(event) : h(event)
 
 async function respondWithRedirect(event: H3Event, url: string, status = 302) {
   await sendRedirect(event, url, status)
@@ -16,7 +18,7 @@ async function respondWithRedirect(event: H3Event, url: string, status = 302) {
 }
 
 // Nitro : This register a special internal namespaced route for the loader
-export function defineServerLoader<T>(loader: Loader<T>) {
+export function defineServerLoader<T>(loader: Handler<T>) {
   return eventHandler(event => callHandler(loader, event))
 }
 
