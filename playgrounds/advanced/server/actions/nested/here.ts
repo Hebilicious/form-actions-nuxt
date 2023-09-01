@@ -1,6 +1,15 @@
+/* eslint-disable no-console */
 export default defineFormActions({
-  default: (event) => {
-    return actionResponse(event, { test: "here" })
+  default: {
+    onRequest: [(event) => {
+      console.log("onRequest", event)
+    }],
+    onBeforeResponse: [(event) => {
+      console.log("onBeforeResponse", event)
+    }],
+    handler: (event) => {
+      return actionResponse(event, { test: "here" })
+    }
   }
 })
 
