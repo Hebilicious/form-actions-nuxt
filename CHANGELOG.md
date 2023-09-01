@@ -1,3 +1,7 @@
+## [0.2.4-beta.3](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.4-beta.2...v0.2.4-beta.3) (2023-09-01)
+
+
+
 ## [0.2.4-beta.2](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.4-beta.1...v0.2.4-beta.2) (2023-09-01)
 
 

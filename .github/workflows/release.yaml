@@ -21,7 +21,7 @@ jobs:
         with:
           bun-version: latest
 
-      - run: bunx changelogithub
+      - run: bun x changelogithub
         continue-on-error: false
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
