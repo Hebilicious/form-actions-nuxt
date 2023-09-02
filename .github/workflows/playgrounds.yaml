@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'playgrounds/**'
+      - 'packages/**'
       - .github/workflows/playgrounds.yaml
   workflow_dispatch:
 
