@@ -44,6 +44,18 @@ const { copy, copied } = useClipboard({ source })
       </UInput>
     </template>
   </ULandingHero>
+  <!-- <UContainer>
+    <p class="text-center text-sm md:text-base font-semibold text-white">
+      Trusted by the best frontend teams
+    </p>
+    <div class="flex items-center justify-between text-gray-400 gap-4 md:gap-8 mt-4 md:mt-10">
+      <NuxtImg width="104" height="28" preload src="/brands/openai.svg" alt="OpenAI" class="h-5 md:h-8" />
+      <NuxtImg width="217" height="28" preload src="/brands/sephora.svg" alt="Sephora" class="hidden md:inline-block md:h-6" />
+      <NuxtImg width="205" height="28" preload src="/brands/hyundai.svg" alt="Hyundai" class="h-4 md:h-7" />
+      <NuxtImg width="129" height="28" preload src="/brands/gitlab.svg" alt="Gitlab" class="h-4 md:h-7" />
+      <NuxtImg width="115" height="28" preload src="/brands/emma.svg" alt="Emma" class="hidden md:inline-block md:h-7" />
+    </div>
+  </UContainer> -->
   <ULandingSection>
     <template #title>
       Handle form submissions with <br><span class="text-primary-400">simplicity.</span>
