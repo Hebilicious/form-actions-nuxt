@@ -48,7 +48,7 @@ const navigation = await useNavigation()
 <template>
   <UHeader :links="links">
     <template #logo>
-      <FANLogo />
+      <Logo class="w-8 h-8" /> Nuxt <span class="text-primary-400">FormAction</span>
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />

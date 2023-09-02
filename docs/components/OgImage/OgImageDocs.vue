@@ -11,11 +11,6 @@ defineProps({
   description: {
     type: String,
     required: true
-  },
-  image: {
-    type: String,
-    required: false,
-    default: ""
   }
 })
 </script>
@@ -28,13 +23,15 @@ defineProps({
     <div>
       <h1 class="text-8xl mb-4 text-white flex items-center">
         <span>{{ title }}</span>
-        <img v-if="image" :src="image" class="h-20 w-20 rounded ml-8">
       </h1>
       <p class="text-5xl text-gray-200 leading-tight pr-10">
         {{ description }}
       </p>
     </div>
-    <Logo class="w-[349px] h-[60px] text-white" />
+    <div class="flex items-end text-4xl font-semibold flex-nowrap">
+      <Logo class="w-14 h-14 mr-2" />
+      <span class="text-white pb-0.5 mr-2">Nuxt</span> <span class="pb-0.5 text-green-400">FormActions</span>
+    </div>
   </div>
 </template>
 
