@@ -16,7 +16,7 @@ defineOgImage({
   title,
   description
 })
-const source = ref("npm i @hebilicious/form-action-nuxt")
+const source = ref("npm i @hebilicious/form-actions-nuxt")
 const { copy, copied } = useClipboard({ source })
 </script>
 
