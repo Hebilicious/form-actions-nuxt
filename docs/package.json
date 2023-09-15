@@ -8,22 +8,22 @@
   },
   "dependencies": {
     "@iconify-json/ph": "^1.1.6",
-    "@iconify-json/simple-icons": "^1.1.70",
+    "@iconify-json/simple-icons": "^1.1.68",
     "@nuxt/content": "2.8.2",
-    "@nuxt/image": "npm:@nuxt/image-edge@1.0.0-rc.1-28242227.bd00755",
-    "@nuxthq/elements": "npm:@nuxthq/elements-edge@0.0.1-28242263.01d174c",
-    "@nuxthq/ui": "npm:@nuxthq/ui-edge@2.7.0-28234716.d4b4fb8",
+    "@nuxt/image": "npm:@nuxt/image-edge@1.0.0-rc.1-28224985.8423773",
+    "@nuxthq/elements": "npm:@nuxthq/elements-edge@0.0.1-28223632.89f04cc",
+    "@nuxthq/ui": "npm:@nuxthq/ui-edge@2.7.0-28223581.ead87a9",
     "@nuxtjs/fontaine": "^0.4.1",
     "@nuxtjs/google-fonts": "^3.0.2",
     "@vueuse/core": "^10.4.1",
     "@vueuse/nuxt": "^10.4.1",
     "micromark": "4.0.0",
     "nuxt-compile-markdown": "^0.0.3",
-    "shikiji": "^0.6.8"
+    "shikiji": "^0.6.6"
   },
   "devDependencies": {
-    "@nuxt/devtools": "0.8.3",
-    "nuxt": "^3.7.2",
-    "nuxt-og-image": "^2.0.26"
+    "@nuxt/devtools": "0.8.2",
+    "nuxt": "^3.7.0",
+    "nuxt-og-image": "^2.0.24"
   }
 }
