@@ -44,12 +44,12 @@
   },
   "peerDependencies": {
     "h3": "^1.8.1",
-    "nitropack": "2.6.3",
-    "nuxt": "^3.7.2",
+    "nitropack": "2.6.2",
+    "nuxt": "^3.7.0",
     "vite": "*"
   },
   "dependencies": {
-    "@nuxt/kit": "3.7.2",
+    "@nuxt/kit": "3.7.0",
     "@vueuse/core": "^10.4.1",
     "defu": "^6.1.2",
     "esbuild": "^0.19.2",
