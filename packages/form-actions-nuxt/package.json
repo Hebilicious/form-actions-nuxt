@@ -43,20 +43,20 @@
     "dev": "nuxi dev"
   },
   "peerDependencies": {
-    "h3": "^1.8.1",
+    "h3": "^1.8.2",
     "nitropack": "2.6.3",
-    "nuxt": "^3.7.3",
+    "nuxt": "^3.7.4",
     "vite": "*"
   },
   "dependencies": {
-    "@nuxt/kit": "3.7.3",
-    "@vueuse/core": "^10.4.1",
+    "@nuxt/kit": "3.7.4",
+    "@vueuse/core": "^10.5.0",
     "defu": "^6.1.2",
-    "esbuild": "^0.19.3",
+    "esbuild": "^0.19.4",
     "magicast": "^0.3.0",
     "scule": "^1.0.0"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "^0.5.1"
+    "@nuxt/module-builder": "^0.5.2"
   }
 }
