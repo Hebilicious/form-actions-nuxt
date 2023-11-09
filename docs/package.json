@@ -15,10 +15,7 @@
     "@nuxtjs/fontaine": "^0.4.1",
     "@nuxtjs/google-fonts": "^3.0.2",
     "@vueuse/core": "^10.5.0",
-    "@vueuse/nuxt": "^10.5.0",
-    "micromark": "4.0.0",
-    "nuxt-compile-markdown": "^0.0.3",
-    "shikiji": "^0.6.9"
+    "@vueuse/nuxt": "^10.5.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "0.8.5",
