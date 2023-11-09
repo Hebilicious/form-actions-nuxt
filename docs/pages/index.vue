@@ -22,10 +22,12 @@ const { copy, copied } = useClipboard({ source })
 
 <template>
   <span class="gradient" />
-  <ULandingHero direction="horizontal" :ui="{ container: 'flex lg:gap-12' }">
-    <Illustration class="hidden lg:block h-64" />
+  <ULandingHero orientation="horizontal" :ui="{ container: 'flex lg:gap-12' }">
+    <template #default>
+      <Illustration class="hidden lg:block h-64 w-full" />
+    </template>
     <template #title>
-      Form Actions and Server Loaders for your <span class="text-primary-400">Nuxt Apps</span>
+      Form Actions for your <span class="text-primary-400">Nuxt Apps</span>
     </template>
     <template #description>
       A Nuxt module that enables Form actions and Server loaders paradigms for Nuxt.
@@ -61,24 +63,24 @@ const { copy, copied } = useClipboard({ source })
       Handle form submissions with <br><span class="text-primary-400">simplicity.</span>
     </template>
     <UPageGrid>
-      <UPageCard to="/usage/form-actions" title="Form Actions" icon="i-ph-codesandbox-logo">
+      <ULandingCard to="/usage/form-actions" title="Form Actions" icon="i-ph-codesandbox-logo">
         Learn how to handle form submissions with Form Actions.
-      </UPageCard>
-      <UPageCard to="/usage/server-loaders" title="Server Loaders" icon="i-ph-download">
+      </ULandingCard>
+      <ULandingCard to="/usage/server-loaders" title="Server Loaders" icon="i-ph-download">
         Learn how to use Server Loaders to simplify your data fetching.
-      </UPageCard>
-      <UPageCard to="/usage/advanced" title="Advanced" icon="i-ph-magic-wand-duotone">
+      </ULandingCard>
+      <ULandingCard to="/usage/advanced" title="Advanced" icon="i-ph-magic-wand-duotone">
         Multiple forms ? Optimistic updates ? We got you covered.
-      </UPageCard>
-      <UPageCard to="/integrations/validation-libraries" title="3rd party Integrations" icon="i-ph-plug-duotone">
+      </ULandingCard>
+      <ULandingCard to="/integrations/validation-libraries" title="3rd party Integrations" icon="i-ph-plug-duotone">
         Integrate with Zod, Valibot, Vorms and all your favourite libraries.
-      </UPageCard>
-      <UPageCard to="/integrations/server-block" title="Server Block" icon="i-ph-frame-corners">
+      </ULandingCard>
+      <ULandingCard to="/integrations/server-block" title="Server Block" icon="i-ph-frame-corners">
         Want to combine Form Actions and Loaders with the Server Block module ? You can.
-      </UPageCard>
-      <UPageCard to="/get-started/installation" title="Powerful Paradigms" icon="i-ph-rocket-launch-duotone">
+      </ULandingCard>
+      <ULandingCard to="/get-started/installation" title="Powerful Paradigms" icon="i-ph-rocket-launch-duotone">
         Form Actions are powerful and pleasant to work with.
-      </UPageCard>
+      </ULandingCard>
     </UPageGrid>
   </ULandingSection>
 </template>

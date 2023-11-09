@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true, timeline: true },
-  extends: "@nuxthq/elements",
+  extends: "@nuxt/ui-pro",
   modules: [
-    "@nuxt/image",
     "@nuxt/content",
-    "@nuxthq/ui",
+    "@nuxt/image",
+    "@nuxt/ui",
     "@vueuse/nuxt",
     "@nuxtjs/fontaine",
     "@nuxtjs/google-fonts",

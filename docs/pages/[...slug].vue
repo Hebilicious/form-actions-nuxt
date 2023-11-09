@@ -3,7 +3,6 @@ definePageMeta({
   layout: "docs"
 })
 const route = useRoute()
-const { findPageHeadline } = useElementsHelpers()
 
 const { data: page } = await useAsyncData(`docs-${route.path}`, () => queryContent(route.path).findOne())
 if (!page.value)
@@ -28,7 +27,7 @@ defineOgImage({
   description: page.value.description
 })
 
-const headline = computed(() => findPageHeadline(page.value))
+const headline = computed(() => findPageHeadline(page.value!))
 const communityLinks = computed(() => [
   {
     icon: "i-ph-pen-duotone",
@@ -65,16 +64,16 @@ const communityLinks = computed(() => [
 
 <template>
   <UPage>
-    <UPageHeader :title="page.title" :description="page.description" :links="page.links" :headline="headline" />
+    <UPageHeader :title="page?.title" :description="page?.description" :links="page?.links" :headline="headline" />
 
     <UPageBody prose class="pb-0">
-      <ContentRenderer v-if="page.body" :value="page" />
+      <ContentRenderer v-if="page?.body" :value="page" />
       <hr v-if="surround?.length" class="my-8">
-      <UDocsSurround :surround="surround" />
+      <UDocsSurround :surround="surround!" />
     </UPageBody>
 
-    <template v-if="page.body?.toc?.links?.length" #right>
-      <UDocsToc :links="page.body.toc.links">
+    <template v-if="page?.body?.toc?.links?.length" #right>
+      <UDocsToc :links="page?.body.toc.links">
         <template #bottom>
           <div class="hidden lg:block space-y-6 !mt-6">
             <UDivider v-if="page.body?.toc?.links?.length" dashed />
