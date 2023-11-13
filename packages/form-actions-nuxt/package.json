@@ -42,18 +42,15 @@
     "postinstall": "nuxi prepare",
     "dev": "nuxi dev"
   },
-  "peerDependencies": {
-    "h3": "^1.8.2",
-    "nitropack": "2.6.3",
-    "nuxt": "^3.7.4",
-    "vite": "*"
-  },
   "dependencies": {
-    "@nuxt/kit": "3.7.4",
+    "@nuxt/kit": "3.8.1",
     "@vueuse/core": "^10.5.0",
     "defu": "^6.1.2",
     "esbuild": "^0.19.4",
+    "h3": "^1.8.2",
     "magicast": "^0.3.0",
+    "nitropack": "2.7.2",
+    "nuxt": "3.8.1",
     "scule": "^1.0.0"
   },
   "devDependencies": {

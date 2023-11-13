@@ -1,5 +1,5 @@
-<script setup>
-const { mapContentNavigation } = useElementsHelpers()
+<script lang="ts" setup>
+import type { ParsedContent } from "@nuxt/content/dist/runtime/types"
 
 useServerSeoMeta({
   titleTemplate: "%s - Nuxt Image",
@@ -38,7 +38,7 @@ const socialLinks = [{
   to: "https://github.com/Hebilicious/form-actions-nuxt"
 }]
 
-const { data: files } = useLazyFetch("/api/search.json", {
+const { data: files } = useLazyFetch<ParsedContent[]>("/api/search.json", {
   default: () => [],
   server: false
 })
@@ -52,7 +52,7 @@ const navigation = await useNavigation()
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" />
+      <UButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" color="gray" variant="ghost" />
     </template>
     <!-- Mobile panel -->
     <template v-if="$route.path !== '/'" #panel>
@@ -73,28 +73,10 @@ const navigation = await useNavigation()
     </template>
     <template #right>
       <UColorModeButton v-if="!$colorMode.forced" />
-      <USocialButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" />
+      <UButton v-for="link in socialLinks" :key="link.label" :aria-label="link.label" :icon="link.icon" :to="link.to" color="gray" variant="ghost" />
     </template>
   </UFooter>
   <ClientOnly>
     <LazyUDocsSearch :files="files" :navigation="navigation" :links="links" />
   </ClientOnly>
 </template>
-
-<style>
-html.dark {
-  color-scheme: dark;
-}
-
-.shiki {
-  padding: 0.6rem;
-  border-radius: 0.2rem;
-  border: 1px solid #8882;
-}
-
-html.dark .shiki,
-html.dark .shiki span {
-  color: var(--s-dark) !important;
-  background-color: var(--s-dark-bg) !important;
-}
-</style>

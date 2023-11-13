@@ -11,6 +11,6 @@
     "@hebilicious/server-block-nuxt": "0.3.4",
     "@hebilicious/sfc-server-volar": "0.3.4",
     "@nuxt/devtools": "^0.8.5",
-    "nuxt": "3.7.4"
+    "nuxt": "3.8.1"
   }
 }

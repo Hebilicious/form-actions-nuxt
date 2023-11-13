@@ -33,7 +33,7 @@ interface AsyncDataExecuteOptions {
 
 type FetchResult<T> = {
     result: Ref<T | null>
-    refresh: (opts?: AsyncDataExecuteOptions) => Promise<void>
+    refresh: (opts?: AsyncDataExecuteOptions) => Promise<unknown>
     pending: Ref<boolean>
     error: Ref<FetchError | null>
 }
