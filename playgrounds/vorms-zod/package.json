@@ -11,7 +11,7 @@
     "@nuxt/devtools": "^0.8.5",
     "@vorms/core": "^1.1.0",
     "@vorms/resolvers": "^1.1.0",
-    "nuxt": "3.7.4",
+    "nuxt": "3.8.1",
     "zod": "^3.22.4"
   }
 }
