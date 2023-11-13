@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@hebilicious/form-actions-nuxt": "latest",
-    "@nuxt/devtools": "^0.8.5",
+    "@nuxt/devtools": "^1.0.2",
     "@vorms/core": "^1.1.0",
     "@vorms/resolvers": "^1.1.0",
     "nuxt": "3.8.1",
