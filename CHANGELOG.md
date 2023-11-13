@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.4...v0.3.0) (2023-11-13)
+
+
+### Bug Fixes
+
+* windows compatible regex and filename ([#87](https://github.com/Hebilicious/form-actions-nuxt/issues/87)) ([105153c](https://github.com/Hebilicious/form-actions-nuxt/commit/105153c43c2a2177abe81dd03538c4d3d80becb0))
+
+
+
 ## [0.2.4](https://github.com/Hebilicious/form-actions-nuxt/compare/v0.2.4-beta.4...v0.2.4) (2023-09-01)
 
 
