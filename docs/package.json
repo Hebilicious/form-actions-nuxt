@@ -18,7 +18,7 @@
     "@vueuse/nuxt": "^10.5.0"
   },
   "devDependencies": {
-    "@nuxt/devtools": "0.8.5",
+    "@nuxt/devtools": "1.0.2",
     "nuxt": "^3.8.1",
     "nuxt-og-image": "^2.1.1"
   }
