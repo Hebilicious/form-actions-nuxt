@@ -9,6 +9,6 @@
   "devDependencies": {
     "@hebilicious/form-actions-nuxt": "latest",
     "@nuxt/devtools": "^1.0.2",
-    "nuxt": "3.8.1"
+    "nuxt": "3.12.4"
   }
 }
