@@ -14,7 +14,7 @@
     "@nuxt/ui-pro": "npm:@nuxt/ui-pro-edge@latest",
     "@nuxtjs/fontaine": "^0.4.1",
     "@nuxtjs/google-fonts": "^3.0.2",
-    "@vueuse/core": "^10.6.1",
+    "@vueuse/core": "^11.1.0",
     "@vueuse/nuxt": "^10.6.1"
   },
   "devDependencies": {
