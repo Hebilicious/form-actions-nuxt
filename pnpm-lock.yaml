@@ -71,6 +71,9 @@ importers:
       esbuild:
         specifier: ^0.19.5
         version: 0.19.12
+      h3:
+        specifier: ^1.15.1
+        version: 1.15.1
       magicast:
         specifier: ^0.3.5
         version: 0.3.5

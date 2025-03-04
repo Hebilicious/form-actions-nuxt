@@ -19,7 +19,7 @@
     "release": "bun lint:fix && bumpp -r -x \"bun run changelog\" --all",
     "prepare:types": "cd packages/form-actions-nuxt && nuxi prepare",
     "publish:ci": "pnpm -r publish --access public --no-git-checks",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "cd packages/form-actions-nuxt && tsc --noEmit",
     "test": "vitest",
     "docs:preview": "vitepress preview docs"
   },
