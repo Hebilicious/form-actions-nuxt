@@ -11,13 +11,13 @@ Use your favourite package manager.
 Install your dependencies :
 
 ```bash
-bun install 
+pnpm install 
 ```
 
 Run the dev server :
 
 ```bash
-bun run dev
+pnpm run dev
 ```
 
 ## Issues & Contributions

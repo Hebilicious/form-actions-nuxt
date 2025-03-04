@@ -13,14 +13,15 @@
     "build": "rimraf packages/*/dist && cd packages/form-actions-nuxt && bun run build",
     "lint": "eslint --cache .",
     "lint:fix": "bun run lint --fix",
-    "docs:dev": "cd docs && nuxt dev",
-    "docs:build": "cd docs && nuxt build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "bun lint:fix && bumpp -r -x \"bun run changelog\" --all",
     "prepare:types": "cd packages/form-actions-nuxt && nuxi prepare",
     "publish:ci": "pnpm -r publish --access public --no-git-checks",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest"
+    "typecheck": "cd packages/form-actions-nuxt && tsc --noEmit --project tsconfig.tsc.json",
+    "test": "vitest",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@hebilicious/eslint-config": "0.0.3-beta.3",
@@ -37,6 +38,7 @@
     "simple-git-hooks": "^2.9.0",
     "taze": "^0.12.0",
     "typescript": "^5.2.2",
+    "vitepress": "^1.6.3",
     "vitest": "^0.34.6"
   },
   "trustedDependencies": [

@@ -15,15 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
+      - uses: ./.github/workflows/actions/install
 
       - name: Install
-        run: bun install
+        run: pnpm install
 
       - name: Lint
-        run: bun run lint
+        run: pnpm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -31,18 +29,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
-      - name: Install
-        run: bun install
+      - uses: ./.github/workflows/actions/install
 
       - name: Build
-        run: bun run build
+        run: pnpm run build
 
       - name: Test
-        run: bun run test
+        run: pnpm run test
 
       - name: Typecheck
-        run: bun run typecheck
+        run: pnpm run typecheck

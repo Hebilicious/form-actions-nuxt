@@ -17,23 +17,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
+      - uses: ./.github/workflows/actions/install
 
       - run: bun x changelogithub
         continue-on-error: false
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Install
-        run: bun install
-
       - name: Build
-        run: bun run build
+        run: pnpm run build
 
       - name: Publish to NPM
-        run: bun run publish:ci
+        run: pnpm run publish:ci
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
