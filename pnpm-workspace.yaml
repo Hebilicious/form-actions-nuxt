@@ -1,3 +1,2 @@
-# We use pnpm to publish https://github.com/oven-sh/bun/issues/1976
 packages:
   - packages/**

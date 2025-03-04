@@ -150,8 +150,8 @@ export default defineNuxtModule({
 
     // We add all the handlers at once.
     nuxt.hook("ready", async () => {
-      for (const [loader] of loaderCache.values()) useNitro().options.handlers.push(loader)
-      for (const [action] of actionCache.values()) useNitro().options.handlers.push(action)
+      for (const [loader] of loaderCache.values()) useNitro().scannedHandlers.push(loader)
+      for (const [action] of actionCache.values()) useNitro().scannedHandlers.push(action)
       logger.success(`[form-actions] {handlers} added to Nitro : ${[...actionCache.keys(), ...loaderCache.keys()].join(", ")}`)
     })
 
@@ -167,6 +167,7 @@ export default defineNuxtModule({
       for (const [path, [handler]] of loaderCache.entries()) {
         if (useNitro().options.handlers.some(h => h.route === addLoaderPrefix(path))) continue // Skip if already added.
         useNitro().options.handlers.push(handler)
+        useNitro().scannedHandlers.push(handler)
         logger.info(`[form-actions] {loader} added to Nitro : '${path}'`)
       }
       updateTemplates({ filter: t => t.filename === loaderTypesFilename })
