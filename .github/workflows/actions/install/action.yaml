@@ -19,15 +19,15 @@ runs:
     - run: echo "PACKAGE_JSON=$(jq -c . < package.json)" >> $GITHUB_ENV
       shell: bash
 
-    - name: Use Bun ${{ fromJson(env.PACKAGE_JSON).engines.bun || inputs.bun-version }} 
+    - name: Use Bun ${{ fromJson(env.PACKAGE_JSON).engines.bun || inputs.bun-version }}
       uses: oven-sh/setup-bun@v2
       with:
-        bun-version: ${{ fromJson(env.PACKAGE_JSON).engines.bun || inputs.bun-version }} 
+        bun-version: ${{ fromJson(env.PACKAGE_JSON).engines.bun || inputs.bun-version }}
 
-    - name: Use Pnpm ${{ fromJson(env.PACKAGE_JSON).engines.pnpm || inputs.pnpm-version }} 
+    - name: Use Pnpm ${{ fromJson(env.PACKAGE_JSON).engines.pnpm || inputs.pnpm-version }}
       uses: pnpm/action-setup@v3
       with:
-        version: ${{ fromJson(env.PACKAGE_JSON).engines.pnpm || inputs.pnpm-version }} 
+        version: ${{ fromJson(env.PACKAGE_JSON).engines.pnpm || inputs.pnpm-version }}
 
     - name: Use Node.js ${{ fromJson(env.PACKAGE_JSON).engines.node || inputs.node-version }}
       uses: actions/setup-node@v4

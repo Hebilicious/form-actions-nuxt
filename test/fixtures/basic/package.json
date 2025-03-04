@@ -1,9 +1,11 @@
 {
   "name": "basic-fixture",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "h3": "^1.8.0-rc.3",
-    "nitropack": "2.7.2",
-    "nuxt": "3.6.5"
+    "@hebilicious/form-actions-nuxt": "workspace:*",
+    "nuxt": "3.6.5",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0"
   }
 }
