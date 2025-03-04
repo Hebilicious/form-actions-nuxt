@@ -43,7 +43,7 @@
 
 * add micromark dep ([16be898](https://github.com/Hebilicious/form-actions-nuxt/commit/16be8984b4917692c90b074977f4abad16443b85))
 * add preset cloudflare-pages ([f8ea816](https://github.com/Hebilicious/form-actions-nuxt/commit/f8ea816acb351d31a38fb65a72d4b7de8e90b88a))
-* move to pnpm ([4ada17f](https://github.com/Hebilicious/form-actions-nuxt/commit/4ada17fe769672c0071b01879144bc28ad7cee18))
+* move to bun ([4ada17f](https://github.com/Hebilicious/form-actions-nuxt/commit/4ada17fe769672c0071b01879144bc28ad7cee18))
 
 
 
