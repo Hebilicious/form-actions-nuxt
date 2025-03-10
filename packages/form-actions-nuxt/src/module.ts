@@ -1,5 +1,5 @@
 import { existsSync, promises as fsp } from "node:fs"
-import { dirname, resolve as pathResolve } from "node:path"
+import { relative, dirname, resolve as pathResolve } from "node:path"
 import { addImports, addPlugin, addTemplate, addTypeTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger, useNitro } from "@nuxt/kit"
 import { generateCode, loadFile } from "magicast"
 import { pascalCase } from "scule"
@@ -226,6 +226,7 @@ export default defineNuxtModule({
 
     // On watch, add new actions, extract loaders and add loaders.
     nuxt.hook("builder:watch", async (event, path) => {
+      path = relative(nuxt.options.srcDir, pathResolve(nuxt.options.srcDir, path))
       try {
         await addHandlers(path, event)
       }
